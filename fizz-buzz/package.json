@@ -4,12 +4,12 @@
   "description": "FizzBuzz code kata",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "vitest"
   },
   "keywords": [
     "kata",
     "test",
-    "jest",
+    "vitest",
     "typescript",
     "tdd"
   ],
