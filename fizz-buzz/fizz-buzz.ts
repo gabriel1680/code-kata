@@ -8,3 +8,4 @@ export function fizzbuzz(n: number): string | number {
     }
     return result || n;
 }
+

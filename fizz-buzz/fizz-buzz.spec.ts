@@ -1,19 +1,26 @@
 import { fizzbuzz } from "fizz-buzz";
 
 describe("FizzBuzz", () => {
-    it("should return 'Fizz' when n is divisible by 3", () => {
-        expect(fizzbuzz(3)).toBe('Fizz');
+
+    it.each([ 3, 6, 9, 12, 18 ])
+        ("should return 'Fizz' when n is divisible by 3 (%s)", (n) => {
+        expect(fizzbuzz(n)).toBe('Fizz');
     });
 
-    it("should return 'Buzz' when n is divisible by 5", () => {
-        expect(fizzbuzz(5)).toBe('Buzz');
+    it.each([ 5, 20, 25, 35 ])
+        ("should return 'Buzz' when n is divisible by 5 (%s)", (n) => {
+        expect(fizzbuzz(n)).toBe('Buzz');
     });
 
-    it("should return 'FizzBuzz' when n is divisible by 3 and 5", () => {
-        expect(fizzbuzz(15)).toBe('FizzBuzz');
+    it.each([ 15, 30, 45 ])
+        ("should return 'FizzBuzz' when n is divisible by 3 and 5 (%s)", (n) => {
+        expect(fizzbuzz(n)).toBe('FizzBuzz');
     });
 
-    it("should return the number 'n' when n is neither divisible by 3 nor 5", () => {
-        expect(fizzbuzz(1)).toBe(1);
+    it.each([ 1, 2, 4, 7, 8 ])
+        ("should return the number 'n' when n is neither divisible by 3 nor 5 (%s)", (n) => {
+        expect(fizzbuzz(n)).toBe(n);
     });
+
 });
+
