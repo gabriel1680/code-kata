@@ -2,8 +2,10 @@
 
 This is a repository for my code katas, tdd training and problem solving
 
-## Execute
+Not all examples will be in the same language, but to warm i started with simple problems and TS.
+I would like to use this to implement more complex algorithms and learn new languages basics.
 
-```sh
-cd ./{folder-name} && npm i && npm t
-```
+If you found this repo, feel free to suggest some algorithms for me!
+
+Thanx.
+
