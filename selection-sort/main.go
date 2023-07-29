@@ -1,24 +1,19 @@
 package main
 
 func SelectionSort(n []int) ([]int) {
-    if len(n) == 0 {
-        return n
-    }
-    for i := 0; i < len(n); i++ {
-        if i == 0 {
-            if n[i] > n[i + 1] {
-                aux := n[i]
-                n[i] = n[i + 1]
-                n[i + 1] = aux
-            }
-            continue
+    lower_index := 0
+    for i := 1; i < len(n); i++ {
+        if n[lower_index] > n[i] {
+            swap(&n, lower_index, i)
         }
-        if n[i - 1] > n[i] {
-            aux := n[i - 1]
-            n[i - 1] = n[i]
-            n[i] = aux
-        }
+        lower_index = i
     }
     return n
+}
+
+func swap(n *[]int, left int, right int) {
+	aux := (*n)[left]
+	(*n)[left] = (*n)[right]
+    (*n)[right] = aux
 }
 
