@@ -1,0 +1,21 @@
+{
+  "name": "fizz-buzz",
+  "version": "1.0.0",
+  "description": "FizzBuzz code kata",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "kata",
+    "test",
+    "jest",
+    "typescript",
+    "tdd"
+  ],
+  "author": "Gabriel P. Lopes",
+  "license": "ISC",
+  "devDependencies": {
+    "vitest": "^0.33.0"
+  }
+}
