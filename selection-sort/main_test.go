@@ -20,17 +20,19 @@ func TestSelectionSort(t *testing.T) {
         for i := 0; i < len(result); i++ {
           if result[i] != expect[i] {
                 t.Errorf("expected %d, recieved %d", expect, result)
+                break
             }
         }
     })
 
     t.Run("should sort ascending order with multiple values", func(t *testing.T) {
         rng := []int{2, 0, 1, 4, 3, 8, 5, 7}
-        expect := []int{0, 1, 2, 3, 4, 5, 7, 8}
+        expect := []int{0, 1, 2, 9, 10, 5, 7, 8}
         result := SelectionSort(rng)
         for i := 0; i < len(result); i++ {
           if result[i] != expect[i] {
                 t.Errorf("expected %d, recieved %d", expect, result)
+                break
             }
         }
     })
