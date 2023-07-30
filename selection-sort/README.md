@@ -1,4 +1,4 @@
-# selection-sort
+# Selection Sort
 
 Selection is a in-place sorting algrithm, wich means that it does not create any other arrays, but change the position of the original.
 
