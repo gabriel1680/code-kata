@@ -13,11 +13,11 @@ Thanx.
 
 Sorting
 
-- [selection sort]('./selection-sort/')
-- [bubble sort]('./bubble-sort/')
+- [selection sort](./selection-sort)
+- [bubble sort](./bubble-sort)
 
 Others
 
-- [fizzbuzz]('./fizz-buzz/')
-- [is-prime]('./is-prime/')
+- [fizzbuzz](./fizz-buzz)
+- [is-prime](./is-prime)
 
