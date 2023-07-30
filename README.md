@@ -9,3 +9,15 @@ If you found this repo, feel free to suggest some algorithms for me!
 
 Thanx.
 
+## Table of contents
+
+Sorting
+
+- [selection sort]('./selection-sort/')
+- [bubble sort]('./bubble-sort/')
+
+Others
+
+- [fizzbuzz]('./fizz-buzz/')
+- [is-prime]('./is-prime/')
+
