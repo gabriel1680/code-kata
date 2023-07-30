@@ -15,6 +15,7 @@ Sorting
 
 - [selection sort](./selection-sort)
 - [bubble sort](./bubble-sort)
+- [insertion sort](./insertion-sort)
 
 Others
 
