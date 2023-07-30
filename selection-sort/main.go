@@ -1,12 +1,14 @@
 package main
 
 func SelectionSort(n []int) ([]int) {
-    lower_index := 0
-    for i := 1; i < len(n); i++ {
-        if n[lower_index] > n[i] {
-            swap(&n, lower_index, i)
+    for i := 0; i < len(n); i++ {
+        lower_index := i
+        for j := i; j < len(n); j++ {
+            if n[lower_index] > n[j] {
+                lower_index = j
+            }
         }
-        lower_index = i
+        swap(&n, lower_index, i)
     }
     return n
 }

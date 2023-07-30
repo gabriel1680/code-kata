@@ -14,8 +14,8 @@ func TestSelectionSort(t *testing.T) {
     })
 
     t.Run("should sort ascending order", func(t *testing.T) {
-        rng := []int{2, 1}
-        expect := []int{1, 2}
+        rng := []int{8, 9, 3, 4}
+        expect := []int{3, 4, 8, 9}
         result := SelectionSort(rng)
         for i := 0; i < len(result); i++ {
           if result[i] != expect[i] {
@@ -27,7 +27,7 @@ func TestSelectionSort(t *testing.T) {
 
     t.Run("should sort ascending order with multiple values", func(t *testing.T) {
         rng := []int{2, 0, 1, 4, 3, 8, 5, 7}
-        expect := []int{0, 1, 2, 9, 10, 5, 7, 8}
+        expect := []int{0, 1, 2, 3, 4, 5, 7, 8}
         result := SelectionSort(rng)
         for i := 0; i < len(result); i++ {
           if result[i] != expect[i] {
