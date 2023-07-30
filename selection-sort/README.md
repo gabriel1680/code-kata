@@ -5,3 +5,5 @@ Selection is a in-place sorting algrithm, wich means that it does not create any
 It's complexity is quadratic constant => O(n^2) = Omega(n^2)
 
 The current implementation considers a copy of the original array and returns the sorted copy.
+
+This algorithm iterates through the list searching for the lower value each time, then swaps after each look.
