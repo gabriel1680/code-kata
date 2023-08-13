@@ -6,16 +6,16 @@ fn main() {
 
 pub fn to_roman(mut n: u32) -> String {
     let map = create_roman_map();
+    let keys = get_reverse_sorted_keys_of(&map);
     let mut roman = String::from("");
 
     while n > 3 {
-
         if map.contains_key(&(n + 1)) {
             roman.push('I');
             n += 1;
         }
 
-        for i in vec![1000, 500, 100, 50, 10, 5] {
+        for &i in keys.to_owned() {
             while n >= i {
                 let value = map.get(&i).unwrap();
                 roman.push(*value);
@@ -44,7 +44,14 @@ fn create_roman_map() -> HashMap<u32, char> {
     map.insert(100, 'C');
     map.insert(500, 'D');
     map.insert(1000, 'M');
-    return map;
+    map
+}
+
+fn get_reverse_sorted_keys_of(map: &HashMap<u32, char>) -> Vec<&u32> {
+    let mut keys: Vec<&u32> = map.keys().collect();
+    keys.sort();
+    keys.reverse();
+    keys
 }
 
 #[cfg(test)]
