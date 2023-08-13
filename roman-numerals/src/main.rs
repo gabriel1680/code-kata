@@ -1,25 +1,51 @@
+use std::collections::HashMap;
+
 fn main() {
     println!("Hello, world!");
 }
 
-
 pub fn to_roman(mut n: u32) -> String {
+
+    let mut map: HashMap<u32, char> = HashMap::new();
+    map.insert(5, 'V');
+    map.insert(10, 'X');
+    map.insert(50, 'L');
+    map.insert(100, 'C');
+    map.insert(500, 'D');
+    map.insert(1000, 'M');
+
     let mut roman = String::from("");
-    if n == 9 || n == 4 {
-        roman.push('I');
-        n += 1;
+
+    while n > 3 {
+        if map.contains_key(&(n + 1)) {
+            roman.push('I');
+            n += 1;
+        }
+
+        for i in vec![1000, 500, 100, 50, 10, 5] {
+            if n >= i {
+                let value = map.get(&i).unwrap();
+                roman.push(*value);
+                n -= i;
+
+                if map.contains_key(&(n + 1)) {
+                    roman.push('I');
+                    n += 1;
+                }
+
+                if n == i {
+                    let value = map.get(&i).unwrap();
+                    roman.push(*value);
+                    n -= i;
+                }
+            }
+        }
     }
-    if n >= 10 {
-        roman.push('X');
-        n -= 10;
-    }
-    if n >= 5 {
-        roman.push('V');
-        n -= 5;
-    }
+    
     for _ in 0..n {
         roman.push('I');
     }
+
     return roman;
 }
 
@@ -43,6 +69,18 @@ mod tests {
         assert_eq!("XI", to_roman(11));
         assert_eq!("XII", to_roman(12));
         assert_eq!("XIII", to_roman(13));
+        assert_eq!("XIV", to_roman(14));
+        assert_eq!("XV", to_roman(15));
+        assert_eq!("XVI", to_roman(16));
+        assert_eq!("XVII", to_roman(17));
+        assert_eq!("XVIII", to_roman(18));
+        assert_eq!("XIX", to_roman(19));
+        assert_eq!("XX", to_roman(20));
+        assert_eq!("XI", to_roman(21));
+        assert_eq!("L", to_roman(50));
+        assert_eq!("C", to_roman(100));
+        assert_eq!("D", to_roman(500));
+        assert_eq!("M", to_roman(1000));
     }
 
 }
