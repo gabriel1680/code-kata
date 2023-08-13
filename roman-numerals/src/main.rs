@@ -5,25 +5,18 @@ fn main() {
 }
 
 pub fn to_roman(mut n: u32) -> String {
-
-    let mut map: HashMap<u32, char> = HashMap::new();
-    map.insert(5, 'V');
-    map.insert(10, 'X');
-    map.insert(50, 'L');
-    map.insert(100, 'C');
-    map.insert(500, 'D');
-    map.insert(1000, 'M');
-
+    let map = create_roman_map();
     let mut roman = String::from("");
 
     while n > 3 {
+
         if map.contains_key(&(n + 1)) {
             roman.push('I');
             n += 1;
         }
 
         for i in vec![1000, 500, 100, 50, 10, 5] {
-            if n >= i {
+            while n >= i {
                 let value = map.get(&i).unwrap();
                 roman.push(*value);
                 n -= i;
@@ -31,12 +24,6 @@ pub fn to_roman(mut n: u32) -> String {
                 if map.contains_key(&(n + 1)) {
                     roman.push('I');
                     n += 1;
-                }
-
-                if n == i {
-                    let value = map.get(&i).unwrap();
-                    roman.push(*value);
-                    n -= i;
                 }
             }
         }
@@ -47,6 +34,17 @@ pub fn to_roman(mut n: u32) -> String {
     }
 
     return roman;
+}
+
+fn create_roman_map() -> HashMap<u32, char> {
+    let mut map: HashMap<u32, char> = HashMap::new();
+    map.insert(5, 'V');
+    map.insert(10, 'X');
+    map.insert(50, 'L');
+    map.insert(100, 'C');
+    map.insert(500, 'D');
+    map.insert(1000, 'M');
+    return map;
 }
 
 #[cfg(test)]
@@ -76,11 +74,17 @@ mod tests {
         assert_eq!("XVIII", to_roman(18));
         assert_eq!("XIX", to_roman(19));
         assert_eq!("XX", to_roman(20));
-        assert_eq!("XI", to_roman(21));
+        assert_eq!("XXI", to_roman(21));
+        assert_eq!("XXII", to_roman(22));
+        assert_eq!("XXIV", to_roman(24));
+        assert_eq!("XXV", to_roman(25));
         assert_eq!("L", to_roman(50));
         assert_eq!("C", to_roman(100));
+        assert_eq!("ID", to_roman(499));
         assert_eq!("D", to_roman(500));
+        assert_eq!("DI", to_roman(501));
         assert_eq!("M", to_roman(1000));
+        assert_eq!("MM", to_roman(2000));
     }
 
 }
