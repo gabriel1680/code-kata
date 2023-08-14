@@ -1,7 +1,16 @@
 use std::collections::HashMap;
 
 fn main() {
-    println!("Hello, world!");
+    println!("Type the decimal number that will be converted to roman: ");
+
+    let mut line = String::new();
+    std::io::stdin().read_line(&mut line).unwrap();
+
+    let input_value: Result<u32, std::num::ParseIntError> = line.trim().parse();
+    match input_value {
+        Ok(value) => println!("Roman numeral: {}", to_roman(value)),
+        Err(_) => println!("Invalid input."),
+    }
 }
 
 pub fn to_roman(mut n: u32) -> String {
@@ -16,8 +25,8 @@ pub fn to_roman(mut n: u32) -> String {
         }
 
         for &i in keys.to_owned() {
+            let value = map.get(&i).unwrap();
             while n >= i {
-                let value = map.get(&i).unwrap();
                 roman.push_str(value);
                 n -= i;
 
