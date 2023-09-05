@@ -21,4 +21,5 @@ Others
 
 - [fizzbuzz](./fizz-buzz)
 - [is-prime](./is-prime)
+- [roman-numeral](./roman-numerals)
 
