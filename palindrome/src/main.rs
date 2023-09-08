@@ -1,4 +1,12 @@
-fn main() {}
+fn main() {
+    println!("Type the word for check if it's a palindrome: ");
+
+    let mut line = String::new();
+    std::io::stdin().read_line(&mut line).unwrap();
+
+    let input_value: &str = line.trim();
+    println!("Is palindrome: {}", is_palindrome(input_value));
+}
 
 pub fn is_palindrome(word: &str) -> bool {
     to_palindrome(word) == word
