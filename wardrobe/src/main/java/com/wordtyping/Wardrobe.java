@@ -3,14 +3,14 @@ package com.wordtyping;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WardrobePossibilities {
+public class Wardrobe {
     private final int[] availableMeasures;
 
-    public WardrobePossibilities(List<Integer> someMeasures) {
+    public Wardrobe(List<Integer> someMeasures) {
         availableMeasures = someMeasures.stream().mapToInt(Integer::intValue).toArray();
     }
 
-    public List<List<Integer>> getPossibilitiesFor(final int target) {
+    public List<List<Integer>> getCombinationsFor(final int target) {
         List<List<Integer>> result = new ArrayList<>();
         findCombinations(0, target, result, new ArrayList<>());
         return result;
