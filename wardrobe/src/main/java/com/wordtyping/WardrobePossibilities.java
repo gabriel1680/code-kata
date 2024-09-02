@@ -17,15 +17,16 @@ public class WardrobePossibilities {
     }
 
     private void findCombinations(int idx, int target, List<List<Integer>> result, List<Integer> ds) {
-        if (idx == availableMeasures.length) {
-            if (target == 0) result.add(new ArrayList<>(ds));
+        if (target == 0) {
+            result.add(new ArrayList<>(ds));
             return;
         }
-        if (availableMeasures[idx] <= target) {
-            ds.add(availableMeasures[idx]);
-            findCombinations(idx, target - availableMeasures[idx], result, ds);
-            ds.remove(ds.size() - 1);
+        if (idx >= availableMeasures.length || target < 0) {
+            return;
         }
+        ds.add(availableMeasures[idx]);
+        findCombinations(idx, target - availableMeasures[idx], result, ds);
+        ds.remove(ds.size() - 1);
         findCombinations(idx + 1, target, result, ds);
     }
 }
