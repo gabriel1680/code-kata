@@ -14,8 +14,13 @@ class WardrobeTest {
 
     @BeforeEach
     void setup() {
-        final var wardrobes = Map.of(50, 59.0, 75, 62.0, 100, 90.0, 120, 110.0);
-        sut = new Wardrobe(wardrobes);
+        final var measuresAndPrices = Map.of(
+            50, 59.0,
+            75, 62.0,
+            100, 90.0,
+            120, 110.0
+        );
+        sut = new Wardrobe(measuresAndPrices);
     }
 
     @Test
