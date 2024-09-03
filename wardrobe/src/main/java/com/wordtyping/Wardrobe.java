@@ -1,13 +1,14 @@
 package com.wordtyping;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Wardrobe {
     private final int[] availableMeasures;
+    private final Map<Integer, Double> measures;
 
-    public Wardrobe(List<Integer> someMeasures) {
-        availableMeasures = someMeasures.stream().mapToInt(Integer::intValue).toArray();
+    public Wardrobe(Map<Integer, Double> someMeasures) {
+        availableMeasures = someMeasures.keySet().stream().mapToInt(i -> i).sorted().toArray();
+        measures = someMeasures;
     }
 
     public List<List<Integer>> getCombinationsFor(final int target) {
@@ -28,5 +29,28 @@ public class Wardrobe {
         findCombinations(idx, target - availableMeasures[idx], result, ds);
         ds.remove(ds.size() - 1);
         findCombinations(idx + 1, target, result, ds);
+    }
+
+    public List<Integer> getCheapestFor(final int size) {
+        final List<Number> result = Arrays.asList(0, Double.POSITIVE_INFINITY);
+        final var combinations = getCombinationsFor(size);
+        for (int i = 0; i < combinations.size(); i++)
+            findCheapestOf(combinations.get(i), i, result);
+        return combinations.get((Integer) result.get(0));
+    }
+
+    private void findCheapestOf(List<Integer> combination, int i, List<Number> result) {
+        final var acc = reduce(combination);
+        if (((Double) result.get(1)).compareTo(acc) > 0) {
+            result.set(0, i);
+            result.set(1, acc);
+        }
+    }
+
+    private Double reduce(List<Integer> combination) {
+        Double acc = 0.0;
+        for (var value : combination)
+            acc += measures.get(value);
+        return acc;
     }
 }
