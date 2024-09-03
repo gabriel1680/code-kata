@@ -35,18 +35,19 @@ class WardrobeTest {
             List.of(50, 100, 100), // 239
             List.of(75, 75, 100) // 214
         );
-        return Stream.of(Arguments.of(wardrobeConfigurations));
+        final var wardrobeSize = 250;
+        return Stream.of(Arguments.of(wardrobeConfigurations, wardrobeSize));
     }
 
     @ParameterizedTest
     @MethodSource("makeWardrobesConfigurations")
-    void getCombinations(List<List<Integer>> configurations) {
-        assertEquals(configurations, sut.getCombinationsFor(250));
+    void getCombinations(List<List<Integer>> configurations, int size) {
+        assertEquals(configurations, sut.getCombinationsFor(size));
     }
 
     @ParameterizedTest
     @MethodSource("makeWardrobesConfigurations")
-    void getCheapestCombination(List<List<Integer>> configurations) {
-        assertEquals(configurations.get(4), sut.getCheapestFor(250));
+    void getCheapestCombination(List<List<Integer>> configurations, int size) {
+        assertEquals(configurations.get(4), sut.getCheapestFor(size));
     }
 }
