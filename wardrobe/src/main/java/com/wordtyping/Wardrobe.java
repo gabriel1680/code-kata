@@ -7,8 +7,12 @@ public class Wardrobe {
     private final Map<Integer, Double> measures;
 
     public Wardrobe(Map<Integer, Double> someMeasures) {
-        availableMeasures = someMeasures.keySet().stream().mapToInt(i -> i).sorted().toArray();
+        availableMeasures = toArray(someMeasures);
         measures = someMeasures;
+    }
+
+    private static int[] toArray(Map<Integer, Double> someMeasures) {
+        return someMeasures.keySet().stream().mapToInt(i -> i).sorted().toArray();
     }
 
     public List<List<Integer>> getCombinationsFor(final int target) {
