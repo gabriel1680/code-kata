@@ -4,9 +4,8 @@ public class CoinChanger {
     public int[] exchange(int amount) {
         final var result = new int[]{0, 0, 0, 0, 0};
         var counter = amount;
-        while (counter > 0) {
+        while (counter > 0)
             counter = calculate(counter, result);
-        }
         return result;
     }
 
