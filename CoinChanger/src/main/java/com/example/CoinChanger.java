@@ -10,13 +10,19 @@ public class CoinChanger {
         final var result = new ArrayList<Integer>();
         var counter = amount;
         for (Coin coin : Coin.values()) {
-            int currentCoinAcc = 0;
-            while (counter >= coin.value) {
-                currentCoinAcc++;
-                counter -= coin.value;
-            }
-            result.add(currentCoinAcc);
+            final var acc = reduceCoin(coin, counter);
+            result.add(acc);
+            counter -= acc * coin.value;
         }
         return unmodifiableList(result);
+    }
+
+    private static int reduceCoin(Coin coin, int counter) {
+        int acc = 0;
+        while (counter >= coin.value) {
+            acc++;
+            counter -= coin.value;
+        }
+        return acc;
     }
 }
