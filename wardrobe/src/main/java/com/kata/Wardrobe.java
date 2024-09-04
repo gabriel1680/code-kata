@@ -1,4 +1,4 @@
-package com.wordtyping;
+package com.kata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
