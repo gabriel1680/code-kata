@@ -1,5 +1,3 @@
-use std::collections::HashMap;
-
 fn main() {
     println!("Type the decimal number that will be converted to roman: ");
 
@@ -14,57 +12,86 @@ fn main() {
 }
 
 pub fn to_roman(mut n: u32) -> String {
-    let map = create_roman_map();
-    let keys = get_reverse_sorted_keys_of(&map);
-    let mut roman = String::from("");
-
-    while n > 3 {
-        if map.contains_key(&(n + 1)) {
-            roman.push('I');
-            n += 1;
-        }
-
-        for &i in keys.to_owned() {
-            let value = map.get(&i).unwrap();
-            while n >= i {
-                roman.push_str(value);
-                n -= i;
-
-                if map.contains_key(&(n + 1)) {
-                    roman.push('I');
-                    n += 1;
-                }
-            }
+    let mut result = String::from("");
+    for roman in Roman::VALUES {
+        while n >= roman.as_int() {
+            n -= roman.as_int();
+            result.push_str(&roman.as_str());
         }
     }
-    
-    for _ in 0..n {
-        roman.push('I');
+    return result;
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum Roman {
+    M,
+    CM,
+    D,
+    CD,
+    C,
+    XC,
+    L,
+    XL,
+    X,
+    IX,
+    V,
+    IV,
+    I,
+}
+
+impl Roman {
+    pub fn as_str(&self) -> String {
+        let value = match self {
+            Roman::M => "M",
+            Roman::CM => "CM",
+            Roman::D => "D",
+            Roman::CD => "CD",
+            Roman::C => "C",
+            Roman::XC => "XC",
+            Roman::L => "L",
+            Roman::XL => "XL",
+            Roman::X => "X",
+            Roman::IX => "IX",
+            Roman::V => "V",
+            Roman::IV => "IV",
+            Roman::I => "I",
+        };
+        String::from(value)
     }
 
-    return roman;
-}
+    pub fn as_int(&self) -> u32 {
+        match self {
+            Roman::M => 1000,
+            Roman::CM => 900,
+            Roman::D => 500,
+            Roman::CD => 400,
+            Roman::C => 100,
+            Roman::XC => 90,
+            Roman::L => 50,
+            Roman::XL => 40,
+            Roman::X => 10,
+            Roman::IX => 9,
+            Roman::V => 5,
+            Roman::IV => 4,
+            Roman::I => 1,
+        }
+    }
 
-fn create_roman_map() -> HashMap<u32, String> {
-    let mut map: HashMap<u32, String> = HashMap::new();
-    map.insert(5, String::from("V"));
-    map.insert(10, String::from("X"));
-    map.insert(40, String::from("XL"));
-    map.insert(50, String::from("L"));
-    map.insert(90, String::from("XC"));
-    map.insert(100, String::from("C"));
-    map.insert(400, String::from("CD"));
-    map.insert(500, String::from("D"));
-    map.insert(900, String::from("CM"));
-    map.insert(1000, String::from("M"));
-    map
-}
-
-fn get_reverse_sorted_keys_of(map: &HashMap<u32, String>) -> Vec<&u32> {
-    let mut keys: Vec<&u32> = map.keys().collect();
-    keys.sort();
-    keys.reverse();
-    keys
+    const VALUES: [Self; 13] = [
+        Self::M,
+        Self::CM,
+        Self::D,
+        Self::CD,
+        Self::C,
+        Self::XC,
+        Self::L,
+        Self::XL,
+        Self::X,
+        Self::IX,
+        Self::V,
+        Self::IV,
+        Self::I,
+    ];
 }
 
 #[cfg(test)]
@@ -102,7 +129,7 @@ mod tests {
         assert_eq!("LXX", to_roman(70));
         assert_eq!("C", to_roman(100));
         assert_eq!("CCXCIV", to_roman(294));
-        assert_eq!("ID", to_roman(499));
+        assert_eq!("CDXCIX", to_roman(499));
         assert_eq!("D", to_roman(500));
         assert_eq!("DI", to_roman(501));
         assert_eq!("DCC", to_roman(700));
@@ -110,5 +137,4 @@ mod tests {
         assert_eq!("MM", to_roman(2000));
         assert_eq!("MMXIX", to_roman(2019));
     }
-
 }
