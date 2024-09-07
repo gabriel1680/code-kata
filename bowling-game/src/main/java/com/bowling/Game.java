@@ -2,6 +2,9 @@ package com.bowling;
 
 public class Game {
 
+    private static final int TOTAL_FRAMES = 10;
+    private static final int MAX_ONE_FRAME_SCORE = 10;
+
     private final int[] rolls = new int[21];
     private int currentRoll = 0;
 
@@ -11,35 +14,39 @@ public class Game {
 
     public int score() {
         int score = 0;
-        int firstInFrame = 0;
-        for (int frame = 0; frame < 10; frame++) {
-            if (isStrike(firstInFrame)) {
-                score += 10 + getStrikeBonus(firstInFrame);
-                firstInFrame += 1;
-            } else if (isSpare(firstInFrame)) {
-                score += 10 + getSpareBonus(firstInFrame);
-                firstInFrame += 2;
+        int frameIdx = 0;
+        for (int frame = 0; frame < TOTAL_FRAMES; frame++) {
+            if (isStrike(frameIdx)) {
+                score += MAX_ONE_FRAME_SCORE + getStrikeBonus(frameIdx);
+                frameIdx++;
+            } else if (isSpare(frameIdx)) {
+                score += MAX_ONE_FRAME_SCORE + getSpareBonus(frameIdx);
+                frameIdx += 2;
             } else {
-                score += rolls[firstInFrame] + rolls[firstInFrame + 1];
-                firstInFrame += 2;
+                score += getCurrentAndNextRoll(frameIdx);
+                frameIdx += 2;
             }
         }
         return score;
     }
 
-    private int getSpareBonus(int firstFrame) {
-        return rolls[firstFrame + 2];
+    private boolean isStrike(int frameIdx) {
+        return rolls[frameIdx] == MAX_ONE_FRAME_SCORE;
     }
 
-    private int getStrikeBonus(int firstFrame) {
-        return rolls[firstFrame + 1] + rolls[firstFrame + 2];
+    private int getStrikeBonus(int frameIdx) {
+        return rolls[frameIdx + 1] + rolls[frameIdx + 2];
     }
 
-    private boolean isStrike(int i) {
-        return rolls[i] == 10;
+    private boolean isSpare(int frameIdx) {
+        return getCurrentAndNextRoll(frameIdx) == MAX_ONE_FRAME_SCORE;
     }
 
-    private boolean isSpare(int i) {
-        return rolls[i] + rolls[i + 1] == 10;
+    private int getSpareBonus(int frameIdx) {
+        return rolls[frameIdx + 2];
+    }
+
+    private int getCurrentAndNextRoll(int frameIdx) {
+        return rolls[frameIdx] + rolls[frameIdx + 1];
     }
 }

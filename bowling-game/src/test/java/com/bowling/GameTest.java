@@ -3,7 +3,7 @@ package com.bowling;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class GameTest {
 
@@ -20,8 +20,7 @@ class GameTest {
     }
 
     private void rollSpare() {
-        game.roll(5);
-        game.roll(5);
+        rollMany(2, 5);
     }
 
     private void rollStrike() {
