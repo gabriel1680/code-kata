@@ -30,38 +30,37 @@ def test_password_should_be_ok():
     password = "Password4_8"
     assert True == validate_password(password)
 
+# ===== impl ====
+
+def have_more_than_8_len(password: str) -> bool:
+    return len(password) >= 8
+
+def contains(pattern: str, text: str) -> bool:
+    return re.search(pattern, text) is not None
+
+def have_lower_letter(password: str) -> bool:
+    return contains("[a-z]", password)
+
+def have_upper_letter(password: str) -> bool:
+    return contains("[A-Z]", password)
+
+def have_number(password: str) -> bool:
+    return contains("[0-9]", password)
+
+def have_underscore(password: str) -> bool:
+    return contains("[_]", password)
+
+validators = [
+    have_more_than_8_len,
+    have_lower_letter,
+    have_upper_letter,
+    have_number,
+    have_underscore
+]
 
 def validate_password(password: str) -> bool:
-
-    if have_less_than_8_len(password):
-        return False
-
-    if not_have_lower_letter(password):
-        return False
-
-    if not_have_upper_letter(password):
-        return False
-
-    if not_have_number(password):
-        return False
-
-    if not_have_underscore(password):
-        return False
-
+    for rule in validators:
+        if rule(password) == False:
+            return False
     return True
-
-def have_less_than_8_len(password: str) -> bool:
-    return len(password) < 8
-
-def not_have_lower_letter(password: str) -> bool:
-    return re.search("[a-z]", password) is None
-
-def not_have_upper_letter(password: str) -> bool:
-    return re.search("[A-Z]", password) is None
-
-def not_have_number(password: str) -> bool:
-    return re.search("[0-9]", password) is None
-
-def not_have_underscore(password: str) -> bool:
-    return re.search("[_]", password) is None
 
