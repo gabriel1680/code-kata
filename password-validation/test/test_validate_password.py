@@ -1,9 +1,5 @@
 from src.validate_password import validate_password
 
-def test_password_should_not_have_less_than_8_char():
-    password = "xxxxxxx"
-    assert False == validate_password(password)
-  
 def test_password_should_not_contains_only_lower_case_letters():
     password = "xxxxxxxx"
     assert False == validate_password(password)
@@ -22,6 +18,10 @@ def test_password_should_have_at_least_one_letter():
 
 def test_password_should_have_at_least_one_underscore():
     password = "Xx1xxxxx"
+    assert False == validate_password(password)
+
+def test_password_should_not_have_less_than_8_char():
+    password = "Xxx4xxx"
     assert False == validate_password(password)
 
 def test_password_should_be_ok():
