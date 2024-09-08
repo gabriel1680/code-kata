@@ -1,7 +1,8 @@
 import re
+from typing import Callable
 
-def have_more_than_8_len(password: str) -> bool:
-    return len(password) >= 8
+def have_more_than(n: int) -> Callable[[str], bool]:
+    return lambda password : len(password) >= n
 
 def contains(pattern: str, text: str) -> bool:
     return re.search(pattern, text) is not None
@@ -18,16 +19,30 @@ def have_number(password: str) -> bool:
 def have_underscore(password: str) -> bool:
     return contains("[_]", password)
 
-validators = [
-    have_more_than_8_len,
+all_rules = [
+    have_more_than(8),
     have_lower_letter,
     have_upper_letter,
     have_number,
     have_underscore
 ]
 
-def validate_password(password: str) -> bool:
-    for rule in validators:
+simple_rules = [
+    have_more_than(6),
+    have_number,
+    have_lower_letter,
+    have_upper_letter,
+]
+
+mixed_rules = [
+    have_more_than(16),
+    have_lower_letter,
+    have_upper_letter,
+    have_underscore,
+]
+
+def validate_password(password: str, rules: list[Callable[[str], bool]] = all_rules) -> bool:
+    for rule in rules:
         if rule(password) == False:
             return False
     return True
