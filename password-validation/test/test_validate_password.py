@@ -21,7 +21,7 @@ def test_password_should_have_at_least_one_underscore():
     assert False == validate_password(password)
 
 def test_password_should_not_have_less_than_8_char():
-    password = "Xxx4xxx"
+    password = "Xxx4xx_"
     assert False == validate_password(password)
 
 def test_password_should_be_ok():
