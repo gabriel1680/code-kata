@@ -41,9 +41,23 @@ mixed_rules = [
     have_underscore,
 ]
 
-def validate_password(password: str, rules: list[Callable[[str], bool]] = all_rules) -> bool:
-    for rule in rules:
-        if rule(password) == False:
-            return False
-    return True
+def create_password_validator(aType: str) -> Callable[[str], bool]:
+    rules = all_rules
 
+    match aType:
+        case "1":
+            rules = all_rules
+        case "2":
+            rules = simple_rules
+        case "3":
+            rules = mixed_rules
+        case _:
+            rules = all_rules
+
+    def validate_password(password: str) -> bool:
+        for rule in rules:
+            if rule(password) == False:
+                return False
+        return True
+
+    return validate_password
