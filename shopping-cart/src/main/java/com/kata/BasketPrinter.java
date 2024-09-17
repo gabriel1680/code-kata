@@ -18,6 +18,10 @@ public class BasketPrinter {
     }
 
     private void printItems(Basket basket) {
+        if (isEmpty(basket)) {
+            console.printLine("- | - £ | -");
+            return;
+        }
         for (var item : basket.getItems())
             printItem(item);
     }
@@ -28,10 +32,18 @@ public class BasketPrinter {
     }
 
     private void printDiscount(Basket basket) {
+        if (isEmpty(basket)) {
+            console.printLine("Promotion: ");
+            return;
+        }
         final var discount = basket.getDiscount();
         final var percentage = (int) (discount.percentage() * 100);
         final var discountLine = format("Promotion: %d%% off with code %s", percentage, discount.name());
         console.printLine(discountLine);
+    }
+
+    private static boolean isEmpty(Basket basket) {
+        return basket.getItems().isEmpty();
     }
 
     private void printTotals(Basket basket) {
