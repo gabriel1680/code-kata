@@ -23,7 +23,7 @@ class ShoppingCartTest {
         var basketPrinter = new BasketPrinter(console);
         final var products = List.of(new Product("x", 1.50));
         var productRepository = new ProductRepository(products);
-        final var coupons = List.of(new Coupon("PROMO_5", 0.05));
+        final var coupons = List.of(new Discount("PROMO_5", 0.05));
         var discountRepository = new DiscountRepository(coupons);
         sut = new ShoppingCart(productRepository, discountRepository, basketPrinter);
     }

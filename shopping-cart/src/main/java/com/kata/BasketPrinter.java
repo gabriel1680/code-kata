@@ -28,7 +28,9 @@ public class BasketPrinter {
     }
 
     private void printDiscount(Basket basket) {
-        final var discountLine = format("Promotion: %d%% off with code PROMO_5", (int)(basket.getDiscount() * 100));
+        final var discount = basket.getDiscount();
+        final var percentage = (int) (discount.percentage() * 100);
+        final var discountLine = format("Promotion: %d%% off with code %s", percentage, discount.name());
         console.printLine(discountLine);
     }
 

@@ -8,11 +8,11 @@ public class Basket {
 
     protected Map<String, CartItem> itemMap;
 
-    protected double discount;
+    protected Discount discount;
 
     public Basket() {
         itemMap = new HashMap<>();
-        discount = 1.00;
+        discount = Discount.empty();
     }
 
     public void addItem(String aName, double price) {
@@ -24,8 +24,8 @@ public class Basket {
         itemMap.remove(productName);
     }
 
-    public void applyDiscount(double aDiscount) {
-        discount = 1.00 - aDiscount;
+    public void applyDiscount(Discount aDiscount) {
+        discount = aDiscount;
     }
 
     public int totalQuantity() {
@@ -38,14 +38,14 @@ public class Basket {
         final var total = itemMap.values().stream()
             .map(CartItem::totalPrice)
             .reduce(0.00, Double::sum);
-        return total * discount;
+        return discount.of(total);
     }
 
     public List<CartItem> getItems() {
         return itemMap.values().stream().toList();
     }
 
-    public double getDiscount() {
-        return 1 - discount;
+    public Discount getDiscount() {
+        return discount;
     }
 }

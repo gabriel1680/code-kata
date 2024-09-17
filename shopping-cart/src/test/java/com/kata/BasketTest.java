@@ -54,7 +54,7 @@ class BasketTest {
     void applyDiscount() {
         sut.addItem("x", 1.50);
         sut.addItem("x", 1.50);
-        sut.applyDiscount(0.10);
+        sut.applyDiscount(new Discount("y", 0.10));
         assertBasket(2, 2.70);
     }
 }

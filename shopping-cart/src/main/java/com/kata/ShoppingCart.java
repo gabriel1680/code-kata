@@ -31,9 +31,7 @@ public class ShoppingCart {
     }
 
     public void applyDiscount(double discountPercentage) {
-        discountRepository.get(discountPercentage).ifPresent(coupon -> {
-            basket.applyDiscount(coupon.discountPercentage());
-        });
+        discountRepository.get(discountPercentage).ifPresent(basket::applyDiscount);
     }
 
     public void printShoppingCart() {
