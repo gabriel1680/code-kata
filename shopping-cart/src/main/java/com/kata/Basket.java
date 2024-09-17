@@ -1,6 +1,7 @@
 package com.kata;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Basket {
@@ -38,5 +39,13 @@ public class Basket {
             .map(CartItem::totalPrice)
             .reduce(0.00, Double::sum);
         return total * discount;
+    }
+
+    public List<CartItem> getItems() {
+        return itemMap.values().stream().toList();
+    }
+
+    public double getDiscount() {
+        return 1 - discount;
     }
 }
