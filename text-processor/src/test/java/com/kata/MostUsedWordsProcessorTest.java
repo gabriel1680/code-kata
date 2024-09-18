@@ -33,12 +33,22 @@ class MostUsedWordsProcessorTest {
     }
 
     @Test
-    void processWords() {
+    void processWordsWithMultipleOccurrences() {
         assertEquals(List.of("x", "y"), processor.process("x x y"));
+    }
+
+    @Test
+    void processWordsIgnoringCase() {
+        assertEquals(List.of("x", "y"), processor.process("x X y"));
     }
 
     @Test
     void processWordsInOrder() {
         assertEquals(List.of("y", "x"), processor.process("x y y"));
+    }
+
+    @Test
+    void processWordsInOrderWithSameOccurrences() {
+        assertEquals(List.of("x", "y"), processor.process("x x y y"));
     }
 }

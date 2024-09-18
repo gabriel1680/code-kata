@@ -11,6 +11,7 @@ public class TextProcessor {
     }
 
     public void analyse(String text) {
-        throw new UnsupportedOperationException();
+        final var words = mostUsedWordsProcessor.process(text);
+        printer.print(words);
     }
 }

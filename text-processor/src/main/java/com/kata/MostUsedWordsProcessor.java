@@ -1,5 +1,6 @@
 package com.kata;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,14 +17,13 @@ public class MostUsedWordsProcessor {
     }
 
     private static List<String> getWords(String s) {
-        return List.of(s.split(" "));
+        return Arrays.stream(s.split(" ")).map(String::toLowerCase).toList();
     }
 
     private static HashMap<String, Integer> buildOccurrencesMap(List<String> words) {
         final var wordMap = new HashMap<String, Integer>();
-        for (var word : words) {
+        for (var word : words)
             wordMap.compute(word, (k, v) -> (v == null) ? 1 : v + 1);
-        }
         return wordMap;
     }
 
