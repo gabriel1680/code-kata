@@ -1,6 +1,5 @@
 package com.kata;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,20 +9,13 @@ import static java.util.Collections.emptyList;
 
 public class MostUsedWordsProcessor {
 
-    public List<String> process(String s) {
-        return s.isEmpty() ?
-            emptyList() :
-            sort(buildOccurrencesMap(getWords(s))).toList();
-    }
-
-    private static List<String> getWords(String s) {
-        return Arrays.stream(s.split(" ")).map(String::toLowerCase).toList();
+    public List<String> process(List<String> words) {
+        return words.isEmpty() ? emptyList() : sort(buildOccurrencesMap(words)).toList();
     }
 
     private static HashMap<String, Integer> buildOccurrencesMap(List<String> words) {
         final var wordMap = new HashMap<String, Integer>();
-        for (var word : words)
-            wordMap.compute(word, (k, v) -> (v == null) ? 1 : v + 1);
+        words.forEach(word -> wordMap.compute(word, (k, v) -> (v == null) ? 1 : v + 1));
         return wordMap;
     }
 

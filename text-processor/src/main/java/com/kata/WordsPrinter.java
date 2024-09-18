@@ -4,7 +4,7 @@ import java.util.List;
 
 public class WordsPrinter {
 
-    private final int MAX_WORDS_DISPLAY = 10;
+    private static final int MAX_WORDS_DISPLAY = 10;
 
     private final Console console;
 
@@ -12,11 +12,11 @@ public class WordsPrinter {
         this.console = console;
     }
 
-    public void print(List<String> words) {
+    public void print(List<String> words, int wordsCount) {
         console.printLine("Those are the top 10 words used:");
         printWords(words);
         console.printLine(
-            "The text has in total %d words".formatted(words.size()));
+            "The text has in total %d words".formatted(wordsCount));
     }
 
     private void printWords(List<String> words) {

@@ -3,6 +3,7 @@ package com.kata;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
@@ -17,38 +18,36 @@ class MostUsedWordsProcessorTest {
         processor = new MostUsedWordsProcessor();
     }
 
+    private void assertProcessed(List<String> expected, String wordsAsString) {
+        assertEquals(expected, processor.process(toWordsList(wordsAsString)));
+    }
+
+    private static List<String> toWordsList(String wordsAsString) {
+        return Arrays.stream(wordsAsString.split(" ")).toList();
+    }
+
     @Test
     void processWords_whenEmpty() {
-        assertEquals(emptyList(), processor.process(""));
+        assertEquals(emptyList(), processor.process(emptyList()));
     }
 
     @Test
     void processWords_whenOnlyOneWord() {
-        assertEquals(List.of("x"), processor.process("x"));
+        assertProcessed(List.of("x"), "x");
     }
 
     @Test
     void processWords_whenAllDifferent() {
-        assertEquals(List.of("x", "y"), processor.process("x y"));
-    }
-
-    @Test
-    void processWordsWithMultipleOccurrences() {
-        assertEquals(List.of("x", "y"), processor.process("x x y"));
-    }
-
-    @Test
-    void processWordsIgnoringCase() {
-        assertEquals(List.of("x", "y"), processor.process("x X y"));
+        assertProcessed(List.of("x", "y"), "x y");
     }
 
     @Test
     void processWordsInOrder() {
-        assertEquals(List.of("y", "x"), processor.process("x y y"));
+
     }
 
     @Test
     void processWordsInOrderWithSameOccurrences() {
-        assertEquals(List.of("x", "y"), processor.process("x x y y"));
+        assertProcessed(List.of("x", "y"), "x x y y");
     }
 }

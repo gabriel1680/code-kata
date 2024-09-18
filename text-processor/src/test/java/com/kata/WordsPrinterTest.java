@@ -28,7 +28,7 @@ class WordsPrinterTest {
 
     @Test
     void printListOfWords_whenEmpty() {
-        printer.print(emptyList());
+        printer.print(emptyList(), 0);
         InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("-");
@@ -37,33 +37,43 @@ class WordsPrinterTest {
 
     @Test
     void printListOfWords_whenOnlyOneWord() {
-        printer.print(List.of("a"));
+        printer.print(List.of("a"), 0);
         InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("1. a");
-        inOrder.verify(console).printLine("The text has in total 1 words");
+        inOrder.verify(console).printLine("The text has in total 0 words");
     }
 
     @Test
     void printListOfWords_whenLessThan10() {
-        printer.print(List.of("a", "b"));
+        printer.print(List.of("a", "b"), 0);
         InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("1. a");
         inOrder.verify(console).printLine("2. b");
-        inOrder.verify(console).printLine("The text has in total 2 words");
+        inOrder.verify(console).printLine("The text has in total 0 words");
     }
 
     @Test
     void printListOfWords_whenMoreThan10() {
         final var maxWordsToDisplay = 2;
         printer = new LimitedWordsPrinter(console, maxWordsToDisplay);
-        printer.print(List.of("a", "b", "c"));
+        printer.print(List.of("a", "b", "c"), 0);
         InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("1. a");
         inOrder.verify(console).printLine("2. b");
-        inOrder.verify(console).printLine("The text has in total 3 words");
+        inOrder.verify(console).printLine("The text has in total 0 words");
         verify(console, times(4)).printLine(anyString());
+    }
+
+    @Test
+    void printListOfWordsWithTotal() {
+        printer.print(List.of("a", "b"), 5);
+        InOrder inOrder = inOrder(console);
+        inOrder.verify(console).printLine("Those are the top 10 words used:");
+        inOrder.verify(console).printLine("1. a");
+        inOrder.verify(console).printLine("2. b");
+        inOrder.verify(console).printLine("The text has in total 5 words");
     }
 }
