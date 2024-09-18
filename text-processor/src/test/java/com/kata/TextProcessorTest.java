@@ -5,8 +5,6 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TextProcessorTest {
 
     @Mock
@@ -14,7 +12,8 @@ class TextProcessorTest {
 
     @Test
     void givenAText_whenProcess_shouldReturnTheOrderedListOfMostUsedWordsAndWordsCount() {
-        TextProcessor textProcessor = new TextProcessor();
+        WordsPrinter printer = new WordsPrinter(console);
+        TextProcessor textProcessor = new TextProcessor(printer);
         String text =
                 "Hello, this is an example for you to practice. You should grab this text and make it as your test case.";
         textProcessor.analyse(text);

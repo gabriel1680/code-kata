@@ -3,8 +3,10 @@ package com.kata;
 public class TextProcessor {
 
     private final MostUsedWordsProcessor mostUsedWordsProcessor;
+    private final WordsPrinter printer;
 
-    public TextProcessor() {
+    public TextProcessor(WordsPrinter printer) {
+        this.printer = printer;
         this.mostUsedWordsProcessor = new MostUsedWordsProcessor();
     }
 
