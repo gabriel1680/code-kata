@@ -1,5 +1,7 @@
 package com.kata;
 
+import java.util.function.Consumer;
+
 import static java.lang.String.format;
 
 public class BasketPrinter {
@@ -12,38 +14,37 @@ public class BasketPrinter {
 
     public void print(Basket basket) {
         console.printLine("Product name | Price with VAT | Quantity");
-        if (isEmpty(basket)) {
-            printEmpty(basket);
-        } else {
-            printItems(basket);
-            printDiscount(basket);
-        }
+        printItems(basket);
+        printDiscount(basket);
         printTotals(basket);
+    }
+
+    private void printItems(Basket basket) {
+        doWhen(basket,
+            () -> console.printLine("- | - £ | -"),
+            b -> b.getItems().forEach(this::printItem));
+    }
+
+    private void printDiscount(Basket basket) {
+        doWhen(basket,
+            () -> console.printLine("Promotion: "),
+            b -> console.printLine(format("Promotion: %d%% off with code %s", getDiscountPercentage(b), getDiscountName(b))));
+    }
+
+    private void doWhen(Basket basket, Runnable isEmpty, Consumer<Basket> isNotEmpty) {
+        if (isEmpty(basket))
+            isEmpty.run();
+        else
+            isNotEmpty.accept(basket);
     }
 
     private static boolean isEmpty(Basket basket) {
         return basket.getItems().isEmpty();
     }
 
-    private void printEmpty(Basket basket) {
-        console.printLine("- | - £ | -");
-        console.printLine("Promotion: ");
-    }
-
-    private void printItems(Basket basket) {
-        for (var item : basket.getItems())
-            printItem(item);
-    }
-
     private void printItem(CartItem item) {
         console.printLine(
             format("%s | %.2f £ | %d", item.name(), item.price(), item.quantity())
-        );
-    }
-
-    private void printDiscount(Basket basket) {
-        console.printLine(
-            format("Promotion: %d%% off with code %s", getDiscountPercentage(basket), getDiscountName(basket))
         );
     }
 
