@@ -2,7 +2,7 @@ package com.kata;
 
 public record Discount(String name, double percentage) {
 
-    public double of(double total) {
+    public double applyFor(double total) {
         return (1 - percentage) * total;
     }
 

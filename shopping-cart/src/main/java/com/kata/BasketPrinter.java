@@ -12,38 +12,47 @@ public class BasketPrinter {
 
     public void print(Basket basket) {
         console.printLine("Product name | Price with VAT | Quantity");
-        printItems(basket);
-        printDiscount(basket);
+        if (isEmpty(basket)) {
+            printEmpty(basket);
+        } else {
+            printItems(basket);
+            printDiscount(basket);
+        }
         printTotals(basket);
     }
 
+    private static boolean isEmpty(Basket basket) {
+        return basket.getItems().isEmpty();
+    }
+
+    private void printEmpty(Basket basket) {
+        console.printLine("- | - £ | -");
+        console.printLine("Promotion: ");
+    }
+
     private void printItems(Basket basket) {
-        if (isEmpty(basket)) {
-            console.printLine("- | - £ | -");
-            return;
-        }
         for (var item : basket.getItems())
             printItem(item);
     }
 
     private void printItem(CartItem item) {
-        final var itemLine = format("%s | %.2f £ | %d", item.name(), item.price(), item.quantity());
-        console.printLine(itemLine);
+        console.printLine(
+            format("%s | %.2f £ | %d", item.name(), item.price(), item.quantity())
+        );
     }
 
     private void printDiscount(Basket basket) {
-        if (isEmpty(basket)) {
-            console.printLine("Promotion: ");
-            return;
-        }
-        final var discount = basket.getDiscount();
-        final var percentage = (int) (discount.percentage() * 100);
-        final var discountLine = format("Promotion: %d%% off with code %s", percentage, discount.name());
-        console.printLine(discountLine);
+        console.printLine(
+            format("Promotion: %d%% off with code %s", getDiscountPercentage(basket), getDiscountName(basket))
+        );
     }
 
-    private static boolean isEmpty(Basket basket) {
-        return basket.getItems().isEmpty();
+    private static String getDiscountName(Basket basket) {
+        return basket.getDiscount().name();
+    }
+
+    private static int getDiscountPercentage(Basket basket) {
+        return (int) (basket.getDiscount().percentage() * 100);
     }
 
     private void printTotals(Basket basket) {

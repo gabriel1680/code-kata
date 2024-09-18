@@ -6,22 +6,22 @@ import java.util.Map;
 
 public class Basket {
 
-    protected Map<String, CartItem> itemMap;
+    protected Map<String, CartItem> itemsMap;
 
     protected Discount discount;
 
     public Basket() {
-        itemMap = new HashMap<>();
+        itemsMap = new HashMap<>();
         discount = Discount.empty();
     }
 
     public void addItem(String aName, double price) {
-        final var item = itemMap.getOrDefault(aName, CartItem.create(aName, price));
-        itemMap.put(aName, item.increment());
+        final var item = itemsMap.getOrDefault(aName, CartItem.create(aName, price));
+        itemsMap.put(aName, item.increment());
     }
 
     public void deleteItem(String productName) {
-        itemMap.remove(productName);
+        itemsMap.remove(productName);
     }
 
     public void applyDiscount(Discount aDiscount) {
@@ -29,20 +29,23 @@ public class Basket {
     }
 
     public int totalQuantity() {
-        return itemMap.values().stream()
+        return itemsMap.values().stream()
             .map(CartItem::quantity)
             .reduce(0, Integer::sum);
     }
 
     public double totalPrice() {
-        final var total = itemMap.values().stream()
+        return discount.applyFor(getTotal());
+    }
+
+    private Double getTotal() {
+        return itemsMap.values().stream()
             .map(CartItem::totalPrice)
             .reduce(0.00, Double::sum);
-        return discount.of(total);
     }
 
     public List<CartItem> getItems() {
-        return itemMap.values().stream().toList();
+        return itemsMap.values().stream().toList();
     }
 
     public Discount getDiscount() {
