@@ -1,5 +1,7 @@
 package com.kata;
 
+import java.util.function.Consumer;
+
 public class ShoppingCart {
 
     private final Basket basket;
@@ -19,15 +21,17 @@ public class ShoppingCart {
     }
 
     public void addItem(String productName) {
-        productRepository.get(productName).ifPresent(product -> {
-            basket.addItem(product.name(), product.price());
-        });
+        executeWhenProductExists(productName, product ->
+            basket.addItem(product.name(), product.price()));
     }
 
     public void deleteItem(String productName) {
-        productRepository.get(productName).ifPresent(product -> {
-            basket.deleteItem(product.name());
-        });
+        executeWhenProductExists(productName, product ->
+            basket.deleteItem(product.name()));
+    }
+
+    private void executeWhenProductExists(String productName, Consumer<Product> consumer) {
+        productRepository.get(productName).ifPresent(consumer);
     }
 
     public void applyDiscount(double discountPercentage) {

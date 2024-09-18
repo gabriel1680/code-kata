@@ -5,14 +5,14 @@ import java.util.Optional;
 
 public class DiscountRepository {
 
-    private List<Discount> coupons;
+    private final List<Discount> discounts;
 
     public DiscountRepository(List<Discount> discounts) {
-        this.coupons = discounts;
+        this.discounts = discounts;
     }
 
     public Optional<Discount> get(double discountPercentage) {
-        return coupons.stream()
+        return discounts.stream()
             .filter(discount -> discount.percentage() == discountPercentage)
             .findFirst();
     }

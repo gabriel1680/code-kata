@@ -5,7 +5,7 @@ import java.util.Optional;
 
 public class ProductRepository {
 
-    private List<Product> products;
+    private final List<Product> products;
 
     public ProductRepository(List<Product> products) {
         this.products = products;
