@@ -20,16 +20,17 @@ class WordsPrinterTest {
     private Console console;
 
     private WordsPrinter printer;
+    private InOrder inOrder;
 
     @BeforeEach
     void setUp() {
         printer = new WordsPrinter(console);
+        inOrder = inOrder(console);
     }
 
     @Test
     void printListOfWords_whenEmpty() {
         printer.print(emptyList(), 0);
-        InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("-");
         inOrder.verify(console).printLine("The text has in total 0 words");
@@ -38,7 +39,6 @@ class WordsPrinterTest {
     @Test
     void printListOfWords_whenOnlyOneWord() {
         printer.print(List.of("a"), 0);
-        InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("1. a");
         inOrder.verify(console).printLine("The text has in total 0 words");
@@ -47,7 +47,6 @@ class WordsPrinterTest {
     @Test
     void printListOfWords_whenLessThan10() {
         printer.print(List.of("a", "b"), 0);
-        InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("1. a");
         inOrder.verify(console).printLine("2. b");
@@ -59,7 +58,6 @@ class WordsPrinterTest {
         final var maxWordsToDisplay = 2;
         printer = new LimitedWordsPrinter(console, maxWordsToDisplay);
         printer.print(List.of("a", "b", "c"), 0);
-        InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 2 words used:");
         inOrder.verify(console).printLine("1. a");
         inOrder.verify(console).printLine("2. b");
@@ -70,7 +68,6 @@ class WordsPrinterTest {
     @Test
     void printListOfWordsWithTotal() {
         printer.print(List.of("a", "b"), 5);
-        InOrder inOrder = inOrder(console);
         inOrder.verify(console).printLine("Those are the top 10 words used:");
         inOrder.verify(console).printLine("1. a");
         inOrder.verify(console).printLine("2. b");
