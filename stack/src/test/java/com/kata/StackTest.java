@@ -12,4 +12,12 @@ class StackTest {
         assertTrue(stack.isEmpty());
         assertEquals(0, stack.size());
     }
+
+    @Test
+    void pushOneNotEmpty() {
+        Stack stack = new Stack();
+        stack.push(1);
+        assertEquals(1, stack.size());
+        assertFalse(stack.isEmpty());
+    }
 }

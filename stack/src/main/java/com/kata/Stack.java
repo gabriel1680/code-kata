@@ -2,11 +2,17 @@ package com.kata;
 
 public class Stack {
 
+    private int size = 0;
+
     public boolean isEmpty() {
-        return true;
+        return size == 0;
     }
 
     public int size() {
-        return 0;
+        return size;
+    }
+
+    public void push(int i) {
+        size++;
     }
 }
