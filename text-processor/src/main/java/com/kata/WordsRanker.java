@@ -7,9 +7,9 @@ import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
 
-public class MostUsedWordsProcessor {
+public class WordsRanker {
 
-    public List<String> process(List<String> words) {
+    public List<String> rank(List<String> words) {
         return words.isEmpty() ? emptyList() : sort(buildOccurrencesMap(words)).toList();
     }
 

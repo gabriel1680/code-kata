@@ -18,16 +18,16 @@ class TextParserTest {
 
     @Test
     void parseWordsWithMultipleOccurrences() {
-        assertEquals(List.of("x", "y"), parser.parse("x x y"));
+        assertEquals(List.of("x",  "y"), parser.parse("x y"));
     }
 
     @Test
     void parseWordsIgnoringCase() {
-        assertEquals(List.of("x", "y"), parser.parse("x X y"));
+        assertEquals(List.of("x", "x"), parser.parse("x X"));
     }
 
     @Test
     void parseWordsIgnoringOtherChars() {
-        assertEquals(List.of("x", "y"), parser.parse("x, x. y"));
+        assertEquals(List.of("x", "x", "y"), parser.parse("x, x. y"));
     }
 }

@@ -9,17 +9,17 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class MostUsedWordsProcessorTest {
+class WordsRankerTest {
 
-    private MostUsedWordsProcessor processor;
+    private WordsRanker processor;
 
     @BeforeEach
     void setUp() {
-        processor = new MostUsedWordsProcessor();
+        processor = new WordsRanker();
     }
 
     private void assertProcessed(List<String> expected, String wordsAsString) {
-        assertEquals(expected, processor.process(toWordsList(wordsAsString)));
+        assertEquals(expected, processor.rank(toWordsList(wordsAsString)));
     }
 
     private static List<String> toWordsList(String wordsAsString) {
@@ -27,27 +27,27 @@ class MostUsedWordsProcessorTest {
     }
 
     @Test
-    void processWords_whenEmpty() {
-        assertEquals(emptyList(), processor.process(emptyList()));
+    void rankWords_whenEmpty() {
+        assertEquals(emptyList(), processor.rank(emptyList()));
     }
 
     @Test
-    void processWords_whenOnlyOneWord() {
+    void rankWords_whenOnlyOneWord() {
         assertProcessed(List.of("x"), "x");
     }
 
     @Test
-    void processWords_whenAllDifferent() {
+    void rankWords_whenAllDifferent() {
         assertProcessed(List.of("x", "y"), "x y");
     }
 
     @Test
-    void processWordsInOrder() {
+    void rankWordsInOrder() {
 
     }
 
     @Test
-    void processWordsInOrderWithSameOccurrences() {
+    void rankWordsInOrderWithSameOccurrences() {
         assertProcessed(List.of("x", "y"), "x x y y");
     }
 }
