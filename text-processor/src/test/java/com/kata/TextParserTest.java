@@ -18,7 +18,7 @@ class TextParserTest {
 
     @Test
     void parseWordsWithMultipleOccurrences() {
-        assertEquals(List.of("x",  "y"), parser.parse("x y"));
+        assertEquals(List.of("x", "y"), parser.parse("x y"));
     }
 
     @Test
