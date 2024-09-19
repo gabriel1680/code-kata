@@ -1,8 +1,8 @@
 package com.kata;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
@@ -13,15 +13,15 @@ public class WordsRanker {
         return words.isEmpty() ? emptyList() : sort(buildOccurrencesMap(words)).toList();
     }
 
-    private static HashMap<String, Integer> buildOccurrencesMap(List<String> words) {
-        final var wordMap = new HashMap<String, Integer>();
-        words.forEach(word -> wordMap.compute(word, (k, v) -> (v == null) ? 1 : v + 1));
-        return wordMap;
+    private static Map<String, Long> buildOccurrencesMap(List<String> words) {
+        return words.stream()
+            .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+
     }
 
-    private static Stream<String> sort(HashMap<String, Integer> wordMap) {
+    private static Stream<String> sort(Map<String, Long> wordMap) {
         return wordMap.entrySet().stream()
-            .sorted((a, b) -> b.getValue() - a.getValue())
+            .sorted((a, b) -> Math.toIntExact(b.getValue() - a.getValue()))
             .map(Map.Entry::getKey);
     }
 }
