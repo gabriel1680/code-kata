@@ -13,7 +13,8 @@ public class WordsPrinter {
     }
 
     public void print(List<String> words, int wordsCount) {
-        console.printLine("Those are the top 10 words used:");
+        console.printLine(
+            "Those are the top %d words used:".formatted(getMaxDisplay()));
         printWords(words);
         console.printLine(
             "The text has in total %d words".formatted(wordsCount));

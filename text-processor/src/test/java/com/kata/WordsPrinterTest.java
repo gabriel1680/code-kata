@@ -60,7 +60,7 @@ class WordsPrinterTest {
         printer = new LimitedWordsPrinter(console, maxWordsToDisplay);
         printer.print(List.of("a", "b", "c"), 0);
         InOrder inOrder = inOrder(console);
-        inOrder.verify(console).printLine("Those are the top 10 words used:");
+        inOrder.verify(console).printLine("Those are the top 2 words used:");
         inOrder.verify(console).printLine("1. a");
         inOrder.verify(console).printLine("2. b");
         inOrder.verify(console).printLine("The text has in total 0 words");
