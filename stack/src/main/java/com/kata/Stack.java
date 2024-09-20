@@ -2,7 +2,17 @@ package com.kata;
 
 public class Stack {
 
-    private int size = 0;
+    private final int capacity;
+    private final int[] elements;
+    private int size;
+
+    public Stack(int capacity) {
+        if (capacity < 0)
+            throw new InvalidCapacity();
+        this.capacity = capacity;
+        this.elements = new int[capacity];
+        this.size = 0;
+    }
 
     public boolean isEmpty() {
         return size == 0;
@@ -13,6 +23,14 @@ public class Stack {
     }
 
     public void push(int i) {
-        size++;
+        if (size == capacity)
+            throw new OverflowException();
+        elements[size++] = i;
+    }
+
+    public int pop() {
+        if (isEmpty())
+            throw new UnderflowException();
+        return elements[--size];
     }
 }
