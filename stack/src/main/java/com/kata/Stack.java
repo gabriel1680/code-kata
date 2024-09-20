@@ -33,4 +33,10 @@ public class Stack {
             throw new UnderflowException();
         return elements[--size];
     }
+
+    public int peek() {
+        if (isEmpty())
+            throw new UnderflowException();
+        return elements[size - 1];
+    }
 }

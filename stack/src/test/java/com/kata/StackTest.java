@@ -75,4 +75,16 @@ class StackTest {
         stack.push(2);
         assertThrows(OverflowException.class, () -> stack.push(2));
     }
+
+    @Test
+    void peekEmptyStack_shouldThrow() {
+        assertThrows(UnderflowException.class, stack::peek);
+    }
+
+    @Test
+    void pushOneThenPeek() {
+        stack.push(24);
+        stack.push(32);
+        assertEquals(32, stack.peek());
+    }
 }
