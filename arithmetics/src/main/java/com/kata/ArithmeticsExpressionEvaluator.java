@@ -7,29 +7,41 @@ import static java.lang.Character.*;
 public class ArithmeticsExpressionEvaluator {
 
     public int evaluate(String expression) {
+        if (isInvalid(expression))
+            throw new InvalidRecordException();
+        return compute(expression);
+    }
+
+    private static boolean isInvalid(String expression) {
+        return expression.charAt(0) != '(';
+    }
+
+    private int compute(String expression) {
         final var numbers = new Stack<Integer>();
         final var operators = new Stack<Character>();
-        if (expression.charAt(0) != '(')
-            throw new InvalidRecordException();
-        for (char c : expression.toCharArray()) {
-            if (c == ' ') {
-                continue;
-            } else if (isDigit(c)) {
-                numbers.push(getNumericValue(c));
-            } else if (c == ')') {
-                if (numbers.isEmpty()) {
-                    continue;
-                }
-                var b = numbers.pop();
-                var a = numbers.pop();
-                var op = operators.pop();
-                numbers.push(applyOp(a, b, op));
-                operators.pop();
-            } else {
-                operators.push(c);
-            }
+        for (char token : expression.toCharArray()) {
+            computeFor(token, numbers, operators);
         }
-        return numbers.isEmpty() ? 0 : numbers.get(0);
+        return !numbers.isEmpty() ? numbers.get(0) : 0;
+    }
+
+    private void computeFor(char token, Stack<Integer> numbers, Stack<Character> operators) {
+        if (token == ' ') {
+            return;
+        } else if (isDigit(token)) {
+            numbers.push(getNumericValue(token));
+        } else if (token == ')') {
+            if (numbers.isEmpty()) {
+                return;
+            }
+            var b = numbers.pop();
+            var a = numbers.pop();
+            var op = operators.pop();
+            numbers.push(applyOp(a, b, op));
+            operators.pop();
+        } else {
+            operators.push(token);
+        }
     }
 
     private int applyOp(int x, int y, char op) {
