@@ -57,8 +57,8 @@ class ArithmeticsExpressionEvaluatorTest {
         return Stream.of(
             Arguments.of(10, "(2 * (3 + 2))"),
             Arguments.of(8, "(2 + (3 * 2))"),
-            Arguments.of(101, "(1 + ((2 + 3) * (4 * 5)))")
-//            Arguments.of(-165, "( 5 * ( 4 * ( 3 * ( 2 * ( 1 * 9 ) / 8 - 7 ) + 6 ) ) )")
+            Arguments.of(101, "(1 + ((2 + 3) * (4 * 5)))"),
+            Arguments.of(1200, "(5 * (4 * ((3 * (2 * ((1 * 9) / (8 - 7)))) + 6)))")
         );
     }
 }

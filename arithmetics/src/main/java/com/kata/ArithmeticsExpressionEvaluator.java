@@ -2,7 +2,8 @@ package com.kata;
 
 import java.util.Stack;
 
-import static java.lang.Character.*;
+import static java.lang.Character.getNumericValue;
+import static java.lang.Character.isDigit;
 
 public class ArithmeticsExpressionEvaluator {
 
@@ -31,21 +32,19 @@ public class ArithmeticsExpressionEvaluator {
         } else if (isDigit(token)) {
             numbers.push(getNumericValue(token));
         } else if (token == ')') {
-            if (numbers.isEmpty()) {
-                return;
-            }
-            var b = numbers.pop();
-            var a = numbers.pop();
-            var op = operators.pop();
-            numbers.push(applyOp(a, b, op));
+            if (numbers.isEmpty()) return;
+            final var b = numbers.pop();
+            final var a = numbers.pop();
+            final var operation = operators.pop();
+            numbers.push(applyOperation(a, b, operation));
             operators.pop();
         } else {
             operators.push(token);
         }
     }
 
-    private int applyOp(int x, int y, char op) {
-        return switch (op) {
+    private int applyOperation(int x, int y, char operation) {
+        return switch (operation) {
             case '+' -> x + y;
             case '-' -> x - y;
             case '*' -> x * y;
