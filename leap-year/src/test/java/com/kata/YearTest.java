@@ -1,6 +1,5 @@
 package com.kata;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -8,30 +7,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class YearTest {
 
-    private Year year;
-
-    @BeforeEach
-    void setUp() {
-        year = new Year();
-    }
-
     @Test
     void notLeapYear_whenNotDivisibleBy4() {
-        assertFalse(year.isLeap(1997));
+        Year year = new Year(1997);
+        assertFalse(year.isLeap());
     }
 
     @Test
     void isLeapYear_whenDivisibleBy4() {
-        assertTrue(year.isLeap(1996));
+        Year year = new Year(1996);
+        assertTrue(year.isLeap());
     }
 
     @Test
     void isLeapYear_whenDivisibleBy400() {
-        assertTrue(year.isLeap(1600));
+        Year year = new Year(1600);
+        assertTrue(year.isLeap());
     }
 
     @Test
     void notLeapYear_whenNotDivisibleBy400ButIsFor100() {
-        assertFalse(year.isLeap(1800));
+        Year year = new Year(1800);
+        assertFalse(year.isLeap());
     }
 }
