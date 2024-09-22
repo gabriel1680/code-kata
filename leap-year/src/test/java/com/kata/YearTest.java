@@ -7,27 +7,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class YearTest {
 
-    @Test
-    void notLeapYear_whenNotDivisibleBy4() {
-        Year year = new Year(1997);
-        assertFalse(year.isLeap());
+    private static boolean isLeapYear(int year1) {
+        return new Year(year1).isLeap();
     }
 
     @Test
-    void isLeapYear_whenDivisibleBy4() {
-        Year year = new Year(1996);
-        assertTrue(year.isLeap());
+    void notLeapIsLeapYear_whenNotDivisibleBy4() {
+        assertFalse(isLeapYear(1997));
     }
 
     @Test
-    void isLeapYear_whenDivisibleBy400() {
-        Year year = new Year(1600);
-        assertTrue(year.isLeap());
+    void isLeapIsLeapYear_whenDivisibleBy4() {
+        assertTrue(isLeapYear(1996));
     }
 
     @Test
-    void notLeapYear_whenNotDivisibleBy400ButIsFor100() {
-        Year year = new Year(1800);
-        assertFalse(year.isLeap());
+    void isLeapIsLeapYear_whenDivisibleBy400() {
+        assertTrue(isLeapYear(1600));
+    }
+
+    @Test
+    void notLeapIsLeapYear_whenNotDivisibleBy400ButIsFor100() {
+        assertFalse(isLeapYear(1800));
     }
 }
