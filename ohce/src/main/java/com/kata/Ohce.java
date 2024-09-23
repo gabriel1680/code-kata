@@ -1,6 +1,5 @@
 package com.kata;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Ohce {
@@ -22,11 +21,17 @@ public class Ohce {
     }
 
     public List<String> echo(String word) {
-        final var reversed = new StringBuilder(word).reverse().toString();
-        final var result = new ArrayList<>(List.of(reversed));
-        if (reversed.equals(word)) {
-            result.add("¡Bonita palabra!");
-        }
-        return result;
+        final var reversedWord = toReversed(word);
+        return isPalindrome(word, reversedWord) ?
+            List.of(reversedWord, "¡Bonita palabra!") :
+            List.of(reversedWord);
+    }
+
+    private static String toReversed(String word) {
+        return new StringBuilder(word).reverse().toString();
+    }
+
+    private static boolean isPalindrome(String word, String reversed) {
+        return reversed.equals(word);
     }
 }
