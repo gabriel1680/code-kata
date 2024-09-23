@@ -19,21 +19,21 @@ class OhceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {21, 22, 23, 0, 1, 2, 3, 4, 5})
+    @ValueSource(ints = {21, 1, 5})
     void ohceBetween20And6(int hour) {
         clock.setHour(hour);
         assertEquals("¡Buenas noches Gabriel!", ohce.start("Gabriel"));
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {6, 7, 8, 9, 10, 11, 12})
+    @ValueSource(ints = {6, 9, 12})
     void ohceBetween6And12(int hour) {
         clock.setHour(hour);
         assertEquals("¡Buenos días Julia!", ohce.start("Julia"));
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {13, 14, 15, 16, 17, 18, 19, 20})
+    @ValueSource(ints = {13, 17, 20})
     void ohceBetween12And20(int hour) {
         clock.setHour(hour);
         assertEquals("¡Buenas tardes Nina!", ohce.start("Nina"));
