@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OhceTest {
@@ -37,5 +39,17 @@ class OhceTest {
     void ohceBetween12And20(int hour) {
         clock.setHour(hour);
         assertEquals("¡Buenas tardes Nina!", ohce.start("Nina"));
+    }
+
+    @Test
+    void echoWordShouldReverseIt() {
+        ohce.start("");
+        assertEquals(List.of("aloh"), ohce.echo("hola"));
+    }
+
+    @Test
+    void echoWithPalindrome() {
+        ohce.start("");
+        assertEquals(List.of("oto", "¡Bonita palabra!"), ohce.echo("oto"));
     }
 }

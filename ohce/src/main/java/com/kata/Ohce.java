@@ -1,5 +1,8 @@
 package com.kata;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Ohce {
 
     private final Clock clock;
@@ -16,5 +19,14 @@ public class Ohce {
             return "¡Buenos días %s!".formatted(name);
         else
             return "¡Buenas tardes %s!".formatted(name);
+    }
+
+    public List<String> echo(String word) {
+        final var reversed = new StringBuilder(word).reverse().toString();
+        final var result = new ArrayList<>(List.of(reversed));
+        if (reversed.equals(word)) {
+            result.add("¡Bonita palabra!");
+        }
+        return result;
     }
 }
