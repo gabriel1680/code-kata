@@ -1,16 +1,22 @@
 package com.kata;
 
+import java.util.Collections;
 import java.util.List;
+
+import static java.util.Collections.*;
 
 public class Ohce {
 
     private final Clock clock;
+    private String name;
 
     public Ohce(Clock aClock) {
         clock = aClock;
+        name = "";
     }
 
-    public String start(String name) {
+    public String start(String aName) {
+        name = aName;
         final var hour = clock.getHour();
         if (hour > 20 || hour < 6)
             return "¡Buenas noches %s!".formatted(name);
@@ -21,10 +27,13 @@ public class Ohce {
     }
 
     public List<String> echo(String word) {
+        if (word.equals("Stop!")) {
+            return singletonList("Adios %s".formatted(name));
+        }
         final var reversedWord = toReversed(word);
         return isPalindrome(word, reversedWord) ?
             List.of(reversedWord, "¡Bonita palabra!") :
-            List.of(reversedWord);
+            singletonList(reversedWord);
     }
 
     private static String toReversed(String word) {

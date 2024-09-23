@@ -20,36 +20,50 @@ class OhceTest {
         ohce = new Ohce(clock);
     }
 
+    private String givenAOhceStartedwith(String user) {
+        return ohce.start(user);
+    }
+
+    private void assertEcho(List<String> expectedList, String echo) {
+        assertEquals(expectedList, ohce.echo(echo));
+    }
+
     @ParameterizedTest
     @ValueSource(ints = {21, 1, 5})
     void ohceBetween20And6(int hour) {
         clock.setHour(hour);
-        assertEquals("¡Buenas noches Gabriel!", ohce.start("Gabriel"));
+        assertEquals("¡Buenas noches Gabriel!", givenAOhceStartedwith("Gabriel"));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {6, 9, 12})
     void ohceBetween6And12(int hour) {
         clock.setHour(hour);
-        assertEquals("¡Buenos días Julia!", ohce.start("Julia"));
+        assertEquals("¡Buenos días Julia!", givenAOhceStartedwith("Julia"));
     }
 
     @ParameterizedTest
     @ValueSource(ints = {13, 17, 20})
     void ohceBetween12And20(int hour) {
         clock.setHour(hour);
-        assertEquals("¡Buenas tardes Nina!", ohce.start("Nina"));
+        assertEquals("¡Buenas tardes Nina!", givenAOhceStartedwith("Nina"));
     }
 
     @Test
     void echoWordShouldReverseIt() {
-        ohce.start("");
-        assertEquals(List.of("aloh"), ohce.echo("hola"));
+        givenAOhceStartedwith("");
+        assertEcho(List.of("aloh"), "hola");
     }
 
     @Test
     void echoWithPalindrome() {
-        ohce.start("");
-        assertEquals(List.of("oto", "¡Bonita palabra!"), ohce.echo("oto"));
+        givenAOhceStartedwith("");
+        assertEcho(List.of("oto", "¡Bonita palabra!"), "oto");
+    }
+
+    @Test
+    void stop() {
+        givenAOhceStartedwith("Gabriel");
+        assertEcho(List.of("Adios Gabriel"), "Stop!");
     }
 }
