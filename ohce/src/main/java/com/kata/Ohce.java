@@ -2,7 +2,7 @@ package com.kata;
 
 import java.util.List;
 
-import static java.util.Collections.*;
+import static java.util.Collections.singletonList;
 
 public class Ohce {
 
@@ -16,22 +16,34 @@ public class Ohce {
 
     public String start() {
         final var hour = clock.getHour();
-        if (hour > 20 || hour < 6)
+        if (isNight(hour))
             return "¡Buenas noches %s!".formatted(name);
-        else if (hour >= 6 && hour <= 12)
+        else if (isMorning(hour))
             return "¡Buenos días %s!".formatted(name);
         else
             return "¡Buenas tardes %s!".formatted(name);
     }
 
+    private static boolean isMorning(int hour) {
+        return hour >= 6 && hour <= 12;
+    }
+
+    private static boolean isNight(int hour) {
+        return hour > 20 || hour < 6;
+    }
+
     public List<String> echo(String word) {
-        if (word.equals("Stop!")) {
+        if (isStop(word)) {
             return singletonList("Adios %s".formatted(name));
         }
         final var reversedWord = toReversed(word);
         return isPalindrome(word, reversedWord) ?
             List.of(reversedWord, "¡Bonita palabra!") :
             singletonList(reversedWord);
+    }
+
+    private static boolean isStop(String word) {
+        return word.equals("Stop!");
     }
 
     private static String toReversed(String word) {
