@@ -1,6 +1,5 @@
 package com.kata;
 
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.*;
@@ -8,15 +7,14 @@ import static java.util.Collections.*;
 public class Ohce {
 
     private final Clock clock;
-    private String name;
+    private final String name;
 
-    public Ohce(Clock aClock) {
+    public Ohce(Clock aClock, String aName) {
         clock = aClock;
-        name = "";
+        name = aName;
     }
 
-    public String start(String aName) {
-        name = aName;
+    public String start() {
         final var hour = clock.getHour();
         if (hour > 20 || hour < 6)
             return "¡Buenas noches %s!".formatted(name);
