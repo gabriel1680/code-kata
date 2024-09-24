@@ -16,12 +16,20 @@ public class Ohce {
 
     public String start() {
         final var hour = clock.getHour();
+        return buildSalutation(saluteFor(hour));
+    }
+
+    private String saluteFor(int hour) {
         if (isNight(hour))
-            return "¡Buenas noches %s!".formatted(name);
+            return "Buenas noches";
         else if (isMorning(hour))
-            return "¡Buenos días %s!".formatted(name);
+            return "Buenos días";
         else
-            return "¡Buenas tardes %s!".formatted(name);
+            return "Buenas tardes";
+    }
+
+    private String buildSalutation(String salutation) {
+        return "¡%s %s!".formatted(salutation, name);
     }
 
     private static boolean isMorning(int hour) {
