@@ -1,15 +1,16 @@
 package com.kata;
 
+import java.util.stream.Stream;
+
 public class Main {
+
+    private static final SystemClock clock = new SystemClock();
+
     public static void main(String[] args) {
-        final var clock = new SystemClock();
-        final var ohce = new Ohce(clock, "Teste");
+        final var ohce = new Ohce(clock, "Test");
         System.out.println(ohce.start());
-        for (var output : ohce.echo("osso")) {
-            System.out.println(output);
-        }
-        for (var output : ohce.echo("Hola que tal")) {
-            System.out.println(output);
-        }
+        Stream.of("osso", "Hola que tal")
+            .map(ohce::echo)
+            .forEach(item -> item.forEach(System.out::println));
     }
 }
