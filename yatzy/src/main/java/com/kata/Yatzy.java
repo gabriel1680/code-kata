@@ -9,8 +9,8 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class Yatzy {
 
-    public int chance(List<Integer> rolls) {
-        return rolls.stream().mapToInt(Integer::intValue).sum();
+    public int chance(List<Integer> dices) {
+        return dices.stream().mapToInt(Integer::intValue).sum();
     }
 
     public int yatzy(List<Integer> dices) {
