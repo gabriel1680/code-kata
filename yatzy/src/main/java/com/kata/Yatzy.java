@@ -10,6 +10,10 @@ import static java.util.stream.Collectors.groupingBy;
 public class Yatzy {
 
     public int chance(List<Integer> dices) {
+        return sum(dices);
+    }
+
+    private static int sum(List<Integer> dices) {
         return dices.stream().mapToInt(Integer::intValue).sum();
     }
 
@@ -29,6 +33,15 @@ public class Yatzy {
 
     public int smallStraight(List<Integer> dices) {
         final var smallStraightDices = List.of(1, 2, 3, 4, 5);
-        return dices.equals(smallStraightDices) ? 15 : 0;
+        return getStraightOf(dices, smallStraightDices);
+    }
+
+    public int largeStraight(List<Integer> dices) {
+        final var largeStraightDices = List.of(2, 3, 4, 5, 6);
+        return getStraightOf(dices, largeStraightDices);
+    }
+
+    private static int getStraightOf(List<Integer> dices, List<Integer> sequence) {
+        return dices.equals(sequence) ? sum(dices) : 0;
     }
 }

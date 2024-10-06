@@ -77,4 +77,19 @@ class YatzyTest {
             Arguments.of(List.of(2, 3, 4, 5, 6), 0)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("largeStraightSource")
+    void largeStraightShouldSum15(List<Integer> dices, int result) {
+        assertEquals(result, yatzy.largeStraight(dices));
+    }
+
+    private static Stream<Arguments> largeStraightSource() {
+        return Stream.of(
+            Arguments.of(List.of(2, 3, 4, 5, 6), 20),
+            Arguments.of(List.of(1, 2, 3, 4, 5), 0),
+            Arguments.of(List.of(1, 2, 2, 3, 4), 0),
+            Arguments.of(List.of(1, 2, 3, 4, 6), 0)
+        );
+    }
 }
