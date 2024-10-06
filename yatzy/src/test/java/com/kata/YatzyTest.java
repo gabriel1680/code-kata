@@ -92,4 +92,17 @@ class YatzyTest {
             Arguments.of(List.of(1, 2, 3, 4, 6), 0)
         );
     }
+
+    @ParameterizedTest
+    @MethodSource("fullHouseSource")
+    void fullHouseSumAllWhenTwoOfAKindAndThreeOfAnotherKind(List<Integer> dices, int result) {
+        assertEquals(result, yatzy.fullHouse(dices));
+    }
+
+    private static Stream<Arguments> fullHouseSource() {
+        return Stream.of(
+            Arguments.of(List.of(1, 1, 2, 2, 3), 0),
+            Arguments.of(List.of(1, 1, 2, 2, 2), 8)
+        );
+    }
 }
