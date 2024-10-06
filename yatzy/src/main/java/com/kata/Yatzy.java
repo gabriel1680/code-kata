@@ -26,4 +26,9 @@ public class Yatzy {
             .max(Comparator.naturalOrder());
         return greaterKeyPair.orElse(0) * 2;
     }
+
+    public int smallStraight(List<Integer> dices) {
+        final var smallStraightDices = List.of(1, 2, 3, 4, 5);
+        return dices.equals(smallStraightDices) ? 15 : 0;
+    }
 }
