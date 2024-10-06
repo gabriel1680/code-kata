@@ -65,7 +65,7 @@ class YatzyTest {
 
     @ParameterizedTest
     @MethodSource("smallStraightSource")
-    void smallStraightShouldSum15(List<Integer> dices, int result) {
+    void smallStraightShouldSum15WhenDicesAreALowerSequenceOtherwise0(List<Integer> dices, int result) {
         assertEquals(result, yatzy.smallStraight(dices));
     }
 
@@ -80,7 +80,7 @@ class YatzyTest {
 
     @ParameterizedTest
     @MethodSource("largeStraightSource")
-    void largeStraightShouldSum15(List<Integer> dices, int result) {
+    void largeStraightShouldSum15WhenDicesAreAHigherSequenceOtherwise0(List<Integer> dices, int result) {
         assertEquals(result, yatzy.largeStraight(dices));
     }
 
@@ -95,7 +95,7 @@ class YatzyTest {
 
     @ParameterizedTest
     @MethodSource("fullHouseSource")
-    void fullHouseSumAllWhenTwoOfAKindAndThreeOfAnotherKind(List<Integer> dices, int result) {
+    void fullHouseSumAllDicesWhenTwoOfAKindAndThreeOfAnotherKindOtherwise0(List<Integer> dices, int result) {
         assertEquals(result, yatzy.fullHouse(dices));
     }
 
