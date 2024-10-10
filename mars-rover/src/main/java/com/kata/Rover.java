@@ -18,8 +18,19 @@ public class Rover {
 
     public void move(String commands) {
         for (final var command : commands.toCharArray()) {
-            moveRight();
+            if (command == 'R') {
+                moveRight();
+            } else {
+                moveLeft();
+            }
         }
+    }
+
+    private void moveLeft() {
+        if (position == "N") position = "W";
+        else if (position == "W") position = "S";
+        else if (position == "S") position = "E";
+        else position = "N";
     }
 
     private void moveRight() {

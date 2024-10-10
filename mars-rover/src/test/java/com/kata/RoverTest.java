@@ -59,4 +59,31 @@ class RoverTest {
         rover.move("RRRR");
         assertEquals("0:0:N", rover.getPosition());
     }
+
+    @Test
+    void startFacingNorth_whenTurnLeft_shouldBeFacingWest() {
+        rover.move("L");
+        assertEquals("0:0:W", rover.getPosition());
+    }
+
+    @Test
+    void startFacingWest_whenTurnLeft_shouldBeFacingSouth() {
+        rover = new Rover("W");
+        rover.move("L");
+        assertEquals("0:0:S", rover.getPosition());
+    }
+
+    @Test
+    void startFacingSouth_whenTurnLeft_shouldBeFacingEast() {
+        rover = new Rover("S");
+        rover.move("L");
+        assertEquals("0:0:E", rover.getPosition());
+    }
+
+    @Test
+    void startFacingEast_whenTurnLeft_shouldBeFacingNorth() {
+        rover = new Rover("E");
+        rover.move("L");
+        assertEquals("0:0:N", rover.getPosition());
+    }
 }
