@@ -19,28 +19,24 @@ public class Rover {
     public void move(String commands) {
         for (final var command : commands.toCharArray()) {
             if (command == 'R') {
-                moveRight();
+                turnRight();
             } else {
-                moveLeft();
+                turnLeft();
             }
         }
     }
 
-    private void moveLeft() {
+    private void turnLeft() {
         if (position == "N") position = "W";
         else if (position == "W") position = "S";
         else if (position == "S") position = "E";
         else position = "N";
     }
 
-    private void moveRight() {
-        if (position == "N")
-            position = "E";
-        else if (position == "E")
-            position = "S";
-        else if (position == "S")
-            position = "W";
-        else
-            position = "N";
+    private void turnRight() {
+        if (position == "N") position = "E";
+        else if (position == "E") position = "S";
+        else if (position == "S") position = "W";
+        else position = "N";
     }
 }
