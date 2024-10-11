@@ -3,6 +3,13 @@ package com.kata;
 public class Rover {
 
     private String position;
+    private int x;
+    private int y;
+
+    public Rover(int y, String position) {
+        this.y = y;
+        this.position = position;
+    }
 
     public Rover(String aPosition) {
         position = aPosition;
@@ -10,20 +17,37 @@ public class Rover {
 
     public Rover() {
         position = "N";
+        y = 0;
+        x = 0;
+    }
+
+    public Rover(int x, int y, String position) {
+        this.x = x;
+        this.y = y;
+        this.position = position;
     }
 
     public String getPosition() {
-        return "0:0:" + position;
+        return x + ":" + y + ":" + position;
     }
 
     public void move(String commands) {
         for (final var command : commands.toCharArray()) {
             if (command == 'R') {
                 turnRight();
-            } else {
+            } else if (command == 'L') {
                 turnLeft();
+            } else {
+                moveForward();
             }
         }
+    }
+
+    private void moveForward() {
+        if (position == "N") y += 1;
+        else if (position == "S") y -= 1;
+        else if (position == "W") x -= 1;
+        else x += 1;
     }
 
     private void turnLeft() {
