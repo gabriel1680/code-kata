@@ -26,7 +26,7 @@ public class Rover {
     }
 
     public String getPosition() {
-        return coordinate.x + ":" + coordinate.y + ":" + direction.value;
+        return coordinate.x() + ":" + coordinate.y() + ":" + direction.value;
     }
 
     public void move(String commands) {
