@@ -2,41 +2,36 @@ package com.kata;
 
 public class Rover {
 
-    private Direction direction;
-    private Coordinate coordinate;
+    private final Position position;
 
     public Rover(int y, String position) {
-        this.direction = Direction.valueOf(position);
-        coordinate = new Coordinate(0, y);
+        this.position = new Position(0, y, position);
     }
 
     public Rover(String aPosition) {
-        this.direction = Direction.valueOf(aPosition);
-        coordinate = new Coordinate(0, 0);
+        this.position = new Position(0, 0, aPosition);
     }
 
     public Rover() {
-        this.direction = Direction.N;
-        coordinate = new Coordinate(0, 0);
+        this.position = new Position(0, 0, "N");
     }
 
     public Rover(int x, int y, String position) {
-        this.direction = Direction.valueOf(position);
-        coordinate = new Coordinate(x, y);
+        this.position = new Position(x, y, position);
     }
 
     public String getPosition() {
-        return coordinate.x() + ":" + coordinate.y() + ":" + direction.value;
+        return position.coordinate().x() + ":" + position.coordinate().y() + ":" + position.direction().value;
     }
 
     public void move(String commands) {
         for (final var command : commands.toCharArray()) {
             if (command == 'R') {
-                direction = direction.turnRight();
+                position.turnRight();
             } else if (command == 'L') {
-                direction = direction.turnLeft();
+                position.turnLeft();
             } else {
-                coordinate = coordinate.moveForward(direction);
+                position.moveForward();
             }
         }
     }
