@@ -4,24 +4,20 @@ public class Rover {
 
     private final Position position;
 
-    public Rover(int y, String position) {
-        this.position = new Position(0, y, position);
-    }
-
-    public Rover(String aPosition) {
-        this.position = new Position(0, 0, aPosition);
-    }
-
     public Rover() {
-        this.position = new Position(0, 0, "N");
+        this.position = new Position();
     }
 
-    public Rover(int x, int y, String position) {
-        this.position = new Position(x, y, position);
+    private Rover(Position aPosition) {
+        this.position = aPosition;
     }
 
-    public String getPosition() {
-        return position.coordinate().x() + ":" + position.coordinate().y() + ":" + position.direction().value;
+    public static Rover at(int x, int y, String direction) {
+        return new Rover(new Position(x, y, direction));
+    }
+
+    public static Rover facing(String direction) {
+        return new Rover(new Position(0, 0, direction));
     }
 
     public void move(String commands) {
@@ -34,5 +30,9 @@ public class Rover {
                 position.moveForward();
             }
         }
+    }
+
+    public String getPosition() {
+        return position.toString();
     }
 }

@@ -9,6 +9,11 @@ public class Position {
         this.coordinate = new Coordinate(x, y);
     }
 
+    public Position() {
+        coordinate = Coordinate.origin;
+        direction = Direction.N;
+    }
+
     public void turnRight() {
         direction = direction.turnRight();
     }
@@ -27,5 +32,10 @@ public class Position {
 
     public Coordinate coordinate() {
         return coordinate;
+    }
+
+    @Override
+    public String toString() {
+        return coordinate().x() + ":" + coordinate().y() + ":" + direction().value;
     }
 }
