@@ -36,9 +36,9 @@ public class Rover {
     public void move(String commands) {
         for (final var command : commands.toCharArray()) {
             if (command == 'R') {
-                turnRight();
+                direction = direction.turnRight();
             } else if (command == 'L') {
-                turnLeft();
+                direction = direction.turnLeft();
             } else {
                 moveForward();
             }
@@ -50,36 +50,6 @@ public class Rover {
         else if (direction.value == "S") y -= 1;
         else if (direction.value == "W") x -= 1;
         else x += 1;
-    }
-
-    private void turnLeft() {
-        if (direction.value == "N") {
-            direction = Direction.W;
-        }
-        else if (direction.value == "W") {
-            direction = Direction.S;
-        }
-        else if (direction.value == "S") {
-            direction = Direction.E;
-        }
-        else {
-            direction = Direction.N;
-        }
-    }
-
-    private void turnRight() {
-        if (direction.value == "N") {
-            direction = Direction.E;
-        }
-        else if (direction.value == "E") {
-            direction = Direction.S;
-        }
-        else if (direction.value == "S") {
-            direction = Direction.W;
-        }
-        else {
-            direction = Direction.N;
-        }
     }
 
     public enum Direction {
@@ -96,6 +66,14 @@ public class Rover {
             this.value = value;
             this.left = left;
             this.right = right;
+        }
+
+        public Direction turnLeft() {
+            return Direction.valueOf(left);
+        }
+
+        public Direction turnRight() {
+            return Direction.valueOf(right);
         }
     }
 }
