@@ -3,34 +3,30 @@ package com.kata;
 public class Rover {
 
     private Direction direction;
-    private int x;
-    private int y;
+    private Coordinate coordinate;
 
     public Rover(int y, String position) {
-        this.y = y;
         this.direction = Direction.valueOf(position);
+        coordinate = new Coordinate(0, y);
     }
 
     public Rover(String aPosition) {
         this.direction = Direction.valueOf(aPosition);
-        y = 0;
-        x = 0;
+        coordinate = new Coordinate(0, 0);
     }
 
     public Rover() {
         this.direction = Direction.N;
-        y = 0;
-        x = 0;
+        coordinate = new Coordinate(0, 0);
     }
 
     public Rover(int x, int y, String position) {
-        this.x = x;
-        this.y = y;
         this.direction = Direction.valueOf(position);
+        coordinate = new Coordinate(x, y);
     }
 
     public String getPosition() {
-        return x + ":" + y + ":" + direction.value;
+        return coordinate.x + ":" + coordinate.y + ":" + direction.value;
     }
 
     public void move(String commands) {
@@ -40,16 +36,9 @@ public class Rover {
             } else if (command == 'L') {
                 direction = direction.turnLeft();
             } else {
-                moveForward();
+                coordinate = coordinate.moveForward(direction);
             }
         }
-    }
-
-    private void moveForward() {
-        if (direction.value == "N") y += 1;
-        else if (direction.value == "S") y -= 1;
-        else if (direction.value == "W") x -= 1;
-        else x += 1;
     }
 
     public enum Direction {
