@@ -13,6 +13,8 @@ public class Rover {
 
     public Rover(String aPosition) {
         position = aPosition;
+        y = 0;
+        x = 0;
     }
 
     public Rover() {
