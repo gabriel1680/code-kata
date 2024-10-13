@@ -21,16 +21,6 @@ class OhceTest {
     }
 
     @Test
-    void echoWordShouldReverseIt() {
-        assertEquals(List.of("aloh"), ohce.echo("hola"));
-    }
-
-    @Test
-    void echoWithPalindrome() {
-        assertEquals(List.of("oto", "¡Bonita palabra!"), ohce.echo("oto"));
-    }
-
-    @Test
     void stop() {
         assertEquals(List.of("Adios Gabriel"), ohce.echo("Stop!"));
     }

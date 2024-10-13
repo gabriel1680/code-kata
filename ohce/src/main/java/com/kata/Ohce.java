@@ -9,11 +9,13 @@ public class Ohce {
     private final Clock clock;
     private final String name;
     private final Salutation salutation;
+    private final Echo echo;
 
     public Ohce(Clock aClock, String aName) {
         clock = aClock;
         name = aName;
         salutation = new Salutation();
+        echo = new Echo();
     }
 
     public String start() {
@@ -28,7 +30,7 @@ public class Ohce {
         if (isStop(word)) {
             return singletonList("Adios %s".formatted(name));
         }
-        return Echo.of(word);
+        return echo.of(word);
     }
 
     private static boolean isStop(String word) {
