@@ -1,12 +1,11 @@
 package com.kata;
 
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 public class Main {
-
-    private static final SystemClock clock = new SystemClock();
-
     public static void main(String[] args) {
+        final Clock clock = LocalDateTime.now()::getHour;
         final var ohce = new Ohce(clock, "Test");
         System.out.println(ohce.start());
         Stream.of("osso", "Hola que tal")
