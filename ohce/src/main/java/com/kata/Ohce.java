@@ -8,15 +8,16 @@ public class Ohce {
 
     private final Clock clock;
     private final String name;
+    private final Salutation salutation;
 
     public Ohce(Clock aClock, String aName) {
         clock = aClock;
         name = aName;
+        salutation = new Salutation();
     }
 
     public String start() {
-        final var hour = clock.getHour();
-        return buildSalutation(Salutation.at(hour));
+        return buildSalutation(salutation.at(clock.getHour()));
     }
 
     private String buildSalutation(String salutation) {

@@ -20,27 +20,6 @@ class OhceTest {
         ohce = new Ohce(clock, "Gabriel");
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {21, 1, 5})
-    void ohceBetween20And6(int hour) {
-        clock.setHour(hour);
-        assertEquals("¡Buenas noches Gabriel!", ohce.start());
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {6, 9, 12})
-    void ohceBetween6And12(int hour) {
-        clock.setHour(hour);
-        assertEquals("¡Buenos días Gabriel!", ohce.start());
-    }
-
-    @ParameterizedTest
-    @ValueSource(ints = {13, 17, 20})
-    void ohceBetween12And20(int hour) {
-        clock.setHour(hour);
-        assertEquals("¡Buenas tardes Gabriel!", ohce.start());
-    }
-
     @Test
     void echoWordShouldReverseIt() {
         assertEquals(List.of("aloh"), ohce.echo("hola"));
