@@ -2,9 +2,7 @@ package com.kata;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class EchoTest {
 
@@ -12,11 +10,12 @@ class EchoTest {
 
     @Test
     void echoWordShouldReverseIt() {
-        assertEquals(List.of("aloh"), echo.of("hola"));
+        assertThat(echo.of("hola")).containsExactly("aloh");
+        assertThat(echo.of("yeya")).containsExactly("ayey");
     }
 
     @Test
     void echoWithPalindrome() {
-        assertEquals(List.of("oto", "¡Bonita palabra!"), echo.of("oto"));
+        assertThat(echo.of("oto")).containsExactly("oto", "¡Bonita palabra!");
     }
 }
