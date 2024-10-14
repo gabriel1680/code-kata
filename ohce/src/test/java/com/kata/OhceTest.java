@@ -1,27 +1,40 @@
 package com.kata;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
+import static org.mockito.Mockito.when;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@ExtendWith(MockitoExtension.class)
 class OhceTest {
 
-    private TestableClock clock;
-    private Ohce ohce;
+    @Mock
+    private Clock clock;
 
-    @BeforeEach
-    void setUp() {
-        clock = new TestableClock();
-        ohce = new Ohce(clock, "Gabriel");
-    }
+    @Mock
+    private IODevice io;
+
+    @InjectMocks
+    private Ohce sut;
 
     @Test
-    void stop() {
-        assertEquals(List.of("Adios Gabriel"), ohce.echo("Stop!"));
+    void givenAUserAtNight_whenStartTheAppAndSendSomeWords_thenShouldGetSalutationEchoAndGoodBye() {
+        when(clock.getHour()).thenReturn(20);
+        when(io.readLine())
+            .thenReturn("hola")
+            .thenReturn("oto")
+            .thenReturn("Stop!");
+        sut.start("Gabriel");
+        InOrder inOrder = Mockito.inOrder(io);
+        inOrder.verify(io).printLine("¡Buenas noches Gabriel!");
+        inOrder.verify(io).printLine("aloh");
+        inOrder.verify(io).printLine("oto");
+        inOrder.verify(io).printLine("¡Bonita palabra!");
+        inOrder.verify(io).printLine("Adios Gabriel");
     }
 }
