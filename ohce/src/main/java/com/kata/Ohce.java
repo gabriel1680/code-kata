@@ -7,7 +7,7 @@ public class Ohce {
     private final Salutation salutation;
     private final Echo echo;
 
-    private  String name = "";
+    private String name = "";
 
     public Ohce(Clock aClock, IODevice io) {
         this.io = io;
