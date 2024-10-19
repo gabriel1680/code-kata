@@ -23,4 +23,10 @@ class PrimeFactorsTest {
         assertEquals(List.of(2, 2), factors.of(4));
         assertEquals(List.of(2, 2, 2), factors.of(8));
     }
+
+    @Test
+    void ofMultiplesOf3() {
+        assertEquals(List.of(3, 3), factors.of(9));
+        assertEquals(List.of(3, 3, 3), factors.of(9));
+    }
 }

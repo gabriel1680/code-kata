@@ -11,6 +11,10 @@ public class PrimeFactors {
                 result.add(2);
                 n /= 2;
             }
+            while (n % 3 == 0) {
+                result.add(3);
+                n /= 3;
+            }
         }
         if (n > 1) {
             result.add(n);
