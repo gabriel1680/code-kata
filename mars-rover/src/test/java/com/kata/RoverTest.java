@@ -127,4 +127,40 @@ class RoverTest {
         rover.move("F");
         assertEquals("0:0:W", rover.getPosition());
     }
+
+    @Test
+    void startOn2North_whenMoveBackwards_shouldBeAt01() {
+        givenARoverAt(0, 2, "N");
+        rover.move("B");
+        assertEquals("0:1:N", rover.getPosition());
+        rover.move("B");
+        assertEquals("0:0:N", rover.getPosition());
+    }
+
+    @Test
+    void startOn0South_whenMoveBackwards_shouldBeAt01() {
+        givenARoverAt(0, 0, "S");
+        rover.move("B");
+        assertEquals("0:1:S", rover.getPosition());
+        rover.move("B");
+        assertEquals("0:2:S", rover.getPosition());
+    }
+
+    @Test
+    void startOn0West_whenMoveBackwards_shouldBeAt01() {
+        givenARoverAt(0, 0, "W");
+        rover.move("B");
+        assertEquals("1:0:W", rover.getPosition());
+        rover.move("B");
+        assertEquals("2:0:W", rover.getPosition());
+    }
+
+    @Test
+    void startOn2East_whenMoveBackwards_shouldBeAt01() {
+        givenARoverAt(2, 0, "E");
+        rover.move("B");
+        assertEquals("1:0:E", rover.getPosition());
+        rover.move("B");
+        assertEquals("0:0:E", rover.getPosition());
+    }
 }

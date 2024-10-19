@@ -26,6 +26,10 @@ public class Position {
         coordinate = coordinate.moveForwardTo(direction);
     }
 
+    public void moveBackwards() {
+        coordinate = coordinate.moveBackwardTo(direction);
+    }
+
     public Direction direction() {
         return direction;
     }
