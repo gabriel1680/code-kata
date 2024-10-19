@@ -14,6 +14,10 @@ class RoverTest {
         rover = new Rover();
     }
 
+    private void givenARoverFacing(String direction) {
+        rover = Rover.at(0, 0, direction);
+    }
+
     @Test
     void initialPositionOn00N() {
         assertEquals("0:0:N", rover.getPosition());
@@ -27,21 +31,21 @@ class RoverTest {
 
     @Test
     void startFacingEast_whenTurnRight_shouldBeFacingSouth() {
-        rover = Rover.facing("E");
+        givenARoverFacing("E");
         rover.move("R");
         assertEquals("0:0:S", rover.getPosition());
     }
 
     @Test
     void startFacingSouth_whenTurnRight_shouldBeFacingWest() {
-        rover = Rover.facing("S");
+        givenARoverFacing("S");
         rover.move("R");
         assertEquals("0:0:W", rover.getPosition());
     }
 
     @Test
     void startFacingWest_whenTurnRight_shouldBeFacingNorth() {
-        rover = Rover.facing("W");
+        givenARoverFacing("W");
         rover.move("R");
         assertEquals("0:0:N", rover.getPosition());
     }
@@ -66,21 +70,21 @@ class RoverTest {
 
     @Test
     void startFacingWest_whenTurnLeft_shouldBeFacingSouth() {
-        rover = Rover.facing("W");
+        givenARoverFacing("W");
         rover.move("L");
         assertEquals("0:0:S", rover.getPosition());
     }
 
     @Test
     void startFacingSouth_whenTurnLeft_shouldBeFacingEast() {
-        rover = Rover.facing("S");
+        givenARoverFacing("S");
         rover.move("L");
         assertEquals("0:0:E", rover.getPosition());
     }
 
     @Test
     void startFacingEast_whenTurnLeft_shouldBeFacingNorth() {
-        rover = Rover.facing("E");
+        givenARoverFacing("E");
         rover.move("L");
         assertEquals("0:0:N", rover.getPosition());
     }
@@ -93,9 +97,13 @@ class RoverTest {
         assertEquals("0:2:N", rover.getPosition());
     }
 
+    private void givenARoverAt(int x, int y, String direction) {
+        rover = Rover.at(x, y, direction);
+    }
+
     @Test
     void startOn02South_whenMoveForward_shouldBeAt01() {
-        rover = Rover.at(0, 2, "S");
+        givenARoverAt(0, 2, "S");
         rover.move("F");
         assertEquals("0:1:S", rover.getPosition());
         rover.move("F");
@@ -104,7 +112,7 @@ class RoverTest {
 
     @Test
     void startOn00East_whenMoveForward_shouldBeAt10() {
-        rover = Rover.at(0, 0,"E");
+        givenARoverAt(0, 0, "E");
         rover.move("F");
         assertEquals("1:0:E", rover.getPosition());
         rover.move("F");
@@ -113,7 +121,7 @@ class RoverTest {
 
     @Test
     void startOn02West_whenMoveForward_shouldBeAt10() {
-        rover = Rover.at(2, 0, "W");
+        givenARoverAt(2, 0, "W");
         rover.move("F");
         assertEquals("1:0:W", rover.getPosition());
         rover.move("F");

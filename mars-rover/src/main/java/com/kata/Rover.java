@@ -16,10 +16,6 @@ public class Rover {
         return new Rover(new Position(x, y, direction));
     }
 
-    public static Rover facing(String direction) {
-        return new Rover(new Position(0, 0, direction));
-    }
-
     public void move(String commands) {
         for (final var command : commands.toCharArray()) {
             if (command == 'R') {
