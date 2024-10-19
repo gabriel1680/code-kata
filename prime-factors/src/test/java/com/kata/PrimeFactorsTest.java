@@ -27,6 +27,6 @@ class PrimeFactorsTest {
     @Test
     void ofMultiplesOf3() {
         assertEquals(List.of(3, 3), factors.of(9));
-        assertEquals(List.of(3, 3, 3), factors.of(9));
+        assertEquals(List.of(3, 3, 3), factors.of(27));
     }
 }
