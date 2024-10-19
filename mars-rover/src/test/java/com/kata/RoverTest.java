@@ -2,6 +2,11 @@ package com.kata;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -168,5 +173,37 @@ class RoverTest {
         assertEquals("1:0:E", rover.getPosition());
         rover.move("B");
         assertEquals("0:0:E", rover.getPosition());
+    }
+
+    @Test
+    void crossTheVerticalEdgeReturnFromBegin() {
+        givenARoverAt(0, 10, "N");
+        rover.move("F");
+        assertEquals("0:0:N", rover.getPosition());
+        givenARoverAt(0, 0, "N");
+        rover.move("B");
+        assertEquals("0:10:N", rover.getPosition());
+        givenARoverAt(0, 0, "S");
+        rover.move("F");
+        assertEquals("0:10:S", rover.getPosition());
+        givenARoverAt(0, 10, "S");
+        rover.move("B");
+        assertEquals("0:0:S", rover.getPosition());
+    }
+
+    @Test
+    void crossHorizontalEdgeReturnFromBegin() {
+        givenARoverAt(10, 0, "E");
+        rover.move("F");
+        assertEquals("0:0:E", rover.getPosition());
+        givenARoverAt(0, 0, "W");
+        rover.move("B");
+        assertEquals("10:0:W", rover.getPosition());
+        givenARoverAt(0, 0, "E");
+        rover.move("B");
+        assertEquals("10:0:E", rover.getPosition());
+        givenARoverAt(10, 0, "W");
+        rover.move("F");
+        assertEquals("0:0:W", rover.getPosition());
     }
 }
