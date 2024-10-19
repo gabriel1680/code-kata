@@ -31,10 +31,10 @@ class OhceTest {
             .thenReturn("Stop!");
         sut.start("Gabriel");
         InOrder inOrder = Mockito.inOrder(io);
-        inOrder.verify(io).printLine("¡Buenas noches Gabriel!");
-        inOrder.verify(io).printLine("aloh");
-        inOrder.verify(io).printLine("oto");
-        inOrder.verify(io).printLine("¡Bonita palabra!");
-        inOrder.verify(io).printLine("Adios Gabriel");
+        inOrder.verify(io).printLine("> ¡Buenas noches Gabriel!");
+        inOrder.verify(io).printLine("> aloh");
+        inOrder.verify(io).printLine("> oto");
+        inOrder.verify(io).printLine("> ¡Bonita palabra!");
+        inOrder.verify(io).printLine("> Adios Gabriel");
     }
 }

@@ -1,9 +1,14 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'com.kata'
 version = '1.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.kata.Main'
+}
 
 repositories {
     mavenCentral()
@@ -19,4 +24,10 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
 }

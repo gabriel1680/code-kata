@@ -8,6 +8,6 @@ public class Main {
         final Clock clock = LocalDateTime.now()::getHour;
         final var io = new Console(System.out, new Scanner(System.in));
         final var app = new Ohce(clock, io);
-        app.start("Test");
+        app.start(args[0]);
     }
 }
