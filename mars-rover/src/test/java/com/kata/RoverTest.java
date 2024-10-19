@@ -89,16 +89,16 @@ class RoverTest {
         assertEquals("0:0:N", rover.getPosition());
     }
 
+    private void givenARoverAt(int x, int y, String direction) {
+        rover = Rover.at(x, y, direction);
+    }
+
     @Test
     void startOn00North_whenMoveForward_shouldBeAt01() {
         rover.move("F");
         assertEquals("0:1:N", rover.getPosition());
         rover.move("F");
         assertEquals("0:2:N", rover.getPosition());
-    }
-
-    private void givenARoverAt(int x, int y, String direction) {
-        rover = Rover.at(x, y, direction);
     }
 
     @Test
