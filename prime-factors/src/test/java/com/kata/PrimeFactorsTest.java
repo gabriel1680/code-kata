@@ -9,11 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PrimeFactorsTest {
 
+    private final PrimeFactors factors = new PrimeFactors();
+
     @Test
     void ofPrimeNumbers() {
-        final var factors = new PrimeFactors();
         assertEquals(emptyList(), factors.of(1));
         assertEquals(List.of(2), factors.of(2));
         assertEquals(List.of(3), factors.of(3));
+    }
+
+    @Test
+    void ofMultiplesOf2() {
+        assertEquals(List.of(2, 2), factors.of(4));
+        assertEquals(List.of(2, 2, 2), factors.of(8));
     }
 }
