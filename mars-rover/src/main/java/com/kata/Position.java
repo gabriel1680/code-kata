@@ -37,9 +37,4 @@ public class Position {
     public Coordinate coordinate() {
         return coordinate;
     }
-
-    @Override
-    public String toString() {
-        return coordinate().x() + ":" + coordinate().y() + ":" + direction().value;
-    }
 }

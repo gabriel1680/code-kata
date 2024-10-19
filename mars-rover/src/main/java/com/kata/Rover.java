@@ -33,6 +33,6 @@ public class Rover {
     }
 
     public String getPosition() {
-        return position.toString();
+        return position.coordinate().x() + ":" + position.coordinate().y() + ":" + position.direction().value;
     }
 }
