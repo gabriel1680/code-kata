@@ -24,6 +24,12 @@ class RoverTest {
     }
 
     @Test
+    void ignoreOnInvalidCommand() {
+        rover.move("X");
+        assertEquals("0:0:N", rover.getPosition());
+    }
+
+    @Test
     void startFacingNorth_whenTurnRight_shouldBeFacingEast() {
         rover.move("R");
         assertEquals("0:0:E", rover.getPosition());

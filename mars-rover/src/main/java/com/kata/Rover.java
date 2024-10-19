@@ -22,10 +22,12 @@ public class Rover {
                 position.turnRight();
             } else if (command == 'L') {
                 position.turnLeft();
+            } else if (command == 'F') {
+                position.moveForward();
             } else if (command == 'B') {
                 position.moveBackwards();
             } else {
-                position.moveForward();
+                // noop
             }
         }
     }
