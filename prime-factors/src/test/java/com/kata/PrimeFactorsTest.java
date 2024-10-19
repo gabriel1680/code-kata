@@ -1,8 +1,12 @@
 package com.kata;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -18,20 +22,18 @@ class PrimeFactorsTest {
         assertEquals(List.of(3), factors.of(3));
     }
 
-    @Test
-    void ofMultiplesOf2() {
-        assertEquals(List.of(2, 2), factors.of(4));
-        assertEquals(List.of(2, 2, 2), factors.of(8));
+    @ParameterizedTest
+    @MethodSource("source")
+    void ofMultiples(List<Integer> multiples, int number) {
+        assertEquals(multiples, factors.of(number));
     }
 
-    @Test
-    void ofMultiplesOf3() {
-        assertEquals(List.of(3, 3), factors.of(9));
-        assertEquals(List.of(3, 3, 3), factors.of(27));
-    }
-
-    @Test
-    void ofMultiples() {
-        assertEquals(List.of(2, 2, 3, 5, 7, 7, 13), factors.of(2*2*3*5*7*7*13));
+    private static Stream<Arguments> source() {
+        return Stream.of(
+            Arguments.of(List.of(2, 2), 4),
+            Arguments.of(List.of(2, 2, 2), 8),
+            Arguments.of(List.of(3, 3), 9),
+            Arguments.of(List.of(3, 3, 3), 27),
+            Arguments.of(List.of(2, 2, 3, 5, 7, 7, 13), 2*2*3*5*7*7*13));
     }
 }
