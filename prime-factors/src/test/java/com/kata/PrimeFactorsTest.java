@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PrimeFactorsTest {
 
@@ -28,5 +28,10 @@ class PrimeFactorsTest {
     void ofMultiplesOf3() {
         assertEquals(List.of(3, 3), factors.of(9));
         assertEquals(List.of(3, 3, 3), factors.of(27));
+    }
+
+    @Test
+    void ofMultiples() {
+        assertEquals(List.of(2, 2, 3, 5, 7, 7, 13), factors.of(2*2*3*5*7*7*13));
     }
 }

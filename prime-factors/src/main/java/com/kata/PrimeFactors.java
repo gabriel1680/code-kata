@@ -6,16 +6,10 @@ import java.util.List;
 public class PrimeFactors {
     public List<Integer> of(int n) {
         final var result = new ArrayList<Integer>();
-        var divisor = 2;
-        while (n > 1) {
-            while (n % divisor == 0) {
+        for (int divisor = 2; n > 1; divisor++) {
+            for (; n % divisor == 0; n /= divisor) {
                 result.add(divisor);
-                n /= divisor;
             }
-            divisor++;
-        }
-        if (n > 1) {
-            result.add(n);
         }
         return result;
     }
