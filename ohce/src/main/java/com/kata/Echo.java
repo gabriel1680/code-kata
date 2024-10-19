@@ -2,11 +2,13 @@ package com.kata;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
 class Echo {
 
     public List<String> of(String word) {
+        if (word.isEmpty()) return emptyList();
         return isPalindrome(word, toReversed(word)) ?
             List.of(toReversed(word), "¡Bonita palabra!") :
             singletonList(toReversed(word));

@@ -9,6 +9,11 @@ class EchoTest {
     private final Echo echo = new Echo();
 
     @Test
+    void echoEmptyWordShouldReturnEmptyList() {
+        assertThat(echo.of("")).isEmpty();
+    }
+
+    @Test
     void echoWordShouldReverseIt() {
         assertThat(echo.of("hola")).containsExactly("aloh");
         assertThat(echo.of("yeya")).containsExactly("ayey");

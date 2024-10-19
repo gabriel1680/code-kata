@@ -1,5 +1,7 @@
 package com.kata;
 
+import java.util.stream.Stream;
+
 public class Ohce {
 
     private final Clock clock;
@@ -19,17 +21,18 @@ public class Ohce {
     public void start(String aName) {
         final var timelySalutation = presenter.salute(salutation.at(clock.getHour()), aName);
         io.printLine(timelySalutation);
-        while (true) {
-            final var input = io.readLine();
-            if (isStop(input)) {
-                io.printLine(presenter.goodbye(aName));
-                break;
-            }
-            echo.of(input).stream().map(presenter::echo).forEach(io::printLine);
-        }
+        Stream.generate(io::readLine)
+            .takeWhile(this::isNotStop)
+            .flatMap(this::doEcho)
+            .forEach(io::printLine);
+        io.printLine(presenter.goodbye(aName));
     }
 
-    private static boolean isStop(String word) {
-        return word.equals("Stop!");
+    private boolean isNotStop(String input) {
+        return !input.equals("Stop!");
+    }
+
+    private Stream<String> doEcho(String input) {
+        return echo.of(input).stream().map(presenter::echo);
     }
 }
