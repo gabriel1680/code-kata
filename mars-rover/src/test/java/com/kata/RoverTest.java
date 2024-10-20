@@ -182,35 +182,59 @@ class RoverTest {
     class WrappingEdges {
 
         @Test
-        void crossTheVerticalEdgeReturnFromBegin() {
+        void crossTheVerticalEdgeReturnFromBeginningForwardN() {
             givenARoverAt(0, 10, "N");
             rover.move("F");
             assertEquals("0:0:N", rover.getPosition());
+        }
+
+        @Test
+        void crossTheVerticalEdgeReturnFromBeginningBackwardsN() {
             givenARoverAt(0, 0, "N");
             rover.move("B");
             assertEquals("0:10:N", rover.getPosition());
+        }
+
+        @Test
+        void crossTheVerticalEdgeReturnFromBeginningForwardS() {
             givenARoverAt(0, 0, "S");
             rover.move("F");
             assertEquals("0:10:S", rover.getPosition());
+        }
+
+        @Test
+        void crossTheVerticalEdgeReturnFromBeginningBackwardsS() {
             givenARoverAt(0, 10, "S");
             rover.move("B");
             assertEquals("0:0:S", rover.getPosition());
         }
 
         @Test
-        void crossHorizontalEdgeReturnFromBegin() {
+        void crossTheHorizontalEdgeReturnFromBeginningForwardE() {
             givenARoverAt(10, 0, "E");
             rover.move("F");
             assertEquals("0:0:E", rover.getPosition());
-            givenARoverAt(0, 0, "W");
-            rover.move("F");
-            assertEquals("10:0:W", rover.getPosition());
+        }
+
+        @Test
+        void crossTheHorizontalEdgeReturnFromBeginningBackwardsE() {
             givenARoverAt(0, 0, "E");
             rover.move("B");
             assertEquals("10:0:E", rover.getPosition());
-            givenARoverAt(10, 0, "E");
+        }
+
+        @Test
+        void crossTheHorizontalEdgeReturnFromBeginningForwardW() {
+            givenARoverAt(0, 0, "W");
             rover.move("F");
-            assertEquals("0:0:E", rover.getPosition());
+            assertEquals("10:0:W", rover.getPosition());
+        }
+
+        @Test
+        void crossTheHorizontalEdgeReturnFromBeginningBackwardsW() {
+            givenARoverAt(10, 0, "W");
+            rover.move("B");
+            assertEquals("0:0:W", rover.getPosition());
         }
     }
 }
