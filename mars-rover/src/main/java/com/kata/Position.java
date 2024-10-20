@@ -14,20 +14,29 @@ public class Position {
         direction = Direction.N;
     }
 
-    public void turnRight() {
-        direction = direction.turnRight();
+    private Position(Coordinate coordinate, Direction direction) {
+        this.coordinate = coordinate;
+        this.direction = direction;
     }
 
-    public void turnLeft() {
-        direction = direction.turnLeft();
+    public Position(Direction direction) {
+        this.direction = direction;
     }
 
-    public void moveForward() {
-        coordinate = coordinate.moveForwardTo(direction);
+    public Position turnRight() {
+        return new Position(coordinate, direction.turnRight());
     }
 
-    public void moveBackwards() {
-        coordinate = coordinate.moveBackwardTo(direction);
+    public Position turnLeft() {
+        return new Position(coordinate, direction.turnLeft());
+    }
+
+    public Position moveForward() {
+        return new Position(coordinate.moveForwardTo(direction), direction);
+    }
+
+    public Position moveBackwards() {
+        return new Position(coordinate.moveBackwardTo(direction), direction);
     }
 
     public Direction direction() {

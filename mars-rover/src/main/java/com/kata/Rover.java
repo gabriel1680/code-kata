@@ -1,15 +1,25 @@
 package com.kata;
 
+import static java.util.Collections.emptyList;
+
 public class Rover {
 
-    private final Position position;
+    private Position position;
+    private final PlanetGrid grid;
+
+    public Rover(PlanetGrid aGrid) {
+        this.grid = aGrid;
+        this.position = new Position();
+    }
 
     public Rover() {
+        this.grid = new PlanetGrid(emptyList());
         this.position = new Position();
     }
 
     private Rover(Position aPosition) {
         this.position = aPosition;
+        this.grid = new PlanetGrid(emptyList());
     }
 
     public static Rover at(int x, int y, String direction) {
@@ -22,16 +32,23 @@ public class Rover {
     }
 
     private void execute(char command) {
+        final var newPosition = getNewPositionOf(command);
+        if (!grid.haveCollisionOn(newPosition)) {
+            position = newPosition;
+        }
+    }
+
+    private Position getNewPositionOf(char command) {
         if (command == 'R') {
-            position.turnRight();
+            return position.turnRight();
         } else if (command == 'L') {
-            position.turnLeft();
+            return position.turnLeft();
         } else if (command == 'F') {
-            position.moveForward();
+            return position.moveForward();
         } else if (command == 'B') {
-            position.moveBackwards();
+            return position.moveBackwards();
         } else {
-            // noop
+            return position;
         }
     }
 

@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RoverTest {
@@ -235,6 +237,29 @@ class RoverTest {
             givenARoverAt(10, 0, "W");
             rover.move("B");
             assertEquals("0:0:W", rover.getPosition());
+        }
+    }
+
+    @Nested
+    class Obstacles {
+
+        @BeforeEach
+        void setUp() {
+            final var obstacles = List.of(new Coordinate(0, 1));
+            final var grid = new PlanetGrid(obstacles);
+            rover = new Rover(grid);
+        }
+
+        @Test
+        void shouldBlockRoverMoveWhenEncounterAnObstacle() {
+            rover.move("F");
+            assertEquals("0:0:N", rover.getPosition());
+        }
+
+        @Test
+        void shouldNotBlockRoverMoveWhenDoesNotEncounterAnObstacle() {
+            rover.move("B");
+            assertEquals("0:10:N", rover.getPosition());
         }
     }
 }
