@@ -5,14 +5,14 @@ import java.util.stream.Stream;
 public class Ohce {
 
     private final Clock clock;
-    private final IODevice io;
+    private final Console io;
     private final Salutation salutation;
     private final Echo echo;
     private final Presenter presenter;
 
-    public Ohce(Clock aClock, IODevice ioDevice) {
+    public Ohce(Clock aClock, Console console) {
         clock = aClock;
-        io = ioDevice;
+        io = console;
         presenter = new Presenter();
         salutation = new Salutation();
         echo = new Echo();

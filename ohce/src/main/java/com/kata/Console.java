@@ -3,7 +3,7 @@ package com.kata;
 import java.io.PrintStream;
 import java.util.Scanner;
 
-public class Console implements IODevice {
+public class Console {
 
     private final PrintStream out;
     private final Scanner scanner;

@@ -17,7 +17,7 @@ class OhceTest {
     private Clock clock;
 
     @Mock
-    private IODevice io;
+    private Console io;
 
     @InjectMocks
     private Ohce sut;
