@@ -13,14 +13,6 @@ public record Coordinate(int x, int y) {
         };
     }
 
-    private int unshift(int coord) {
-        return coord > 0 ? coord - 1 : 10;
-    }
-
-    private int shift(int coord) {
-        return (coord + 1) % 11;
-    }
-
     public Coordinate moveBackwardTo(Direction aDirection) {
         return switch (aDirection) {
             case N -> new Coordinate(x, unshift(y));
@@ -28,5 +20,13 @@ public record Coordinate(int x, int y) {
             case E -> new Coordinate(unshift(x), y);
             case W -> new Coordinate(shift(x), y);
         };
+    }
+
+    private int shift(int coord) {
+        return (coord + 1) % 11;
+    }
+
+    private int unshift(int coord) {
+        return coord > 0 ? coord - 1 : 10;
     }
 }
