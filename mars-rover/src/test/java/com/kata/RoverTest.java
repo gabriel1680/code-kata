@@ -38,7 +38,6 @@ class RoverTest {
     @Nested
     class Turning {
 
-
         @Test
         void startFacingNorth_whenTurnRight_shouldBeFacingEast() {
             rover.move("R");
