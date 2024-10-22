@@ -6,27 +6,19 @@ public record Coordinate(int x, int y) {
 
     public Coordinate moveForwardTo(Direction aDirection) {
         return switch (aDirection) {
-            case N -> new Coordinate(x, shift(y));
-            case S -> new Coordinate(x, unshift(y));
-            case E -> new Coordinate(shift(x), y);
-            case W -> new Coordinate(unshift(x), y);
+            case N -> new Coordinate(x, y + 1);
+            case S -> new Coordinate(x, y - 1);
+            case E -> new Coordinate(x + 1, y);
+            case W -> new Coordinate(x - 1, y);
         };
     }
 
     public Coordinate moveBackwardTo(Direction aDirection) {
         return switch (aDirection) {
-            case N -> new Coordinate(x, unshift(y));
-            case S -> new Coordinate(x, shift(y));
-            case E -> new Coordinate(unshift(x), y);
-            case W -> new Coordinate(shift(x), y);
+            case N -> new Coordinate(x, y - 1);
+            case S -> new Coordinate(x, y + 1);
+            case E -> new Coordinate(x - 1, y);
+            case W -> new Coordinate(x + 1, y);
         };
-    }
-
-    private int shift(int coord) {
-        return (coord + 1) % 11;
-    }
-
-    private int unshift(int coord) {
-        return coord > 0 ? coord - 1 : 10;
     }
 }

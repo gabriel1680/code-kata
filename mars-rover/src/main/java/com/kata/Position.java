@@ -1,8 +1,8 @@
 package com.kata;
 
 public class Position {
-    private Direction direction;
-    private Coordinate coordinate;
+    private final Direction direction;
+    private final Coordinate coordinate;
 
     public Position(int x, int y, String direction) {
         this.direction = Direction.valueOf(direction);
@@ -16,10 +16,6 @@ public class Position {
 
     private Position(Coordinate coordinate, Direction direction) {
         this.coordinate = coordinate;
-        this.direction = direction;
-    }
-
-    public Position(Direction direction) {
         this.direction = direction;
     }
 
