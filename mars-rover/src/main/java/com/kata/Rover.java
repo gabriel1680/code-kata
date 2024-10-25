@@ -1,5 +1,7 @@
 package com.kata;
 
+import java.util.Arrays;
+
 import static java.util.Collections.emptyList;
 
 public class Rover {
@@ -39,17 +41,13 @@ public class Rover {
     }
 
     private Position getNewPositionOf(char command) {
-        if (command == 'R') {
-            return position.turnRight();
-        } else if (command == 'L') {
-            return position.turnLeft();
-        } else if (command == 'F') {
-            return position.moveForward();
-        } else if (command == 'B') {
-            return position.moveBackwards();
-        } else {
-            return position;
-        }
+        return switch (command) {
+            case 'R' -> position.turnRight();
+            case 'L' -> position.turnLeft();
+            case 'F' -> position.moveForward();
+            case 'B' -> position.moveBackwards();
+            default -> position;
+        };
     }
 
     public String getPosition() {
