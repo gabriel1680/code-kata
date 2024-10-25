@@ -1,7 +1,5 @@
 package com.kata;
 
-import java.util.Arrays;
-
 import static java.util.Collections.emptyList;
 
 public class Rover {
