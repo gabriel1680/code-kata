@@ -12,11 +12,6 @@ public class Rover {
         this.position = new Position();
     }
 
-    public Rover() {
-        this.grid = new PlanetGrid(emptyList());
-        this.position = new Position();
-    }
-
     private Rover(Position aPosition) {
         this.position = aPosition;
         this.grid = new PlanetGrid(emptyList());

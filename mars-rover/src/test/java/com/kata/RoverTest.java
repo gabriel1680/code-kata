@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
+import static java.util.Collections.emptyList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RoverTest {
@@ -14,7 +15,8 @@ class RoverTest {
 
     @BeforeEach
     void setUp() {
-        rover = new Rover();
+        final var aGrid = new PlanetGrid(emptyList());
+        rover = new Rover(aGrid);
     }
 
     private void givenARoverFacing(String direction) {
