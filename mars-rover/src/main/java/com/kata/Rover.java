@@ -36,7 +36,7 @@ public class Rover {
         if (grid.haveCollisionOn(newPosition)) {
             return;
         }
-        if (grid.passedThroughtEdged(newPosition)) {
+        if (grid.passedThroughEdged(newPosition)) {
             position = grid.wrapEdgesOf(newPosition);
         } else {
             position = newPosition;

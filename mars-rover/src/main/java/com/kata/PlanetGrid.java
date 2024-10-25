@@ -16,12 +16,12 @@ public class PlanetGrid {
         return obstacles.contains(newPosition.coordinate());
     }
 
-    public boolean passedThroughtEdged(Position position) {
+    public boolean passedThroughEdged(Position position) {
         return passedOnEdgeFrom(position.coordinate().x()) || passedOnEdgeFrom(position.coordinate().y());
     }
 
     private static boolean passedOnEdgeFrom(int coordinate) {
-        return coordinate < 0 || coordinate > 10;
+        return coordinate < 0 || coordinate > MAX_EDGE_SIZE;
     }
 
     public Position wrapEdgesOf(Position position) {
@@ -29,9 +29,9 @@ public class PlanetGrid {
         final var x = coordinate.x();
         final var y = coordinate.y();
         final var direction = position.direction().toString();
-        if (x > 10) {
+        if (x > MAX_EDGE_SIZE) {
             return new Position(shift(x), y, direction);
-        } else if (y > 10) {
+        } else if (y > MAX_EDGE_SIZE) {
             return new Position(x, shift(y), direction);
         } else if (x < 0) {
             return new Position(MAX_EDGE_SIZE, y, direction);
@@ -43,6 +43,6 @@ public class PlanetGrid {
     }
 
     private int shift(int coordinate) {
-        return coordinate % 11;
+        return coordinate % (MAX_EDGE_SIZE + 1);
     }
 }
