@@ -43,7 +43,9 @@ class WordsRankerTest {
 
     @Test
     void rankWordsInOrder() {
-
+        assertProcessed(List.of("x", "y"), "y x");
+        assertProcessed(List.of("x", "y"), "x y");
+        assertProcessed(List.of("y", "x"), "x y y");
     }
 
     @Test
