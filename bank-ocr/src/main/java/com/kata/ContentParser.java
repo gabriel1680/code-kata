@@ -1,12 +1,9 @@
 package com.kata;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContentParser {
-
-    private static final String ZERO = " _ | ||_|   ";
-    private static final String ONE = "     |  |   ";
-    private static final String TWO = " _  _||_    ";
 
     public List<Integer> parse(String content) {
         final var result = new ArrayList<Integer>();
@@ -27,11 +24,6 @@ public class ContentParser {
 
     private static int numberChunksToInt(List<String> list) {
         final var stringNumber = String.join("", list);
-        return switch (stringNumber) {
-            case ZERO -> 0;
-            case ONE -> 1;
-            case TWO -> 2;
-            default -> -1;
-        };
+        return Entry.of(stringNumber).value;
     }
 }
