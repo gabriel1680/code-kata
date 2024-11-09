@@ -17,7 +17,7 @@ class AccountParserTest {
                                           \s
                 """;
         assertThat(parser.parse(content))
-                .containsExactly(0, 0, 0, 0, 0, 0, 0, 0, 0);
+                .isEqualTo("000000000");
     }
 
     @Test
@@ -29,7 +29,7 @@ class AccountParserTest {
                                           \s
                 """;
         assertThat(parser.parse(content))
-                .containsExactly(1, 1, 1, 1, 1, 1, 1, 1, 1);
+                .isEqualTo("111111111");
     }
 
     @Test
@@ -41,7 +41,7 @@ class AccountParserTest {
                                           \s
                 """;
         assertThat(parser.parse(content))
-                .containsExactly(2, 2, 2, 2, 2, 2, 2, 2, 2);
+                .isEqualTo("222222222");
     }
 
     @Test
@@ -53,7 +53,7 @@ class AccountParserTest {
                                            \s
                 """;
         assertThat(parser.parse(content))
-                .containsExactly(3, 3, 3, 3, 3, 3, 3, 3, 3);
+                .isEqualTo("333333333");
     }
 
 
@@ -66,7 +66,7 @@ class AccountParserTest {
                                           \s
                 """;
         assertThat(parser.parse(content))
-                .containsExactly(4, 4, 4, 4, 4, 4, 4, 4, 4);
+                .isEqualTo("444444444");
     }
 
     @Test
@@ -78,7 +78,7 @@ class AccountParserTest {
                                           \s
                 """;
         assertThat(parser.parse(content))
-                .containsExactly(5, 5, 5, 5, 5, 5, 5, 5, 5);
+                .isEqualTo("555555555");
     }
 
     @Test
@@ -90,6 +90,6 @@ class AccountParserTest {
                                           \s
                 """;
         assertThat(parser.parse(content))
-                .containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9);
+                .isEqualTo("123456789");
     }
 }

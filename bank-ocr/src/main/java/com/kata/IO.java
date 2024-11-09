@@ -4,5 +4,5 @@ public interface IO {
 
     String read();
 
-    void print(int i);
+    void print(String x);
 }

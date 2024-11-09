@@ -19,16 +19,16 @@ class BankOCRTest {
     @Test
     void givenAFileWithOneEntry_whenReadIt_thenShouldBeAbleToParseItIntoAAccountNumber() {
         final var file = "some-file.txt";
-//"""
-//                 _  _     _  _  _  _  _
-//               | _| _||_||_ |_   ||_||_|
-//               ||_  _|  | _||_|  ||_| _|
-//""";
-        final var content = "    _  _     _  _  _  _  _ \n  | _| _||_||_ |_   ||_||_|\n  ||_  _|  | _||_|  ||_| _|";
+        final var content = """
+                    _  _     _  _  _  _  _\s
+                  | _| _||_||_ |_   ||_||_|
+                  ||_  _|  | _||_|  ||_| _|
+                                          \s
+                """;
         when(fileReader.read(file)).thenReturn(content);
         when(io.read()).thenReturn(file);
         final var ocr = new BankOCR(fileReader, io);
         ocr.run();
-        verify(io, times(1)).print(123456789);
+        verify(io, times(1)).print("123456789");
     }
 }

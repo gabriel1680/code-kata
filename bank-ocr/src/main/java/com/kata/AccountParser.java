@@ -2,16 +2,17 @@ package com.kata;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountParser {
 
-    public List<Integer> parse(String content) {
+    public String parse(String content) {
         final var result = new ArrayList<Integer>();
         final List<String> split = List.of(content.split("\n"));
         for (int i = 0; i < 27; i += 3) {
             result.add(parseOneNumberChunk(split, i));
         }
-        return result;
+        return result.stream().map(String::valueOf).collect(Collectors.joining());
     }
 
     public int parseOneNumberChunk(List<String> lines, int n) {
