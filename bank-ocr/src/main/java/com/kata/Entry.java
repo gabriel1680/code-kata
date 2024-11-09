@@ -6,14 +6,14 @@ public enum Entry {
     NEGATIVE("", -1),
     ZERO(" _ | ||_|   ", 0),
     ONE("     |  |   ", 1),
-    TWO(" _  _||_    ", 2);
-//        THREE("_\n_|\n_|\n", 3),
-//        FOUR("\n|_|\n|\n", 4),
-//        FIVE("_\n|_\n_|\n", 5),
-//        SIX("_\n|_\n|_|\n", 6),
-//        SEVEN("_\n|\n|\n", 7),
-//        EIGHT("_\n|_|\n|_|\n", 8),
-//        NINE("_\n|_|\n_|\n", 9);
+    TWO(" _  _||_    ", 2),
+    THREE(" _  _| _|   ", 3),
+    FOUR("   |_|  |   ", 4),
+    FIVE(" _ |_  _|   ", 5),
+    SIX(" _ |_ |_|   ", 6),
+    SEVEN(" _   |  |   ", 7),
+    EIGHT(" _ |_||_|   ", 8),
+    NINE(" _ |_| _|   ", 9);
 
     public final int value;
     public final String representation;
