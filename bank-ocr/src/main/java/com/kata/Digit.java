@@ -2,7 +2,7 @@ package com.kata;
 
 import java.util.Arrays;
 
-public enum Entry {
+public enum Digit {
     NEGATIVE("", -1),
     ZERO(" _ | ||_|   ", 0),
     ONE("     |  |   ", 1),
@@ -18,14 +18,14 @@ public enum Entry {
     public final int value;
     public final String representation;
 
-    Entry(String representation, int value) {
+    Digit(String representation, int value) {
         this.value = value;
         this.representation = representation;
     }
 
-    public static Entry of(String s) {
-        return Arrays.stream(Entry.values())
-                .filter(entry -> entry.representation.equals(s))
+    public static Digit of(String s) {
+        return Arrays.stream(Digit.values())
+                .filter(digit -> digit.representation.equals(s))
                 .findFirst()
                 .orElse(NEGATIVE);
     }

@@ -25,11 +25,6 @@ class BankOCRTest {
 //               ||_  _|  | _||_|  ||_| _|
 //""";
         final var content = "    _  _     _  _  _  _  _ \n  | _| _||_||_ |_   ||_||_|\n  ||_  _|  | _||_|  ||_| _|";
-        final var content2 = """
-                  _  _     _  _  _  _  _  \s
-                | _| _||_||_ |_   ||_||_|
-                ||_  _|  | _||_|  ||_| _|
-               \s""";
         when(fileReader.read(file)).thenReturn(content);
         when(io.read()).thenReturn(file);
         final var ocr = new BankOCR(fileReader, io);

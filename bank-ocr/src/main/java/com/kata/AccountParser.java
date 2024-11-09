@@ -3,7 +3,7 @@ package com.kata;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContentParser {
+public class AccountParser {
 
     public List<Integer> parse(String content) {
         final var result = new ArrayList<Integer>();
@@ -24,6 +24,6 @@ public class ContentParser {
 
     private static int numberChunksToInt(List<String> list) {
         final var stringNumber = String.join("", list);
-        return Entry.of(stringNumber).value;
+        return Digit.of(stringNumber).value;
     }
 }

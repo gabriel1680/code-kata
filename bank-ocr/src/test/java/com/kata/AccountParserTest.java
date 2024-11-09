@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ContentParserTest {
+class AccountParserTest {
 
-    private final ContentParser parser = new ContentParser();
+    private final AccountParser parser = new AccountParser();
 
     @Test
     void shouldParseAllZeros() {
