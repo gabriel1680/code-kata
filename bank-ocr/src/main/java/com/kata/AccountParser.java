@@ -16,15 +16,10 @@ public class AccountParser {
     }
 
     public int parseOneNumberChunk(List<String> lines, int n) {
-        final var numberChunks = lines.stream()
+        final var stringRepresentation = lines.stream()
                 .map(line -> line.substring(n, n + 3))
-                .toList();
-        return numberChunksToInt(numberChunks);
-    }
-
-    private static int numberChunksToInt(List<String> list) {
-        final var stringNumber = String.join("", list);
-        return Digit.of(stringNumber).value;
+                .collect(Collectors.joining());
+        return Digit.of(stringRepresentation).value;
     }
 
     private static String toStringAccountNumber(ArrayList<Integer> result) {
