@@ -16,10 +16,9 @@ public class AccountParser {
     }
 
     public int parseOneNumberChunk(List<String> lines, int n) {
-        final var numberChunks = new ArrayList<String>();
-        for (String line : lines) {
-            numberChunks.add(line.substring(n, n + 3));
-        }
+        final var numberChunks = lines.stream()
+                .map(line -> line.substring(n, n + 3))
+                .toList();
         return numberChunksToInt(numberChunks);
     }
 
