@@ -1,18 +1,18 @@
 package com.kata;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AccountParser {
 
     public String parse(String content) {
-        final var accountNumbers = new ArrayList<Integer>();
-        final List<String> split = List.of(content.split("\n"));
-        for (int i = 0; i < 27; i += 3) {
-            accountNumbers.add(parseOneNumberChunk(split, i));
-        }
-        return toStringAccountNumber(accountNumbers);
+        final var split = List.of(content.split("\n"));
+        return IntStream.iterate(0, i -> i + 3)
+                .limit(9)
+                .map(i -> parseOneNumberChunk(split, i))
+                .mapToObj(String::valueOf)
+                .collect(Collectors.joining());
     }
 
     public int parseOneNumberChunk(List<String> lines, int n) {
@@ -20,9 +20,5 @@ public class AccountParser {
                 .map(line -> line.substring(n, n + 3))
                 .collect(Collectors.joining());
         return Digit.of(stringRepresentation).value;
-    }
-
-    private static String toStringAccountNumber(ArrayList<Integer> result) {
-        return result.stream().map(String::valueOf).collect(Collectors.joining());
     }
 }
