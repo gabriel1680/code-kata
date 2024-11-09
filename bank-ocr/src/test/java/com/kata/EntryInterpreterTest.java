@@ -12,9 +12,9 @@ class EntryInterpreterTest {
 
     @ParameterizedTest
     @MethodSource("numbersSource")
-    void executeShouldParseANumber(String entry, int accountDigit) {
-        final var interpreter = new EntryInterpreter();
-        assertThat(interpreter.execute(entry)).isEqualTo(accountDigit);
+    void executeShouldParseANumber(String entryString, int accountDigit) {
+        final var entry = Entry.of(entryString);
+        assertThat(entry.value).isEqualTo(accountDigit);
     }
 
     private static Stream<Arguments> numbersSource() {
