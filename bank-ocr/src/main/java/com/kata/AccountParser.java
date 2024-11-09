@@ -7,12 +7,12 @@ import java.util.stream.Collectors;
 public class AccountParser {
 
     public String parse(String content) {
-        final var result = new ArrayList<Integer>();
+        final var accountNumbers = new ArrayList<Integer>();
         final List<String> split = List.of(content.split("\n"));
         for (int i = 0; i < 27; i += 3) {
-            result.add(parseOneNumberChunk(split, i));
+            accountNumbers.add(parseOneNumberChunk(split, i));
         }
-        return result.stream().map(String::valueOf).collect(Collectors.joining());
+        return toStringAccountNumber(accountNumbers);
     }
 
     public int parseOneNumberChunk(List<String> lines, int n) {
@@ -26,5 +26,9 @@ public class AccountParser {
     private static int numberChunksToInt(List<String> list) {
         final var stringNumber = String.join("", list);
         return Digit.of(stringNumber).value;
+    }
+
+    private static String toStringAccountNumber(ArrayList<Integer> result) {
+        return result.stream().map(String::valueOf).collect(Collectors.joining());
     }
 }
