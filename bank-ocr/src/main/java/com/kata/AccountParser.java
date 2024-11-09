@@ -7,10 +7,10 @@ import java.util.stream.IntStream;
 public class AccountParser {
 
     public String parse(String content) {
-        final var split = List.of(content.split("\n"));
+        final var accountNumberLines = List.of(content.split("\n"));
         return IntStream.iterate(0, i -> i + 3)
                 .limit(9)
-                .map(i -> parseOneNumberChunk(split, i))
+                .map(i -> parseOneNumberChunk(accountNumberLines, i))
                 .mapToObj(String::valueOf)
                 .collect(Collectors.joining());
     }
