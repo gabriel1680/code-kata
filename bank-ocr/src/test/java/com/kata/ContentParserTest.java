@@ -31,4 +31,16 @@ class ContentParserTest {
         assertThat(parser.parse(content))
                 .containsExactly(1, 1, 1, 1, 1, 1, 1, 1, 1);
     }
+
+    @Test
+    void shouldParseAllTwos() {
+        final var content = """
+                 _  _  _  _  _  _  _  _  _\s
+                 _| _| _| _| _| _| _| _| _|
+                |_ |_ |_ |_ |_ |_ |_ |_ |_\s
+                                          \s
+                """;
+        assertThat(parser.parse(content))
+                .containsExactly(2, 2, 2, 2, 2, 2, 2, 2, 2);
+    }
 }
