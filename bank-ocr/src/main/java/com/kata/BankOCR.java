@@ -13,7 +13,7 @@ public class BankOCR {
     public void run() {
         final var filepath = io.read();
         final var content = fileReader.read(filepath);
-        final var parser = new AccountParser();
+        final var parser = new EntryParser();
         final var accountNumber = parser.parse(content);
         io.print(accountNumber.toString());
     }
