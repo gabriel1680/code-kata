@@ -3,12 +3,14 @@ package com.kata;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.unmodifiableList;
+
 public class AccountNumber {
 
     private final List<Integer> digits;
 
-    public AccountNumber(List<Digit> digits) {
-        this.digits = digits.stream().map(digit -> digit.value).toList();
+    public AccountNumber(List<Integer> digits) {
+        this.digits = unmodifiableList(digits);
     }
 
     @Override
@@ -20,9 +22,13 @@ public class AccountNumber {
 
     public boolean checksum() {
         int result = 0;
-        for (int i = 9; i > 0; i--) {
-            result += digits.get(i - 1) * i;
+        for (int i = 0; i < digits.size(); i++) {
+            result += digits.get(i) * (i - digits.size());
         }
         return result % 11 == 0;
+    }
+
+    public List<Integer> getDigits() {
+        return digits;
     }
 }

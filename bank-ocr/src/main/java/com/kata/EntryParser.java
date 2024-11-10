@@ -16,11 +16,12 @@ public class EntryParser {
         return List.of(content.split("\n"));
     }
 
-    private List<Digit> getDigitsFrom(List<String> accountNumberLines) {
+    private List<Integer> getDigitsFrom(List<String> accountNumberLines) {
         return IntStream.iterate(0, i -> i + 3)
                 .limit(9)
                 .mapToObj(i -> toNumberString(accountNumberLines, i))
                 .map(Digit::of)
+                .map(digit -> digit.value)
                 .toList();
     }
 
