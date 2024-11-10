@@ -8,17 +8,17 @@ public class AccountParser {
 
     public String parse(String content) {
         final var accountNumberLines = List.of(content.split("\n"));
-        return IntStream.iterate(0, i -> i + 3)
+        final var digits = IntStream.iterate(0, i -> i + 3)
                 .limit(9)
-                .map(i -> parseOneNumberChunk(accountNumberLines, i))
-                .mapToObj(String::valueOf)
-                .collect(Collectors.joining());
+                .mapToObj(i -> parseOneNumberChunk(accountNumberLines, i))
+                .toList();
+        return new AccountNumber(digits).toString();
     }
 
-    public int parseOneNumberChunk(List<String> lines, int n) {
+    public Digit parseOneNumberChunk(List<String> lines, int n) {
         final var stringRepresentation = lines.stream()
                 .map(line -> line.substring(n, n + 3))
                 .collect(Collectors.joining());
-        return Digit.of(stringRepresentation).value;
+        return Digit.of(stringRepresentation);
     }
 }
