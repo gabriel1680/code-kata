@@ -10,12 +10,12 @@ public class AccountParser {
         final var accountNumberLines = List.of(content.split("\n"));
         final var digits = IntStream.iterate(0, i -> i + 3)
                 .limit(9)
-                .mapToObj(i -> parseOneNumberChunk(accountNumberLines, i))
+                .mapToObj(i -> toDigit(accountNumberLines, i))
                 .toList();
         return new AccountNumber(digits);
     }
 
-    public Digit parseOneNumberChunk(List<String> lines, int n) {
+    public Digit toDigit(List<String> lines, int n) {
         final var stringRepresentation = lines.stream()
                 .map(line -> line.substring(n, n + 3))
                 .collect(Collectors.joining());
