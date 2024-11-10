@@ -6,13 +6,13 @@ import java.util.stream.IntStream;
 
 public class AccountParser {
 
-    public String parse(String content) {
+    public AccountNumber parse(String content) {
         final var accountNumberLines = List.of(content.split("\n"));
         final var digits = IntStream.iterate(0, i -> i + 3)
                 .limit(9)
                 .mapToObj(i -> parseOneNumberChunk(accountNumberLines, i))
                 .toList();
-        return new AccountNumber(digits).toString();
+        return new AccountNumber(digits);
     }
 
     public Digit parseOneNumberChunk(List<String> lines, int n) {

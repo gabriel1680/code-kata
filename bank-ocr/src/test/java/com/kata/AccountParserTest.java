@@ -16,7 +16,7 @@ class AccountParserTest {
                 |_||_||_||_||_||_||_||_||_|
                                           \s
                 """;
-        assertThat(parser.parse(content))
+        assertThat(parser.parse(content).toString())
                 .isEqualTo("000000000");
     }
 
@@ -28,7 +28,7 @@ class AccountParserTest {
                   |  |  |  |  |  |  |  |  |
                                           \s
                 """;
-        assertThat(parser.parse(content))
+        assertThat(parser.parse(content).toString())
                 .isEqualTo("111111111");
     }
 
@@ -40,7 +40,7 @@ class AccountParserTest {
                 |_ |_ |_ |_ |_ |_ |_ |_ |_\s
                                           \s
                 """;
-        assertThat(parser.parse(content))
+        assertThat(parser.parse(content).toString())
                 .isEqualTo("222222222");
     }
 
@@ -52,7 +52,7 @@ class AccountParserTest {
                  _| _| _| _| _| _| _| _| _|
                                            \s
                 """;
-        assertThat(parser.parse(content))
+        assertThat(parser.parse(content).toString())
                 .isEqualTo("333333333");
     }
 
@@ -65,7 +65,7 @@ class AccountParserTest {
                   |  |  |  |  |  |  |  |  |
                                           \s
                 """;
-        assertThat(parser.parse(content))
+        assertThat(parser.parse(content).toString())
                 .isEqualTo("444444444");
     }
 
@@ -77,7 +77,7 @@ class AccountParserTest {
                  _| _| _| _| _| _| _| _| _|
                                           \s
                 """;
-        assertThat(parser.parse(content))
+        assertThat(parser.parse(content).toString())
                 .isEqualTo("555555555");
     }
 
@@ -89,7 +89,7 @@ class AccountParserTest {
                   ||_  _|  | _||_|  ||_| _|
                                           \s
                 """;
-        assertThat(parser.parse(content))
+        assertThat(parser.parse(content).toString())
                 .isEqualTo("123456789");
     }
 }

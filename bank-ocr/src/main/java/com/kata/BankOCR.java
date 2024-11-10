@@ -14,7 +14,7 @@ public class BankOCR {
         final var filepath = io.read();
         final var content = fileReader.read(filepath);
         final var parser = new AccountParser();
-        final var accountNumbers = parser.parse(content);
-        io.print(accountNumbers);
+        final var accountNumber = parser.parse(content);
+        io.print(accountNumber.toString());
     }
 }
