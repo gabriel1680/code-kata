@@ -12,30 +12,34 @@ import static org.mockito.Mockito.*;
 class BankOCRTest {
 
     @Mock
+    private IO io;
+
+    @Mock
     private FileReader fileReader;
 
     @Mock
     private AccountNumberPresenter presenter;
-
-    @Mock
-    private IO io;
 
     @InjectMocks
     private BankOCR ocr;
 
     @Test
     void givenAFileWithOneEntry_whenReadIt_thenShouldBeAbleToParseItIntoAAccountNumber() {
-        final var file = "some-file.txt";
+        final var filepath = "/home/some-filepath.txt";
         final var content = """
                     _  _     _  _  _  _  _\s
                   | _| _||_||_ |_   ||_||_|
                   ||_  _|  | _||_|  ||_| _|
                                           \s
+                    _  _     _  _  _  _  _\s
+                  | _| _||_||_ |_   ||_||_|
+                  ||_  _|  | _||_|  ||_| _|
+                                          \s
                 """;
-        when(fileReader.read(file)).thenReturn(content);
-        when(io.read()).thenReturn(file);
+        when(io.read()).thenReturn(filepath);
+        when(fileReader.read(filepath)).thenReturn(content);
         when(presenter.present(any())).thenReturn("123456789");
         ocr.run();
-        verify(io, times(1)).print("123456789");
+        verify(io, times(2)).print("123456789");
     }
 }
