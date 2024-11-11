@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 public class AccountNumberPresenter {
 
     public String present(AccountNumber accountNumber) {
-        final var digits = accountNumber.getDigits().stream()
+        final var digits = accountNumber.digits().stream()
                 .map(String::valueOf)
                 .map(AccountNumberPresenter::replaceInvalidDigits)
                 .collect(Collectors.joining());

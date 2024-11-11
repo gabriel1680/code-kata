@@ -4,10 +4,12 @@ public class BankOCR {
 
     private final FileReader fileReader;
     private final IO io;
+    private final AccountNumberPresenter presenter;
 
-    public BankOCR(FileReader fileReader, IO io) {
+    public BankOCR(FileReader fileReader, IO io, AccountNumberPresenter presenter) {
         this.fileReader = fileReader;
         this.io = io;
+        this.presenter = presenter;
     }
 
     public void run() {
@@ -15,6 +17,6 @@ public class BankOCR {
         final var content = fileReader.read(filepath);
         final var parser = new EntryParser();
         final var accountNumber = parser.parse(content);
-        io.print(accountNumber.toString());
+        io.print(presenter.present(accountNumber));
     }
 }

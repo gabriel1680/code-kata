@@ -2,6 +2,7 @@ package com.kata;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -14,7 +15,13 @@ class BankOCRTest {
     private FileReader fileReader;
 
     @Mock
+    private AccountNumberPresenter presenter;
+
+    @Mock
     private IO io;
+
+    @InjectMocks
+    private BankOCR ocr;
 
     @Test
     void givenAFileWithOneEntry_whenReadIt_thenShouldBeAbleToParseItIntoAAccountNumber() {
@@ -27,7 +34,7 @@ class BankOCRTest {
                 """;
         when(fileReader.read(file)).thenReturn(content);
         when(io.read()).thenReturn(file);
-        final var ocr = new BankOCR(fileReader, io);
+        when(presenter.present(any())).thenReturn("123456789");
         ocr.run();
         verify(io, times(1)).print("123456789");
     }
