@@ -1,14 +1,15 @@
 package com.kata;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public record AccountNumber(List<Integer> digits) {
 
     public boolean checksum() {
-        int result = 0;
-        for (int i = 0; i < digits.size(); i++) {
-            result += digits.get(i) * (i - digits.size());
-        }
-        return result % 11 == 0;
+        final int checksum = IntStream
+                .range(0, digits.size())
+                .map(i -> digits.get(i) * (i - digits.size()))
+                .sum();
+        return checksum % 11 == 0;
     }
 }
