@@ -15,9 +15,7 @@ public class BankOCR {
     }
 
     public void run() {
-        final var filepath = io.read();
-        final var content = fileReader.read(filepath);
-        final var fileParser = this.fileParser;
+        final var content = fileReader.read(io.read());
         fileParser.parse(content).stream()
                 .map(presenter::present)
                 .forEach(io::print);
