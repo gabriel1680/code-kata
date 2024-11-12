@@ -6,6 +6,8 @@ import java.util.stream.IntStream;
 
 public class EntryParser {
 
+    private final static int ENTRY_SIZE = 3;
+
     public AccountNumber parse(String content) {
         final var accountNumberLines = getAccountLinesFrom(content);
         final var digits = getDigitsFrom(accountNumberLines);
@@ -17,7 +19,7 @@ public class EntryParser {
     }
 
     private List<Integer> getDigitsFrom(List<String> accountNumberLines) {
-        return IntStream.iterate(0, i -> i + 3)
+        return IntStream.iterate(0, i -> i + ENTRY_SIZE)
                 .limit(9)
                 .mapToObj(i -> toNumberString(accountNumberLines, i))
                 .map(Digit::of)

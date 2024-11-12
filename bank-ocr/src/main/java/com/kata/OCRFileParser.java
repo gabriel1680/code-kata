@@ -1,26 +1,19 @@
 package com.kata;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class OCRFileParser {
+
+    private final static int ENTRY_SIZE = 112;
 
     private final EntryParser entryParser = new EntryParser();
 
     public List<AccountNumber> parse(String content) {
-        List<AccountNumber> accountNumbers = new ArrayList<>();
-        List<String> entryLines = new ArrayList<>();
-        int linesCounter = 0;
-        for (var line : content.split("\n")) {
-            entryLines.add(line);
-            linesCounter++;
-            if (linesCounter == 4) {
-                String entry = String.join("\n", entryLines);
-                accountNumbers.add(entryParser.parse(entry));
-                linesCounter = 0;
-                entryLines = new ArrayList<>();
-            }
-        }
-        return accountNumbers;
+        return IntStream.iterate(0, i -> i + ENTRY_SIZE)
+                .limit((content.length() / ENTRY_SIZE))
+                .mapToObj(i -> content.substring(i, i + ENTRY_SIZE))
+                .map(entryParser::parse)
+                .toList();
     }
 }
