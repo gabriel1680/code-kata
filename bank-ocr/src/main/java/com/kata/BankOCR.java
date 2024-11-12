@@ -7,10 +7,10 @@ public class BankOCR {
     private final AccountNumberPresenter presenter;
     private final OCRFileParser fileParser;
 
-    public BankOCR(FileReader fileReader, IO io, AccountNumberPresenter presenter) {
+    public BankOCR(FileReader fileReader, IO io) {
         this.fileReader = fileReader;
         this.io = io;
-        this.presenter = presenter;
+        this.presenter = new AccountNumberPresenter();
         this.fileParser = new OCRFileParser();
     }
 

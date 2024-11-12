@@ -17,9 +17,6 @@ class BankOCRTest {
     @Mock
     private FileReader fileReader;
 
-    @Mock
-    private AccountNumberPresenter presenter;
-
     @InjectMocks
     private BankOCR ocr;
 
@@ -33,13 +30,18 @@ class BankOCRTest {
                                           \s
                     _  _     _  _  _  _  _\s
                   | _| _||_||_ |_   ||_||_|
-                  ||_  _|  | _||_|  ||_| _|
+                  ||_  _|  | _||_|  ||_||_|
+                                          \s
+                    _  _     _  _  _  _  _\s
+                  | _| _||_||_ |_   || ||_|
+                  ||_  _|  | _||_|  || ||_|
                                           \s
                 """;
         when(io.read()).thenReturn(filepath);
         when(fileReader.read(filepath)).thenReturn(content);
-        when(presenter.present(any())).thenReturn("123456789");
         ocr.run();
-        verify(io, times(2)).print("123456789");
+        verify(io, times(1)).print("123456789");
+        verify(io, times(1)).print("123456788 ERR");
+        verify(io, times(1)).print("1234567?8 ILL");
     }
 }
