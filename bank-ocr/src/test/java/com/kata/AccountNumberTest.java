@@ -28,7 +28,11 @@ class AccountNumberTest {
         var accountNumber = new AccountNumber(validChecksumDigits);
         assertThat(accountNumber.getPossibleCombinations()).containsExactly("345882865");
 
-        var invalidChecksumDigits = List.of(5, 5, 5, 5, 5, 5, 5, 5, 5);
+        var invalidChecksumDigits = List.of(3, 3, 3, 3, 3, 3, 3, 3, 3);
+        accountNumber = new AccountNumber(invalidChecksumDigits);
+        assertThat(accountNumber.getPossibleCombinations()).contains("333393333");
+
+        invalidChecksumDigits = List.of(5, 5, 5, 5, 5, 5, 5, 5, 5);
         accountNumber = new AccountNumber(invalidChecksumDigits);
         assertThat(accountNumber.getPossibleCombinations()).contains("555655555", "559555555");
 

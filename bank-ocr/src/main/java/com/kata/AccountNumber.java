@@ -64,8 +64,12 @@ public record AccountNumber(List<Integer> digits) {
 
     private static List<Integer> getProximalOf(int n) {
         return switch (n) {
+            case 0 -> List.of(8);
+            case 1 -> List.of(7);
+            case 3 -> List.of(9);
             case 5 -> List.of(6, 9);
             case 6 -> List.of(5, 8);
+            case 7 -> List.of(1);
             case 8 -> List.of(6, 0, 9);
             case 9 -> List.of(8, 3, 5);
             default -> emptyList();

@@ -41,7 +41,7 @@ class BankOCRTest {
         when(fileReader.read(filepath)).thenReturn(content);
         ocr.run();
         verify(io, times(1)).print("123456789");
-        verify(io, times(1)).print("123456788 ERR");
+        verify(io, times(1)).print("123456789");
         verify(io, times(1)).print("1234567?8 ILL");
     }
 }
