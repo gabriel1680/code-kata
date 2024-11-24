@@ -21,20 +21,24 @@ public class AccountNumberPresenter {
     }
 
     private static String present(String digits, boolean checksum, List<String> possibleChecksum) {
-        if (digits.contains("?")) {
-            return digits + " ILL";
-        }
-        if (!checksum) {
-            return presentForInvalidChecksum(digits, possibleChecksum);
-        }
-        return digits;
-    }
-
-    private static String presentForInvalidChecksum(String digits, List<String> possibleChecksum) {
-        if (possibleChecksum.size() == 1) {
+        if (isGuessedVariantCorrect(checksum, possibleChecksum)) {
             return possibleChecksum.get(0);
         }
-        final var status = possibleChecksum.size() > 1 ? " AMB " + possibleChecksum : " ILL";
-        return digits + status;
+        return digits + getStatus(digits, checksum, possibleChecksum);
     }
+
+    private static boolean isGuessedVariantCorrect(boolean checksum, List<String> possibleChecksum) {
+        return !checksum && possibleChecksum.size() == 1;
+    }
+
+    private static String getStatus(String digits, boolean checksum, List<String> possibleChecksum) {
+        if (digits.contains("?")) {
+            return " ILL";
+        } else if (!checksum) {
+            return possibleChecksum.size() > 1 ? " AMB " + possibleChecksum : " ILL";
+        } else {
+            return "";
+        }
+    }
+
 }
