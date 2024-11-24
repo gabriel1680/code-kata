@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.function.IntFunction;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -41,14 +42,19 @@ public record AccountNumber(List<Integer> digits) {
     }
 
     private List<String> getOneDigitsCombinations(int element) {
-        final List<String> result = new ArrayList<>();
-        for (int i = 0; i < digits.size(); i++) {
+        return IntStream.range(0, digits.size())
+                .mapToObj(replaceDigitWith(element))
+                .filter(this::calculateChecksum)
+                .map(this::digitsToString)
+                .toList();
+    }
+
+    private IntFunction<ArrayList<Integer>> replaceDigitWith(int element) {
+        return i -> {
             var mutableDigits = new ArrayList<>(digits);
             mutableDigits.set(i, element);
-            if (calculateChecksum(mutableDigits))
-                result.add(digitsToString(mutableDigits));
-        }
-        return result;
+            return mutableDigits;
+        };
     }
 
     private String digitsToString(List<Integer> list) {
