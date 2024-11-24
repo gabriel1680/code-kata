@@ -7,7 +7,7 @@ public class OCRFileParser {
 
     private final static int ENTRY_SIZE = 112;
 
-    private final EntryParser entryParser = new EntryParser();
+    private final OCREntryParser entryParser = new OCREntryParser();
 
     public List<AccountNumber> parse(String content) {
         return IntStream.iterate(0, i -> i + ENTRY_SIZE)

@@ -10,12 +10,12 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-class EntryParserTest {
+class OCREntryParserTest {
 
     @ParameterizedTest
     @MethodSource("provider")
     void shouldParseAnOCREntry(String entry, List<Integer> digits) {
-        final var entryParser = new EntryParser();
+        final var entryParser = new OCREntryParser();
         final var accountNumber = entryParser.parse(entry);
         assertThat(accountNumber.digits()).isEqualTo(digits);
     }

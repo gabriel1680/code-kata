@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class EntryParser {
+public class OCREntryParser {
 
     private final static int ENTRY_SIZE = 3;
 
