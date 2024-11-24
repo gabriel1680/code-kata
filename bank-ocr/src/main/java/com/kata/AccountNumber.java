@@ -28,17 +28,12 @@ public record AccountNumber(List<Integer> digits) {
         if (checksum()) {
             return singletonList(digitsToString(digits));
         }
-        List<List<String>> result = new ArrayList<>();
-        for (var digit : removeDuplicationsFor(digits)) {
-            result.add(getProximalOf(digit).stream()
-                    .map(this::getOneDigitsCombinations)
-                    .flatMap(Collection::stream)
-                    .toList());
-        }
-        return result.stream()
+        return removeDuplicationsFor(digits).stream()
+                .map(AccountNumber::getProximalOf)
+                .flatMap(Collection::stream)
+                .map(this::getOneDigitsCombinations)
                 .flatMap(Collection::stream)
                 .toList();
-
     }
 
     private List<Integer> removeDuplicationsFor(List<Integer> aList) {
