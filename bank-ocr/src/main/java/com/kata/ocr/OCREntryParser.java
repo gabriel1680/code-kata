@@ -1,4 +1,6 @@
-package com.kata;
+package com.kata.ocr;
+
+import com.kata.AccountNumber;
 
 import java.util.List;
 import java.util.stream.Collectors;

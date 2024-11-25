@@ -1,4 +1,4 @@
-package com.kata;
+package com.kata.ocr;
 
 import java.util.Arrays;
 

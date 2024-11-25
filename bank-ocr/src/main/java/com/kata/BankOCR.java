@@ -1,5 +1,7 @@
 package com.kata;
 
+import com.kata.ocr.OCRFileParser;
+
 public class BankOCR {
 
     private final FileReader fileReader;

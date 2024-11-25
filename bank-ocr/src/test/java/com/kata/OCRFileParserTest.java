@@ -1,5 +1,6 @@
 package com.kata;
 
+import com.kata.ocr.OCRFileParser;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
