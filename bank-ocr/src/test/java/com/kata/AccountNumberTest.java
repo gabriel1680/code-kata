@@ -26,26 +26,26 @@ class AccountNumberTest {
     void guessTheValidChecksum() {
         final var validChecksumDigits = List.of(3, 4, 5, 8, 8, 2, 8, 6, 5);
         var accountNumber = new AccountNumber(validChecksumDigits);
-        assertThat(accountNumber.getPossibleCombinations()).containsExactly("345882865");
+        assertThat(accountNumber.possibleCombinations()).containsExactly("345882865");
 
         var invalidChecksumDigits = List.of(3, 3, 3, 3, 3, 3, 3, 3, 3);
         accountNumber = new AccountNumber(invalidChecksumDigits);
-        assertThat(accountNumber.getPossibleCombinations()).contains("333393333");
+        assertThat(accountNumber.possibleCombinations()).contains("333393333");
 
         invalidChecksumDigits = List.of(5, 5, 5, 5, 5, 5, 5, 5, 5);
         accountNumber = new AccountNumber(invalidChecksumDigits);
-        assertThat(accountNumber.getPossibleCombinations()).contains("555655555", "559555555");
+        assertThat(accountNumber.possibleCombinations()).contains("555655555", "559555555");
 
         invalidChecksumDigits = List.of(6, 6, 6, 6, 6, 6, 6, 6, 6);
         accountNumber = new AccountNumber(invalidChecksumDigits);
-        assertThat(accountNumber.getPossibleCombinations()).contains("666566666", "686666666");
+        assertThat(accountNumber.possibleCombinations()).contains("666566666", "686666666");
 
         invalidChecksumDigits = List.of(8, 8, 8, 8, 8, 8, 8, 8, 8);
         accountNumber = new AccountNumber(invalidChecksumDigits);
-        assertThat(accountNumber.getPossibleCombinations()).contains("888886888", "888888880", "888888988");
+        assertThat(accountNumber.possibleCombinations()).contains("888886888", "888888880", "888888988");
 
         invalidChecksumDigits = List.of(9, 9, 9, 9, 9, 9, 9, 9, 9);
         accountNumber = new AccountNumber(invalidChecksumDigits);
-        assertThat(accountNumber.getPossibleCombinations()).contains("899999999", "993999999", "999959999");
+        assertThat(accountNumber.possibleCombinations()).contains("899999999", "993999999", "999959999");
     }
 }

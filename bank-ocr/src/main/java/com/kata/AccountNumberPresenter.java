@@ -9,7 +9,7 @@ public class AccountNumberPresenter {
         return present(
                 accountNumber.digits(),
                 accountNumber.checksum(),
-                accountNumber.getPossibleCombinations());
+                accountNumber.possibleCombinations());
     }
 
     private static String present(List<Integer> digits, boolean checksum, List<String> possibleChecksum) {

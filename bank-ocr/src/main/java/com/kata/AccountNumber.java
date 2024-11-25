@@ -25,7 +25,7 @@ public record AccountNumber(List<Integer> digits) {
         return checksum % 11 == 0;
     }
 
-    public List<String> getPossibleCombinations() {
+    public List<String> possibleCombinations() {
         if (checksum()) {
             return singletonList(digitsToString(digits));
         }
