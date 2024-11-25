@@ -22,7 +22,7 @@ public class OCREntryParser {
         return IntStream.iterate(0, i -> i + ENTRY_SIZE)
                 .limit(9)
                 .mapToObj(i -> toNumberString(accountNumberLines, i))
-                .map(Digit::of)
+                .map(OCRDigit::of)
                 .map(digit -> digit.value)
                 .toList();
     }
