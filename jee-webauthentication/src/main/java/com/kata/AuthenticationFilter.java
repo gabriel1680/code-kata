@@ -14,21 +14,50 @@ import java.io.IOException;
 
 public class AuthenticationFilter implements Filter {
 
-    private final LdapAuthenticationGateway authenticationGateway;
+    private final PostAuthenticationFilter postAuthenticationFilter;
+    private final GetAuthenticationFilter getAuthenticationFilter;
 
     public AuthenticationFilter(LdapAuthenticationGateway authenticationGateway) {
-        this.authenticationGateway = authenticationGateway;
+        postAuthenticationFilter = new PostAuthenticationFilter(authenticationGateway);
+        getAuthenticationFilter = new GetAuthenticationFilter(authenticationGateway);
     }
 
     @Override
     public void init(FilterConfig config) {
-        // noop
+        getAuthenticationFilter.init(config);
+        postAuthenticationFilter.init(config);
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         final var method = ((HttpServletRequest) request).getMethod();
-        if (method.equals("POST")) {
+        final var authenticator = getAuthenticator(method);
+        authenticator.doFilter(request, response, chain);
+    }
+
+    private Filter getAuthenticator(String method) {
+        return switch (method) {
+            case "POST" -> postAuthenticationFilter;
+            case "GET" -> getAuthenticationFilter;
+            default -> throw new RuntimeException("invalid request method");
+        };
+    }
+
+
+    @Override
+    public void destroy() {
+        getAuthenticationFilter.destroy();
+        postAuthenticationFilter.destroy();
+    }
+
+    private record PostAuthenticationFilter(LdapAuthenticationGateway authenticationGateway) implements Filter {
+
+        @Override
+        public void init(FilterConfig filterConfig) {
+        }
+
+        @Override
+        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
             if (!request.getContentType().equals("application/json"))
                 throw new RuntimeException("invalid request content type");
             try (BufferedReader reader = request.getReader()) {
@@ -44,7 +73,21 @@ public class AuthenticationFilter implements Filter {
                     throw new RuntimeException("invalid username or password");
                 chain.doFilter(request, response);
             }
-        } else if (method.equals("GET")) {
+        }
+
+        @Override
+        public void destroy() {
+        }
+    }
+
+    private record GetAuthenticationFilter(LdapAuthenticationGateway authenticationGateway) implements Filter {
+
+        @Override
+        public void init(FilterConfig filterConfig) {
+        }
+
+        @Override
+        public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
             final var username = request.getParameter("username");
             if (username == null || username.isEmpty())
                 throw new RuntimeException("invalid request missing username");
@@ -54,13 +97,10 @@ public class AuthenticationFilter implements Filter {
             if (!authenticationGateway.credentialsAreValid(username, password))
                 throw new RuntimeException("invalid username or password");
             chain.doFilter(request, response);
-        } else {
-            throw new RuntimeException("invalid request method");
         }
-    }
 
-    @Override
-    public void destroy() {
-        // noop
+        @Override
+        public void destroy() {
+        }
     }
 }
