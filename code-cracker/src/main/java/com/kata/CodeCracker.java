@@ -16,23 +16,31 @@ public class CodeCracker {
     }
 
     public String decrypt(String cypher) {
+        return translate(cypher, key, ALPHABET);
+    }
+
+    public String encrypt(String word) {
+        return translate(word, ALPHABET, key);
+    }
+
+    private static String translate(String word, char[] source, char[] from) {
         StringBuilder result = new StringBuilder();
-        for (char c : cypher.toCharArray()) {
-            result.append(getChar(c));
+        for (char c : word.toCharArray()) {
+            result.append(getChar(c, source, from));
         }
         return result.toString();
     }
 
-    private String getChar(char c) {
-        final var index = indexOf(c);
+    private static String getChar(char c, char[] source, char[] from) {
+        final var index = indexOf(c, source);
         if (index == -1)
             throw new IllegalArgumentException("invalid token");
-        return String.valueOf(ALPHABET[index]);
+        return String.valueOf(from[index]);
     }
 
-    private int indexOf(char c) {
-        for (int i = 0; i < key.length; i++) {
-            if (key[i] == c) return i;
+    private static int indexOf(char c, char[] source) {
+        for (int i = 0; i < source.length; i++) {
+            if (source[i] == c) return i;
         }
         return -1;
     }

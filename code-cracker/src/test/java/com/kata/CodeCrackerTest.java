@@ -24,4 +24,15 @@ class CodeCrackerTest {
     void shouldDecryptAWord() {
         assertThat(codeCracker.decrypt("!)")).isEqualTo("ab");
     }
+
+    @Test
+    void shouldEncryptAChar() {
+        assertThat(codeCracker.encrypt("a")).isEqualTo("!");
+        assertThat(codeCracker.encrypt("b")).isEqualTo(")");
+    }
+
+    @Test
+    void shouldEncryptAWord() {
+        assertThat(codeCracker.encrypt("ab")).isEqualTo("!)");
+    }
 }
