@@ -34,4 +34,12 @@ class EmployeeReportTest {
         final var report = "Emplyees Report:\n\tMike\nTotal employees: 1\n";
         assertEquals(report, employeeReport.getReport());
     }
+
+    @Test
+    void sortingNamesInAscendingOrder() {
+        final var employees = List.of(new Employee("Max", 17), new Employee("Sepp", 18), new Employee("Nina", 15), new Employee("Mike", 51));
+        final var employeeReport = new EmployeeReport(employees);
+        final var report = "Emplyees Report:\n\tMike\n\tSepp\nTotal employees: 2\n";
+        assertEquals(report, employeeReport.getReport());
+    }
 }

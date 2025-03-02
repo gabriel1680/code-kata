@@ -15,6 +15,7 @@ public class EmployeeReport {
         final var names = employees.stream()
                 .filter(employee -> employee.age() >= 18)
                 .map(Employee::name)
+                .sorted()
                 .toList();
         final var formattedNames = names.stream()
                 .map("\t%s\n"::formatted)
