@@ -13,6 +13,7 @@ public class EmployeeReport {
 
     public String getReport() {
         final var names = employees.stream()
+                .filter(employee -> employee.age() >= 18)
                 .map(Employee::name)
                 .toList();
         final var formattedNames = names.stream()

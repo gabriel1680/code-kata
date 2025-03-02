@@ -25,4 +25,13 @@ class EmployeeReportTest {
         final var report = "Emplyees Report:\n\tMike\nTotal employees: 1\n";
         assertEquals(report, employeeReport.getReport());
     }
+
+    @ParameterizedTest
+    @ValueSource(ints = {18, 19, 20})
+    void filterFor18YearsOldOrOlder(int age) {
+        final var employees = List.of(new Employee("Max", 17), new Employee("Mike", age));
+        final var employeeReport = new EmployeeReport(employees);
+        final var report = "Emplyees Report:\n\tMike\nTotal employees: 1\n";
+        assertEquals(report, employeeReport.getReport());
+    }
 }
