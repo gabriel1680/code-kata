@@ -18,4 +18,11 @@ class EmployeeReportTest {
         final var report = "Emplyees Report:\nTotal employees: 0\n";
         assertEquals(report, employeeReport.getReport());
     }
+
+    @Test
+    void oneEmployeeReport() {
+        final var employeeReport = new EmployeeReport(List.of(new Employee("Mike", 51)));
+        final var report = "Emplyees Report:\n\tMike\nTotal employees: 1\n";
+        assertEquals(report, employeeReport.getReport());
+    }
 }

@@ -16,6 +16,7 @@ public class EmployeeReport {
                 .map(Employee::name)
                 .toList();
         final var formattedNames = names.stream()
+                .map("\t%s\n"::formatted)
                 .collect(Collectors.joining());
         return "Emplyees Report:\n%sTotal employees: %s\n".formatted(formattedNames, names.size());
     }
