@@ -1,5 +1,6 @@
 package com.kata;
 
+import com.kata.authentication.AuthenticationFilter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
