@@ -11,8 +11,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-// TODO: chain.next() when cookie with authentication already exists
-// TODO: add new AuthorizationFiler to handle with other flow
 public class AuthenticationFilter implements Filter {
 
     private final LdapAuthenticationGateway authenticationGateway;
@@ -46,7 +44,7 @@ public class AuthenticationFilter implements Filter {
             default -> throw new RuntimeException("invalid request method");
         };
     }
-    
+
     @Override
     public void destroy() {
     }
