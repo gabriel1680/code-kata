@@ -1,7 +1,9 @@
 package com.kata;
 
+import com.kata.AuthenticationFilterTest.SSOAuthorization.FakeSSORegistry;
 import com.kata.authentication.AuthenticationFilter;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -56,6 +58,18 @@ class AuthenticationFilterTest {
         when(request.getCookies()).thenReturn(new Cookie[]{});
     }
 
+    private void givenAGETRequestWith(String username, String password) {
+        when(request.getMethod()).thenReturn("GET");
+        when(request.getParameter("username")).thenReturn(username);
+        when(request.getParameter("password")).thenReturn(password);
+    }
+
+    private void givenAPOSTRequestWith(String jsonBody) throws IOException {
+        when(request.getMethod()).thenReturn("POST");
+        when(request.getContentType()).thenReturn("application/json");
+        when(request.getReader()).thenReturn(new BufferedReader(new StringReader(jsonBody)));
+    }
+
     @Test
     void invalidMethodRequest() {
         when(request.getMethod()).thenReturn("PUT");
@@ -63,13 +77,13 @@ class AuthenticationFilterTest {
     }
 
     @Test
-    void invalidFormatRequest_onGET1() {
+    void invalidUsernameRequest_onGET() {
         when(request.getMethod()).thenReturn("GET");
         assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request missing username");
     }
 
     @Test
-    void invalidFormatRequest_onGET2() {
+    void invalidPasswordRequest_onGET2() {
         when(request.getMethod()).thenReturn("GET");
         when(request.getParameter("username")).thenReturn("John Doe");
         assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request missing password");
@@ -77,26 +91,26 @@ class AuthenticationFilterTest {
 
     @Test
     void invalidGatewayAuthentication_onGET() {
-        when(request.getMethod()).thenReturn("GET");
-        when(request.getParameter("username")).thenReturn("invalid");
-        when(request.getParameter("password")).thenReturn("john_doe123");
+        givenAGETRequestWith("invalid_username", "john_doe123");
+        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
+    }
+
+    @Test
+    void invalidGatewayAuthenticationPassword_onGET() {
+        givenAGETRequestWith("John Doe", "invalid_password");
         assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
     }
 
     @Test
     void validGatewayAuthentication_onGET() throws ServletException, IOException {
-        when(request.getMethod()).thenReturn("GET");
-        when(request.getParameter("username")).thenReturn("John Doe");
-        when(request.getParameter("password")).thenReturn("john_doe123");
+        givenAGETRequestWith("John Doe", "john_doe123");
         sut.doFilter(request, response, chain);
         verify(chain, times(1)).doFilter(any(), any());
     }
 
     @Test
     void invalidJsonFormatRequest_onPOST() throws IOException {
-        when(request.getMethod()).thenReturn("POST");
-        when(request.getContentType()).thenReturn("application/json");
-        when(request.getReader()).thenReturn(new BufferedReader(new StringReader("abc")));
+        givenAPOSTRequestWith("abc");
         assertThatThrownBy(() -> sut.doFilter(request, response, chain));
     }
 
@@ -108,75 +122,73 @@ class AuthenticationFilterTest {
             "{\"username\":\"John Doe\",\"password\":\"\"}"
     })
     void emptyFieldsRequest_onPOST(String jsonBody) throws IOException {
-        when(request.getMethod()).thenReturn("POST");
-        when(request.getContentType()).thenReturn("application/json");
-        when(request.getReader()).thenReturn(new BufferedReader(new StringReader(jsonBody)));
+        givenAPOSTRequestWith(jsonBody);
         assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request format");
     }
 
     @Test
     void validRequestRequest_failOnAuthenticate_onPOST() throws IOException {
-        when(request.getMethod()).thenReturn("POST");
-        when(request.getContentType()).thenReturn("application/json");
-        when(request.getReader()).thenReturn(new BufferedReader(new StringReader("{\"username\":\"John Doe\",\"password\":\"123\"}")));
+        givenAPOSTRequestWith("{\"username\":\"John Doe\",\"password\":\"123\"}");
         assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
     }
 
     @Test
     void validRequestRequest_okOnAuthenticate_onPOST() throws IOException, ServletException {
-        when(request.getMethod()).thenReturn("POST");
-        when(request.getContentType()).thenReturn("application/json");
-        when(request.getReader()).thenReturn(new BufferedReader(new StringReader("{\"username\":\"John Doe\",\"password\":\"john_doe123\"}")));
+        givenAPOSTRequestWith("{\"username\":\"John Doe\",\"password\":\"john_doe123\"}");
         sut.doFilter(request, response, chain);
         verify(chain, times(1)).doFilter(any(), any());
     }
 
-    static class FakeSSORegistry implements SingleSignOnRegistry {
+    @Nested
+    class SSOAuthorization {
+
+        static class FakeSSORegistry implements SingleSignOnRegistry {
 
 
-        @Override
-        public boolean tokenIsValid(String token) {
-            return "1".equals(token);
+            @Override
+            public boolean tokenIsValid(String token) {
+                return "1".equals(token);
+            }
+
+            @Override
+            public String registerNewSession(String userName) {
+                return userName.equals("John Doe") ? "1" : "2";
+            }
+
+            @Override
+            public void endSession(String token) {
+            }
         }
 
-        @Override
-        public String registerNewSession(String userName) {
-            return userName.equals("John Doe") ? "1" : "2";
+        @Captor
+        ArgumentCaptor<Cookie> cookieCaptor;
+
+        private void givenTokenCookie(String number) {
+            when(request.getCookies()).thenReturn(new Cookie[]{new Cookie("x-sso-token", number)});
         }
 
-        @Override
-        public void endSession(String token) {
+        @Test
+        void afterSuccessfullyLogin_shouldRegisterTheSessionOnACookie() throws ServletException, IOException {
+            givenAGETRequestWith("John Doe", "john_doe123");
+            sut.doFilter(request, response, chain);
+            verify(response, times(1)).addCookie(cookieCaptor.capture());
+            final var cookie = cookieCaptor.getValue();
+            assertThat(cookie.getName()).isEqualTo("x-sso-token");
+            assertThat(cookie.getValue()).isEqualTo("1");
         }
-    }
 
-    @Captor
-    ArgumentCaptor<Cookie> cookieCaptor;
+        @Test
+        void cookieWithInvalidSSOSessionId() {
+            givenTokenCookie("5");
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid token");
+        }
 
-    @Test
-    void afterSuccessfullyLogin_shouldRegisterTheSessionOnACookie() throws ServletException, IOException {
-        when(request.getMethod()).thenReturn("GET");
-        when(request.getParameter("username")).thenReturn("John Doe");
-        when(request.getParameter("password")).thenReturn("john_doe123");
-        sut.doFilter(request, response, chain);
-        verify(response, times(1)).addCookie(cookieCaptor.capture());
-        final var cookie = cookieCaptor.getValue();
-        assertThat(cookie.getName()).isEqualTo("x-sso-token");
-        assertThat(cookie.getValue()).isEqualTo("1");
-    }
-
-    @Test
-    void cookieWithInvalidSSOSessionId() {
-        when(request.getCookies()).thenReturn(new Cookie[]{new Cookie("x-sso-token", "5")});
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid token");
-    }
-
-    @Test
-    void cookieWithValidSSOSessionId() throws ServletException, IOException {
-        when(request.getMethod()).thenReturn("GET");
-        when(request.getParameter("username")).thenReturn("John Doe");
-        when(request.getParameter("password")).thenReturn("john_doe123");
-        when(request.getCookies()).thenReturn(new Cookie[]{new Cookie("x-sso-token", "1")});
-        sut.doFilter(request, response, chain);
-        verify(chain, times(1)).doFilter(any(), any());
+        @Test
+        void cookieWithValidSSOSessionId() throws ServletException, IOException {
+            givenAGETRequestWith("John Doe", "john_doe123");
+            givenTokenCookie("1");
+            sut.doFilter(request, response, chain);
+            verify(chain, times(1)).doFilter(any(), any());
+        }
     }
 }
