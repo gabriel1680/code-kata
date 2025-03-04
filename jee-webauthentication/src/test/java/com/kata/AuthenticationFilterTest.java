@@ -76,67 +76,75 @@ class AuthenticationFilterTest {
         assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request method");
     }
 
-    @Test
-    void invalidUsernameRequest_onGET() {
-        when(request.getMethod()).thenReturn("GET");
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request missing username");
+    @Nested
+    class AuthenticationWithGET {
+
+        @Test
+        void invalidUsernameRequest() {
+            when(request.getMethod()).thenReturn("GET");
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request missing username");
+        }
+
+        @Test
+        void invalidPasswordRequest() {
+            when(request.getMethod()).thenReturn("GET");
+            when(request.getParameter("username")).thenReturn("John Doe");
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request missing password");
+        }
+
+        @Test
+        void invalidGatewayAuthentication() {
+            givenAGETRequestWith("invalid_username", "john_doe123");
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
+        }
+
+        @Test
+        void invalidGatewayAuthenticationPassword() {
+            givenAGETRequestWith("John Doe", "invalid_password");
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
+        }
+
+        @Test
+        void validGatewayAuthentication() throws ServletException, IOException {
+            givenAGETRequestWith("John Doe", "john_doe123");
+            sut.doFilter(request, response, chain);
+            verify(chain, times(1)).doFilter(any(), any());
+        }
     }
 
-    @Test
-    void invalidPasswordRequest_onGET2() {
-        when(request.getMethod()).thenReturn("GET");
-        when(request.getParameter("username")).thenReturn("John Doe");
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request missing password");
-    }
+    @Nested
+    class AuthenticationWithPOST {
 
-    @Test
-    void invalidGatewayAuthentication_onGET() {
-        givenAGETRequestWith("invalid_username", "john_doe123");
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
-    }
+        @Test
+        void invalidJsonFormatRequest() throws IOException {
+            givenAPOSTRequestWith("abc");
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain));
+        }
 
-    @Test
-    void invalidGatewayAuthenticationPassword_onGET() {
-        givenAGETRequestWith("John Doe", "invalid_password");
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
-    }
+        @ParameterizedTest
+        @ValueSource(strings = {
+                "{}",
+                "{\"username\":\"\"}",
+                "{\"username\":\"John Doe\"}",
+                "{\"username\":\"John Doe\",\"password\":\"\"}"
+        })
+        void emptyFieldsRequest(String jsonBody) throws IOException {
+            givenAPOSTRequestWith(jsonBody);
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request format");
+        }
 
-    @Test
-    void validGatewayAuthentication_onGET() throws ServletException, IOException {
-        givenAGETRequestWith("John Doe", "john_doe123");
-        sut.doFilter(request, response, chain);
-        verify(chain, times(1)).doFilter(any(), any());
-    }
+        @Test
+        void validRequestRequest_failOnAuthenticate() throws IOException {
+            givenAPOSTRequestWith("{\"username\":\"John Doe\",\"password\":\"123\"}");
+            assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
+        }
 
-    @Test
-    void invalidJsonFormatRequest_onPOST() throws IOException {
-        givenAPOSTRequestWith("abc");
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain));
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {
-            "{}",
-            "{\"username\":\"\"}",
-            "{\"username\":\"John Doe\"}",
-            "{\"username\":\"John Doe\",\"password\":\"\"}"
-    })
-    void emptyFieldsRequest_onPOST(String jsonBody) throws IOException {
-        givenAPOSTRequestWith(jsonBody);
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid request format");
-    }
-
-    @Test
-    void validRequestRequest_failOnAuthenticate_onPOST() throws IOException {
-        givenAPOSTRequestWith("{\"username\":\"John Doe\",\"password\":\"123\"}");
-        assertThatThrownBy(() -> sut.doFilter(request, response, chain)).hasMessage("invalid username or password");
-    }
-
-    @Test
-    void validRequestRequest_okOnAuthenticate_onPOST() throws IOException, ServletException {
-        givenAPOSTRequestWith("{\"username\":\"John Doe\",\"password\":\"john_doe123\"}");
-        sut.doFilter(request, response, chain);
-        verify(chain, times(1)).doFilter(any(), any());
+        @Test
+        void validRequestRequest_okOnAuthenticate() throws IOException, ServletException {
+            givenAPOSTRequestWith("{\"username\":\"John Doe\",\"password\":\"john_doe123\"}");
+            sut.doFilter(request, response, chain);
+            verify(chain, times(1)).doFilter(any(), any());
+        }
     }
 
     @Nested
