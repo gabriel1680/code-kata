@@ -9,10 +9,17 @@ import java.io.IOException;
 import java.util.Optional;
 
 class PostCredentialParser implements RequestCredentialParser {
+
+    private static final String CONTENT_TYPE = "application/json";
+
     @Override
     public Credentials getCredentialsOf(ServletRequest request) {
-        if (!request.getContentType().equals("application/json"))
+        if (!CONTENT_TYPE.equals(request.getContentType()))
             throw new RuntimeException("invalid request content type");
+        return getCredentialsFromBody(request);
+    }
+
+    private static Credentials getCredentialsFromBody(ServletRequest request) {
         try (BufferedReader reader = request.getReader()) {
             return getCredentialsOf(reader);
         } catch (IOException e) {
