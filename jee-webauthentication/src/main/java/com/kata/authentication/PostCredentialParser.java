@@ -7,6 +7,7 @@ import javax.servlet.ServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 class PostCredentialParser implements RequestCredentialParser {
 
@@ -38,7 +39,7 @@ class PostCredentialParser implements RequestCredentialParser {
     private static String getOrThrowProperty(JsonNode key) {
         return Optional.ofNullable(key)
                 .map(JsonNode::asText)
-                .filter(i -> !i.isEmpty())
+                .filter(Predicate.not(String::isEmpty))
                 .orElseThrow(() -> new RuntimeException("invalid request format"));
     }
 }
