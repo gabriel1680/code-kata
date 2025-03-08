@@ -6,12 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static com.kata.TestUtils.forDate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -25,10 +22,6 @@ public class BirthdayServiceTest {
     private SpyEmailService emailService;
     private EmployeeRepository employeeRepository;
     private BirthdayService sut;
-
-    private static Instant forDate(String date) {
-        return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy/MM/dd")).atStartOfDay().toInstant(ZoneOffset.UTC);
-    }
 
     @BeforeEach
     void setUp() {
