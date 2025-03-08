@@ -1,13 +1,16 @@
-package com.kata;
+package com.kata.out;
+
+import com.kata.app.Employee;
+import com.kata.app.EmployeeRepository;
 
 import java.time.Instant;
 import java.util.List;
 
-class InMemoryEmployeeRepository implements EmployeeRepository {
+public class InMemoryEmployeeRepository implements EmployeeRepository {
 
     private final List<Employee> employees;
 
-    InMemoryEmployeeRepository(List<Employee> employees) {
+    public InMemoryEmployeeRepository(List<Employee> employees) {
         this.employees = employees;
     }
 

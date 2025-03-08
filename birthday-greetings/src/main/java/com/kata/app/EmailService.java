@@ -1,4 +1,4 @@
-package com.kata;
+package com.kata.app;
 
 @FunctionalInterface
 public interface EmailService {
