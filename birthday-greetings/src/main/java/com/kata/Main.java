@@ -14,6 +14,6 @@ public class Main {
         final var employeeRepository = new CSVFileEmployeeRepository(filepath);
         employeeRepository.loadEmployees();
         final var birthdayService = new BirthdayService(employeeRepository, emailService);
-        birthdayService.sendGreetings(Instant.now());
+        birthdayService.sendGreetings(Instant.parse("2025-10-08T00:00:00.000Z"));
     }
 }

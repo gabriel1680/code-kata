@@ -1,15 +1,12 @@
 package com.kata.out;
 
+import com.kata.app.Birthdate;
 import com.kata.app.Employee;
 import com.kata.app.EmployeeRepository;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +23,8 @@ public class CSVFileEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getFor(Instant date) {
-        return employees.stream().filter(e -> e.birthdate().equals(date)).toList();
+    public List<Employee> getFor(int month, int day) {
+        return employees.stream().filter(e -> e.birthdate().is(month, day)).toList();
     }
 
     public void loadEmployees() {
@@ -40,14 +37,7 @@ public class CSVFileEmployeeRepository implements EmployeeRepository {
     }
 
     private static Employee createEmployeeOf(List<String> record) {
-        return new Employee(record.get(1), record.get(0), record.get(3), parseStringToDate(record));
-    }
-
-    private static Instant parseStringToDate(List<String> record) {
-        final var formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        return LocalDate.parse(record.get(2), formatter)
-                .atStartOfDay()
-                .toInstant(ZoneOffset.UTC);
+        return new Employee(record.get(1), record.get(0), record.get(3), Birthdate.valueOf(record.get(2)));
     }
 
     private List<List<String>> parseCsvIntoRecords() {

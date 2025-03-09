@@ -3,7 +3,6 @@ package com.kata.out;
 import com.kata.app.Employee;
 import com.kata.app.EmployeeRepository;
 
-import java.time.Instant;
 import java.util.List;
 
 public class InMemoryEmployeeRepository implements EmployeeRepository {
@@ -15,7 +14,11 @@ public class InMemoryEmployeeRepository implements EmployeeRepository {
     }
 
     @Override
-    public List<Employee> getFor(Instant date) {
-        return employees.stream().filter(e -> e.birthdate().equals(date)).toList();
+    public List<Employee> getFor(int month, int day) {
+        return employees.stream().filter(e -> withBirthdateOn(e, month, day)).toList();
+    }
+
+    private static boolean withBirthdateOn(Employee e, int month, int day) {
+        return e.birthdate().is(month, day);
     }
 }
