@@ -1,8 +1,7 @@
-package com.kata.out;
+package com.kata.in;
 
 import com.kata.app.Birthdate;
 import com.kata.app.Employee;
-import com.kata.app.EmployeeRepository;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -11,33 +10,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CSVFileEmployeeRepository implements EmployeeRepository {
+public class CSVFileEmployeeLoader {
     private static final String COMMA_DELIMITER = ", ";
 
     private final String sourceFile;
-    private final List<Employee> employees;
 
-    public CSVFileEmployeeRepository(String sourceFile) {
+    public CSVFileEmployeeLoader(String sourceFile) {
         this.sourceFile = sourceFile;
-        employees = new ArrayList<>();
     }
 
-    @Override
-    public List<Employee> getFor(int month, int day) {
-        return employees.stream().filter(e -> e.birthdate().is(month, day)).toList();
-    }
-
-    public void loadEmployees() {
+    public List<Employee> loadEmployees() {
         final var records = parseCsvIntoRecords();
         // removes the header
         records.remove(0);
-        for (var record : records) {
-            employees.add(createEmployeeOf(record));
-        }
+        final var result = new ArrayList<Employee>();
+        for (var record : records)
+            result.add(createEmployeeOf(record));
+        return result;
     }
 
     private static Employee createEmployeeOf(List<String> record) {
-        return new Employee(record.get(1), record.get(0), record.get(3), Birthdate.valueOf(record.get(2)));
+        return new Employee(record.get(1), record.get(0), record.get(3),
+                            Birthdate.valueOf(record.get(2)));
     }
 
     private List<List<String>> parseCsvIntoRecords() {
