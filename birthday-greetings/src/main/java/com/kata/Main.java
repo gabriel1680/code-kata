@@ -10,7 +10,7 @@ import java.time.Instant;
 
 public class Main {
     public static void main(String[] args) {
-        final var emailService = new InMemoryEmailService();
+        final var emailService = new InMemoryEmailService(System.out);
         final var filepath = Paths.get("src", "main", "resources", "employees.csv").toString();
         final var employeeLoader = new CSVFileEmployeeLoader(filepath);
         final var employeeRepository =
