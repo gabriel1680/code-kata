@@ -6,12 +6,15 @@ import com.kata.app.Employee;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public class CSVFileEmployeeLoader {
     private static final String COMMA_DELIMITER = ", ";
+    private static final int CSV_HEADER = 1;
 
     private final String sourceFile;
 
@@ -20,13 +23,9 @@ public class CSVFileEmployeeLoader {
     }
 
     public List<Employee> loadEmployees() {
-        final var records = parseCsvIntoRecords();
-        // removes the header
-        records.remove(0);
-        final var result = new ArrayList<Employee>();
-        for (var record : records)
-            result.add(createEmployeeOf(record));
-        return result;
+        return parseCsvIntoRecords().stream()
+                .map(CSVFileEmployeeLoader::createEmployeeOf)
+                .toList();
     }
 
     private static Employee createEmployeeOf(List<String> record) {
@@ -36,13 +35,24 @@ public class CSVFileEmployeeLoader {
 
     private List<List<String>> parseCsvIntoRecords() {
         try (BufferedReader reader = new BufferedReader(new FileReader(sourceFile))) {
-            final List<List<String>> records = new ArrayList<>();
-            for (String line; (line = reader.readLine()) != null; )
-                records.add(parseLine(line));
-            return records;
+            return Stream.generate(createSupplierOf(reader))
+                    .takeWhile(Objects::nonNull)
+                    .skip(CSV_HEADER)
+                    .map(CSVFileEmployeeLoader::parseLine)
+                    .toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private static Supplier<String> createSupplierOf(BufferedReader reader) {
+        return () -> {
+            try {
+                return reader.readLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        };
     }
 
     private static List<String> parseLine(String line) {

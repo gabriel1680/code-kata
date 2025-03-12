@@ -18,8 +18,8 @@ public class BirthdayService {
     }
 
     public void sendGreetings(Instant birthdate) {
-        for (final var employeeToGreeting : getEmployeesToGreeting(birthdate))
-            sendMailTo(employeeToGreeting.email(), employeeToGreeting.firstName());
+        getEmployeesToGreeting(birthdate).forEach(
+                employee -> sendMailTo(employee.email(), employee.firstName()));
     }
 
     private List<Employee> getEmployeesToGreeting(Instant today) {
