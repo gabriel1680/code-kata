@@ -1,13 +1,14 @@
 package com.kata;
 
 import java.time.LocalDateTime;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        final Clock clock = LocalDateTime.now()::getHour;
-        final var io = new Console(System.out, new Scanner(System.in));
-        final var app = new Ohce(clock, io);
-        app.start(args[0]);
+        Clock clock = LocalDateTime.now()::getHour;
+        var greeter = new Greeter(clock);
+        var interpreter = new Interpreter();
+        var console = new Console(System.in, System.out);
+        var ohce = new Ohce(console, greeter, interpreter);
+        ohce.start(args[0]);
     }
 }

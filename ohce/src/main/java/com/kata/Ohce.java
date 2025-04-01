@@ -1,38 +1,31 @@
 package com.kata;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 public class Ohce {
 
-    private final Clock clock;
-    private final Console io;
-    private final Salutation salutation;
-    private final Echo echo;
-    private final Presenter presenter;
+    private final Console console;
+    private final Greeter greeter;
+    private final Interpreter interpreter;
 
-    public Ohce(Clock aClock, Console console) {
-        clock = aClock;
-        io = console;
-        presenter = new Presenter();
-        salutation = new Salutation();
-        echo = new Echo();
+    public Ohce(Console console, Greeter greeter, Interpreter interpreter) {
+        this.console = console;
+        this.greeter = greeter;
+        this.interpreter = interpreter;
     }
 
     public void start(String aName) {
-        final var timelySalutation = presenter.salute(salutation.at(clock.getHour()), aName);
-        io.printLine(timelySalutation);
-        Stream.generate(io::readLine)
-            .takeWhile(this::isNotStop)
-            .flatMap(this::doEcho)
-            .forEach(io::printLine);
-        io.printLine(presenter.goodbye(aName));
+        console.printLine(greeter.greet(aName));
+        Stream.generate(console::readLine)
+                .takeWhile(this::isNotStop)
+                .map(interpreter::interpret)
+                .flatMap(List::stream)
+                .forEach(console::printLine);
+        console.printLine("Adios " + aName);
     }
 
     private boolean isNotStop(String input) {
         return !input.equals("Stop!");
-    }
-
-    private Stream<String> doEcho(String input) {
-        return echo.of(input).stream().map(presenter::echo);
     }
 }

@@ -1,8 +1,19 @@
 package com.kata;
 
-public class Salutation {
+public class Greeter {
 
-    public String at(int hour) {
+    private final Clock clock;
+
+    public Greeter(Clock clock) {
+        this.clock = clock;
+    }
+
+    public String greet(String name) {
+        return getCurrentTimeGreet() + name + "!";
+    }
+
+    public String getCurrentTimeGreet() {
+        int hour = clock.getHour();
         if (isMorning(hour))
             return "Buenos días";
         else if (isAfternoon(hour))

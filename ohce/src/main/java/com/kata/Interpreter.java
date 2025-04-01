@@ -5,9 +5,9 @@ import java.util.List;
 import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 
-class Echo {
+public class Interpreter {
 
-    public List<String> of(String word) {
+    public List<String> interpret(String word) {
         if (word.isEmpty()) return emptyList();
         return isPalindrome(word, toReversed(word)) ?
             List.of(toReversed(word), "¡Bonita palabra!") :
