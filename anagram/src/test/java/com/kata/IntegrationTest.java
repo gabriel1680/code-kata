@@ -21,12 +21,12 @@ class IntegrationTest {
 
     @BeforeEach
     void setUp() {
-        anagram = new Anagram();
+        anagram = new Anagram(out, new AnagramsProvider(), new AnagramSolver());
     }
 
     @Test
     void acceptance() {
-        anagram.run();
+        anagram.run("documenting");
         InOrder inOrder = inOrder(out);
         inOrder.verify(out).println("documenting");
         inOrder.verify(out).println("gnitnemucod");
