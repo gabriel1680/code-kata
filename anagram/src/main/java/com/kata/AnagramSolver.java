@@ -16,11 +16,15 @@ public class AnagramSolver {
     private static List<String> getAnagrams(String word, List<String> anagrams) {
         List<String> result = new ArrayList<>();
         for (var anagram : anagrams) {
-            if (word.equals(toSorted(anagram))) {
+            if (areAnagrams(word, anagram)) {
                 result.add(anagram);
             }
         }
         return result;
+    }
+
+    private static boolean areAnagrams(String word, String anagram) {
+        return word.equals(toSorted(anagram));
     }
 
     private static String toSorted(String word) {
