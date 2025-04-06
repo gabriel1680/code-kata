@@ -15,7 +15,6 @@ public class Anagram {
     }
 
     public void run(String word) {
-        var anagrams = provider.provide();
-        solver.solve(word, anagrams).forEach(out::println);
+        solver.solve(word, provider.provide()).forEach(out::println);
     }
 }
