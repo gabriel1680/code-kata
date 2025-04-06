@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static org.mockito.Mockito.inOrder;
 
@@ -24,8 +24,8 @@ class IntegrationTest {
 
     @BeforeEach
     void setUp() throws IOException {
-        final var resource = getClass().getClassLoader().getResource("test-file.txt");
-        final var reader = Files.newBufferedReader(Path.of(resource.getPath()));
+        final var path = Paths.get("src", "test", "resources", "test-file.txt");
+        final var reader = Files.newBufferedReader(path);
         final var provider = new AnagramsProvider(reader);
         final var solver = new AnagramSolver();
         anagram = new Anagram(out, provider, solver);
