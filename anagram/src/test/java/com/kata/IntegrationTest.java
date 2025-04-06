@@ -25,7 +25,7 @@ class IntegrationTest {
     @BeforeEach
     void setUp() throws IOException {
         final var resource = getClass().getClassLoader().getResource("test-file.txt");
-        var reader = Files.newBufferedReader(Path.of(resource.getPath()));
+        final var reader = Files.newBufferedReader(Path.of(resource.getPath()));
         final var provider = new AnagramsProvider(reader);
         final var solver = new AnagramSolver();
         anagram = new Anagram(out, provider, solver);
