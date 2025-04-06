@@ -7,7 +7,10 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static org.mockito.Mockito.inOrder;
 
@@ -20,8 +23,12 @@ class IntegrationTest {
     private Anagram anagram;
 
     @BeforeEach
-    void setUp() {
-        anagram = new Anagram(out, new AnagramsProvider(), new AnagramSolver());
+    void setUp() throws IOException {
+        final var resource = getClass().getClassLoader().getResource("test-file.txt");
+        var reader = Files.newBufferedReader(Path.of(resource.getPath()));
+        final var provider = new AnagramsProvider(reader);
+        final var solver = new AnagramSolver();
+        anagram = new Anagram(out, provider, solver);
     }
 
     @Test
