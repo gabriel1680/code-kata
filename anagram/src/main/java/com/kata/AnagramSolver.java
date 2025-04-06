@@ -1,6 +1,5 @@
 package com.kata;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,13 +13,7 @@ public class AnagramSolver {
     }
 
     private static List<String> getAnagrams(String word, List<String> anagrams) {
-        List<String> result = new ArrayList<>();
-        for (var anagram : anagrams) {
-            if (areAnagrams(word, anagram)) {
-                result.add(anagram);
-            }
-        }
-        return result;
+        return anagrams.stream().filter(anagram -> areAnagrams(word, anagram)).toList();
     }
 
     private static boolean areAnagrams(String word, String anagram) {
