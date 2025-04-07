@@ -9,7 +9,7 @@ public class Greeter {
     }
 
     public String greet(String name) {
-        return getCurrentTimeGreet() + name + "!";
+        return "¡%s %s!".formatted(getCurrentTimeGreet(), name);
     }
 
     public String getCurrentTimeGreet() {

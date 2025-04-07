@@ -8,32 +8,26 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OhceTest {
 
     @Mock
-    private Greeter greeter;
-    @Mock
-    private Interpreter interpreter;
-    @Mock
     private Console console;
+    private Clock clock;
 
     private Ohce sut;
 
     @BeforeEach
     void setUp() {
-        sut = new Ohce(console, greeter, interpreter);
+        clock = () -> 6;
+        sut = new Ohce(console, clock);
     }
 
     @Test
     void greetAtMorningThenStop() {
         when(console.readLine()).thenReturn("Stop!");
-        when(greeter.greet(anyString())).thenReturn("¡Buenos días Gabriel!");
         sut.start("Gabriel");
         InOrder inOrder = Mockito.inOrder(console);
         inOrder.verify(console).printLine("¡Buenos días Gabriel!");
@@ -43,8 +37,6 @@ class OhceTest {
     @Test
     void greetAtMorningThenEchoAWordThenStop() {
         when(console.readLine()).thenReturn("hola", "Stop!");
-        when(greeter.greet(anyString())).thenReturn("¡Buenos días Gabriel!");
-        when(interpreter.interpret(anyString())).thenReturn(List.of("aloh"));
         sut.start("Gabriel");
         InOrder inOrder = Mockito.inOrder(console);
         inOrder.verify(console).printLine("¡Buenos días Gabriel!");

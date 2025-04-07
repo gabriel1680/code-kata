@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -13,8 +12,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
-
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class IntegrationTest {
@@ -31,9 +28,7 @@ class IntegrationTest {
         in = new ByteArrayInputStream(String.join("\n", inputs).getBytes());
         clock = () -> 20;
         var console = new Console(in, out);
-        var greeter = new Greeter(clock);
-        var interpreter = new Interpreter();
-        sut = new Ohce(console, greeter, interpreter);
+        sut = new Ohce(console, clock);
     }
 
     @Test

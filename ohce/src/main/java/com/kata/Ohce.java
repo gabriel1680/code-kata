@@ -9,10 +9,10 @@ public class Ohce {
     private final Greeter greeter;
     private final Interpreter interpreter;
 
-    public Ohce(Console console, Greeter greeter, Interpreter interpreter) {
+    public Ohce(Console console, Clock clock) {
         this.console = console;
-        this.greeter = greeter;
-        this.interpreter = interpreter;
+        this.greeter = new Greeter(clock);
+        this.interpreter = new Interpreter();
     }
 
     public void start(String aName) {
