@@ -1,15 +1,57 @@
 fn main() {
-    calculate_moviments(2);
-    tower_of_hanoi(3);
+    let mut tower = hanoi(1);
+    let _ = tower.current_step();
+    let _ = tower.next_step();
 }
 
-fn tower_of_hanoi(rings: i32) -> i32 {
-    rings
+fn hanoi(disks: i32) -> Step {
+    let value: Vec<Vec<i32>> = vec![(1..disks + 1).collect(), vec![], vec![]];
+    Step::new(disks, value)
 }
 
-fn calculate_moviments(disks: u32) -> u32 {
-    // (2 ^ n) - 1
-    return 2_u32.pow(disks) - 1;
+struct Step {
+    disks: i32,
+    value: Vec<Vec<i32>>,
+}
+
+impl Step {
+    pub fn new(disks: i32, value: Vec<Vec<i32>>) -> Step {
+        Step { disks, value }
+    }
+
+    pub fn next_step(&mut self) -> Result<Vec<Vec<i32>>, String> {
+        if self.disks == self.value[2].len() as i32 {
+            return Err("Sequence contains no more elements".to_string());
+        }
+        let mut pin_idx: usize = 0;
+        let mut idx = self.value[pin_idx].len() - 1;
+        let mut value = self.value[pin_idx][idx];
+        loop {
+            if self.value[2].is_empty() || value > self.value[2][self.value[2].len() - 1] as i32 {
+                self.value[2].push(value);
+                self.value[pin_idx].remove(idx);
+                return Ok(self.current_step());
+            } else if self.value[1].is_empty()
+                || value > self.value[1][self.value[1].len() - 1] as i32
+            {
+                self.value[1].push(value);
+                self.value[pin_idx].remove(idx);
+                return Ok(self.current_step());
+            } else {
+                pin_idx = 2;
+                idx = self.value[pin_idx].len() - 1;
+                value = self.value[pin_idx][idx];
+            }
+        }
+    }
+
+    pub fn current_step(&self) -> Vec<Vec<i32>> {
+        let mut result: Vec<Vec<i32>> = vec![];
+        for floor in self.value.iter() {
+            result.push(floor.to_vec());
+        }
+        result
+    }
 }
 
 #[cfg(test)]
@@ -18,16 +60,43 @@ mod tests {
     use super::*;
 
     #[test]
-    fn calculate_moviments_basic() {
-        assert_eq!(calculate_moviments(1), 1);
+    fn empty_tower() {
+        let tower = hanoi(0);
+        let expected: Vec<Vec<i32>> = vec![vec![], vec![], vec![]];
+        assert_eq!(expected, tower.current_step());
     }
 
     #[test]
-    fn calculate_moviments_with_several_disks() {
-        assert_eq!(calculate_moviments(2), 3);
-        assert_eq!(calculate_moviments(3), 7);
-        assert_eq!(calculate_moviments(4), 15);
+    fn error_when_not_have_more_steps() {
+        let mut tower = hanoi(0);
+        let message = String::from("Sequence contains no more elements");
+        assert_eq!(Err(message), tower.next_step());
     }
 
-}
+    #[test]
+    fn should_resolve_one_disk() {
+        let tower = hanoi(1);
+        assert_eq!(vec![vec![1], vec![], vec![]], tower.current_step());
+    }
 
+    #[test]
+    fn should_resolve_next_step() {
+        let mut tower = hanoi(1);
+        assert_eq!(Ok(vec![vec![], vec![], vec![1]]), tower.next_step());
+    }
+
+    #[test]
+    fn should_resolve_two_disks() {
+        let tower = hanoi(2);
+        assert_eq!(vec![vec![1, 2], vec![], vec![]], tower.current_step());
+    }
+
+    #[test]
+    fn next_step_three_disks() {
+        let mut tower = hanoi(3);
+        assert_eq!(Ok(vec![vec![1, 2], vec![], vec![3]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![1], vec![2], vec![3]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![1], vec![2, 3], vec![]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![], vec![2, 3], vec![1]]), tower.next_step());
+    }
+}
