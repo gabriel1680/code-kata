@@ -23,10 +23,10 @@ impl Step {
         if self.disks == self.value[2].len() as i32 {
             return Err("Sequence contains no more elements".to_string());
         }
-        let mut pin_idx: usize = 0;
-        let mut idx = self.value[pin_idx].len() - 1;
-        let mut value = self.value[pin_idx][idx];
-        loop {
+
+        for pin_idx in 0..=2 {
+            let idx = self.value[pin_idx].len() - 1;
+            let value = self.value[pin_idx][idx];
             for pin in self.value.iter_mut() {
                 if pin.is_empty() || value - 1 == *pin.last().unwrap() {
                     pin.push(value);
@@ -34,10 +34,9 @@ impl Step {
                     return Ok(self.current_step());
                 }
             }
-            pin_idx += 1;
-            idx = self.value[pin_idx].len() - 1;
-            value = self.value[pin_idx][idx];
         }
+
+        Err(String::from("Nothing was found"))
     }
 
     pub fn current_step(&self) -> Vec<Vec<i32>> {
@@ -93,10 +92,6 @@ mod tests {
         assert_eq!(Ok(vec![vec![1], vec![3], vec![2]]), tower.next_step());
         assert_eq!(Ok(vec![vec![1], vec![], vec![2, 3]]), tower.next_step());
         assert_eq!(Ok(vec![vec![], vec![1], vec![2, 3]]), tower.next_step());
-
-        //assert_eq!(Ok(vec![vec![1, 2], vec![], vec![3]]), tower.next_step());
-        //assert_eq!(Ok(vec![vec![1], vec![2], vec![3]]), tower.next_step());
-        //assert_eq!(Ok(vec![vec![1], vec![2, 3], vec![]]), tower.next_step());
-        //assert_eq!(Ok(vec![vec![], vec![2, 3], vec![1]]), tower.next_step());
+        //assert_eq!(Ok(vec![vec![], vec![1, 2], vec![3]]), tower.next_step());
     }
 }
