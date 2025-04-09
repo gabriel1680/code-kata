@@ -27,21 +27,16 @@ impl Step {
         let mut idx = self.value[pin_idx].len() - 1;
         let mut value = self.value[pin_idx][idx];
         loop {
-            if self.value[2].is_empty() || value > self.value[2][self.value[2].len() - 1] as i32 {
-                self.value[2].push(value);
-                self.value[pin_idx].remove(idx);
-                return Ok(self.current_step());
-            } else if self.value[1].is_empty()
-                || value > self.value[1][self.value[1].len() - 1] as i32
-            {
-                self.value[1].push(value);
-                self.value[pin_idx].remove(idx);
-                return Ok(self.current_step());
-            } else {
-                pin_idx = 2;
-                idx = self.value[pin_idx].len() - 1;
-                value = self.value[pin_idx][idx];
+            for pin in self.value.iter_mut() {
+                if pin.is_empty() || value - 1 == *pin.last().unwrap() {
+                    pin.push(value);
+                    self.value[pin_idx].remove(idx);
+                    return Ok(self.current_step());
+                }
             }
+            pin_idx += 1;
+            idx = self.value[pin_idx].len() - 1;
+            value = self.value[pin_idx][idx];
         }
     }
 
@@ -82,7 +77,7 @@ mod tests {
     #[test]
     fn should_resolve_next_step() {
         let mut tower = hanoi(1);
-        assert_eq!(Ok(vec![vec![], vec![], vec![1]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![], vec![1], vec![]]), tower.next_step());
     }
 
     #[test]
@@ -94,9 +89,14 @@ mod tests {
     #[test]
     fn next_step_three_disks() {
         let mut tower = hanoi(3);
-        assert_eq!(Ok(vec![vec![1, 2], vec![], vec![3]]), tower.next_step());
-        assert_eq!(Ok(vec![vec![1], vec![2], vec![3]]), tower.next_step());
-        assert_eq!(Ok(vec![vec![1], vec![2, 3], vec![]]), tower.next_step());
-        assert_eq!(Ok(vec![vec![], vec![2, 3], vec![1]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![1, 2], vec![3], vec![]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![1], vec![3], vec![2]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![1], vec![], vec![2, 3]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![], vec![1], vec![2, 3]]), tower.next_step());
+
+        //assert_eq!(Ok(vec![vec![1, 2], vec![], vec![3]]), tower.next_step());
+        //assert_eq!(Ok(vec![vec![1], vec![2], vec![3]]), tower.next_step());
+        //assert_eq!(Ok(vec![vec![1], vec![2, 3], vec![]]), tower.next_step());
+        //assert_eq!(Ok(vec![vec![], vec![2, 3], vec![1]]), tower.next_step());
     }
 }
