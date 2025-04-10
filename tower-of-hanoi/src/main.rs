@@ -4,19 +4,19 @@ fn main() {
     let _ = tower.next_step();
 }
 
-fn hanoi(disks: i32) -> Step {
+fn hanoi(disks: i32) -> Solver {
     let value: Vec<Vec<i32>> = vec![(1..disks + 1).collect(), vec![], vec![]];
-    Step::new(disks, value)
+    Solver::new(disks, value)
 }
 
-struct Step {
+struct Solver {
     disks: i32,
     value: Vec<Vec<i32>>,
 }
 
-impl Step {
-    pub fn new(disks: i32, value: Vec<Vec<i32>>) -> Step {
-        Step { disks, value }
+impl Solver {
+    pub fn new(disks: i32, value: Vec<Vec<i32>>) -> Solver {
+        Solver { disks, value }
     }
 
     pub fn next_step(&mut self) -> Result<Vec<Vec<i32>>, String> {
