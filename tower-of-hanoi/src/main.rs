@@ -25,7 +25,11 @@ impl Step {
         }
 
         for pin_idx in 0..=2 {
-            let idx = self.value[pin_idx].len() - 1;
+            let len = self.value[pin_idx].len();
+            if len == 0 {
+                continue;
+            }
+            let idx = len - 1;
             let value = self.value[pin_idx][idx];
             for pin in self.value.iter_mut() {
                 if pin.is_empty() || value - 1 == *pin.last().unwrap() {
