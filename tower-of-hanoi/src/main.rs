@@ -5,50 +5,86 @@ fn main() {
 }
 
 fn hanoi(disks: i32) -> Solver {
-    let value: Vec<Vec<i32>> = vec![(1..disks + 1).collect(), vec![], vec![]];
-    Solver::new(disks, value)
+    Solver::new(disks)
+}
+
+struct Step {
+    pins: Vec<Vec<i32>>,
 }
 
 struct Solver {
     disks: i32,
-    value: Vec<Vec<i32>>,
+    steps: Vec<Step>,
+    current_step: usize,
 }
 
 impl Solver {
-    pub fn new(disks: i32, value: Vec<Vec<i32>>) -> Solver {
-        Solver { disks, value }
+    pub fn new(disks: i32) -> Solver {
+        let pins: Vec<Vec<i32>> = vec![(1..disks + 1).collect(), vec![], vec![]];
+        let mut solver = Solver {
+            disks,
+            steps: vec![Step { pins }],
+            current_step: 0,
+        };
+        solver.solve();
+        return solver;
     }
 
     pub fn next_step(&mut self) -> Result<Vec<Vec<i32>>, String> {
-        if self.disks == self.value[2].len() as i32 {
+        if self.current_step == self.steps.len() - 1 {
             return Err("Sequence contains no more elements".to_string());
         }
+        self.current_step += 1;
+        return Ok(self.current_step());
+    }
 
-        for pin_idx in 0..=2 {
-            let len = self.value[pin_idx].len();
-            if len == 0 {
-                continue;
-            }
-            let idx = len - 1;
-            let value = self.value[pin_idx][idx];
-            for pin in self.value.iter_mut() {
-                if pin.is_empty() || value - 1 == *pin.last().unwrap() {
-                    pin.push(value);
-                    self.value[pin_idx].remove(idx);
-                    return Ok(self.current_step());
-                }
+    pub fn solve(&mut self) {
+        let initial_state = Step {
+            pins: Solver::create_initial_state(self.disks),
+        };
+        self.steps = vec![initial_state];
+        if self.disks > 0 {
+            self.hanoi(self.disks, 0, 1, 2)
+        }
+    }
+
+    fn create_initial_state(disks: i32) -> Vec<Vec<i32>> {
+        let mut initial_pin_state = vec![];
+        if disks > 0 {
+            for n in 1..=disks {
+                initial_pin_state.push(n);
             }
         }
+        return vec![initial_pin_state, vec![], vec![]];
+    }
 
-        Err(String::from("Nothing was found"))
+    fn hanoi(&mut self, disks: i32, from: usize, to: usize, via: usize) {
+        if disks == 1 {
+            self.move_to(from, to);
+        } else {
+            self.hanoi(disks - 1, from, via, to);
+            self.move_to(from, to);
+            self.hanoi(disks - 1, via, to, from);
+        }
+    }
+
+    fn move_to(&mut self, from: usize, to: usize) {
+        let mut last_step = Solver::copy(&self.steps.last().unwrap().pins);
+        let disk = last_step[from].pop().unwrap();
+        last_step[to].push(disk);
+        self.steps.push(Step { pins: last_step });
+    }
+
+    fn copy(vec: &Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+        let mut result: Vec<Vec<i32>> = vec![];
+        for value in vec.iter() {
+            result.push(value.to_vec());
+        }
+        result
     }
 
     pub fn current_step(&self) -> Vec<Vec<i32>> {
-        let mut result: Vec<Vec<i32>> = vec![];
-        for floor in self.value.iter() {
-            result.push(floor.to_vec());
-        }
-        result
+        Solver::copy(&self.steps[self.current_step].pins)
     }
 }
 
@@ -96,6 +132,8 @@ mod tests {
         assert_eq!(Ok(vec![vec![1], vec![3], vec![2]]), tower.next_step());
         assert_eq!(Ok(vec![vec![1], vec![], vec![2, 3]]), tower.next_step());
         assert_eq!(Ok(vec![vec![], vec![1], vec![2, 3]]), tower.next_step());
-        //assert_eq!(Ok(vec![vec![], vec![1, 2], vec![3]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![3], vec![1], vec![2]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![3], vec![1, 2], vec![]]), tower.next_step());
+        assert_eq!(Ok(vec![vec![], vec![1, 2, 3], vec![]]), tower.next_step());
     }
 }
