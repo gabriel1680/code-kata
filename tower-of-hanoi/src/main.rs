@@ -35,23 +35,9 @@ impl Tower {
     }
 
     pub fn solve(&mut self) {
-        let initial_state = Floor {
-            pins: Tower::create_initial_state(self.disks),
-        };
-        self.floors = vec![initial_state];
         if self.disks > 0 {
             self.hanoi(self.disks, 0, 1, 2)
         }
-    }
-
-    fn create_initial_state(disks: i32) -> Vec<Vec<i32>> {
-        let mut initial_pin_state = vec![];
-        if disks > 0 {
-            for n in 1..=disks {
-                initial_pin_state.push(n);
-            }
-        }
-        return vec![initial_pin_state, vec![], vec![]];
     }
 
     fn hanoi(&mut self, disks: i32, from: usize, to: usize, via: usize) {
