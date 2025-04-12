@@ -1,27 +1,23 @@
 fn main() {
-    let mut tower = hanoi(1);
+    let mut tower = Tower::new(1);
     let _ = tower.current_step();
     let _ = tower.next_step();
-}
-
-fn hanoi(disks: i32) -> Solver {
-    Solver::new(disks)
 }
 
 struct Step {
     pins: Vec<Vec<i32>>,
 }
 
-struct Solver {
+struct Tower {
     disks: i32,
     steps: Vec<Step>,
     current_step: usize,
 }
 
-impl Solver {
-    pub fn new(disks: i32) -> Solver {
+impl Tower {
+    pub fn new(disks: i32) -> Tower {
         let pins: Vec<Vec<i32>> = vec![(1..disks + 1).collect(), vec![], vec![]];
-        let mut solver = Solver {
+        let mut solver = Tower {
             disks,
             steps: vec![Step { pins }],
             current_step: 0,
@@ -40,7 +36,7 @@ impl Solver {
 
     pub fn solve(&mut self) {
         let initial_state = Step {
-            pins: Solver::create_initial_state(self.disks),
+            pins: Tower::create_initial_state(self.disks),
         };
         self.steps = vec![initial_state];
         if self.disks > 0 {
@@ -69,7 +65,7 @@ impl Solver {
     }
 
     fn move_to(&mut self, from: usize, to: usize) {
-        let mut last_step = Solver::copy(&self.steps.last().unwrap().pins);
+        let mut last_step = Tower::copy(&self.steps.last().unwrap().pins);
         let disk = last_step[from].pop().unwrap();
         last_step[to].push(disk);
         self.steps.push(Step { pins: last_step });
@@ -84,7 +80,7 @@ impl Solver {
     }
 
     pub fn current_step(&self) -> Vec<Vec<i32>> {
-        Solver::copy(&self.steps[self.current_step].pins)
+        Tower::copy(&self.steps[self.current_step].pins)
     }
 }
 
@@ -95,39 +91,39 @@ mod tests {
 
     #[test]
     fn empty_tower() {
-        let tower = hanoi(0);
+        let tower = Tower::new(0);
         let expected: Vec<Vec<i32>> = vec![vec![], vec![], vec![]];
         assert_eq!(expected, tower.current_step());
     }
 
     #[test]
     fn error_when_not_have_more_steps() {
-        let mut tower = hanoi(0);
+        let mut tower = Tower::new(0);
         let message = String::from("Sequence contains no more elements");
         assert_eq!(Err(message), tower.next_step());
     }
 
     #[test]
     fn should_resolve_one_disk() {
-        let tower = hanoi(1);
+        let tower = Tower::new(1);
         assert_eq!(vec![vec![1], vec![], vec![]], tower.current_step());
     }
 
     #[test]
     fn should_resolve_next_step() {
-        let mut tower = hanoi(1);
+        let mut tower = Tower::new(1);
         assert_eq!(Ok(vec![vec![], vec![1], vec![]]), tower.next_step());
     }
 
     #[test]
     fn should_resolve_two_disks() {
-        let tower = hanoi(2);
+        let tower = Tower::new(2);
         assert_eq!(vec![vec![1, 2], vec![], vec![]], tower.current_step());
     }
 
     #[test]
     fn next_step_three_disks() {
-        let mut tower = hanoi(3);
+        let mut tower = Tower::new(3);
         assert_eq!(Ok(vec![vec![1, 2], vec![3], vec![]]), tower.next_step());
         assert_eq!(Ok(vec![vec![1], vec![3], vec![2]]), tower.next_step());
         assert_eq!(Ok(vec![vec![1], vec![], vec![2, 3]]), tower.next_step());
