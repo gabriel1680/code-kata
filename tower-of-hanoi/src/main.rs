@@ -34,7 +34,7 @@ impl Tower {
         return Ok(self.get_current_floor());
     }
 
-    pub fn solve(&mut self) {
+    fn solve(&mut self) {
         if self.disks > 0 {
             self.hanoi(self.disks, 0, 1, 2)
         }
