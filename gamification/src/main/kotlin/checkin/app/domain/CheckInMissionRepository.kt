@@ -1,6 +1,6 @@
 package org.gbl.checkin.application.domain
 
-interface CheckInRepository {
+interface CheckInMissionRepository {
     fun getFor(userId: Long): DailyCheckInMission?
-    fun save(checkIn: DailyCheckInMission)
+    fun save(mission: DailyCheckInMission)
 }
