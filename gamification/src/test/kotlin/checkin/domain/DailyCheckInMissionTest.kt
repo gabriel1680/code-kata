@@ -46,8 +46,6 @@ internal class DailyCheckInMissionTest {
     @Nested
     inner class TwoCheckIns {
 
-        private lateinit var sut: DailyCheckInMission
-
         @BeforeEach
         fun setUp() {
             sut = DailyCheckInMission.start(USER_ID)
@@ -69,6 +67,7 @@ internal class DailyCheckInMissionTest {
 
         @Test
         fun anotherDayAfter1HourStartingAt23PM() {
+            sut = DailyCheckInMission.start(USER_ID)
             val date = Instant.parse("2018-11-15T23:59:00.00Z")
             sut.checkIn(date)
             sut.checkIn(date.plus(Duration.ofMinutes(1)))
@@ -101,13 +100,13 @@ internal class DailyCheckInMissionTest {
             lastCheckInDate = lastCheckIn().date
         }
 
-        private fun createWithAWeekStreak() = createWithAStreak(6)
+        private fun createWithAWeekStreak() = createWithAStreak(7)
 
         private fun createWithAStreak(streak: Int) {
             var lastDate = FIRST_DATE
-            for (i in 0..streak) {
+            for (i in 0..<streak) {
                 sut.checkIn(lastDate)
-                lastDate = FIRST_DATE.plus(Duration.ofDays(1))
+                lastDate = lastDate.plus(Duration.ofDays(1))
             }
         }
 
