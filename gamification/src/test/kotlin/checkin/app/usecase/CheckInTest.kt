@@ -7,8 +7,6 @@ import org.gbl.checkin.application.domain.DailyCheckInMission
 import org.gbl.checkin.out.MemoryCheckInRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.any
-import org.mockito.kotlin.verify
 import java.time.Duration
 import java.time.Instant
 import kotlin.test.assertEquals
@@ -32,10 +30,14 @@ class CheckInTest {
         checkIn = CheckIn(repository, clock)
     }
 
+    private fun assertCheckIns(mission: DailyCheckInMission, total: Int) =
+        assertEquals(total, mission.checkIns().size)
+
     @Test
     fun `first check-in of a user`() {
         checkIn(INPUT)
-       assertEquals(1, repository.getFor(USER_ID)!!.checkIns().size)
+        val mission = repository.getFor(USER_ID)!!
+        assertCheckIns(mission, 1)
     }
 
     @Test
@@ -46,6 +48,6 @@ class CheckInTest {
         val dayAfterFirstCheckIn = NOW.plus(Duration.ofDays(1))
         clock.withInstant(dayAfterFirstCheckIn)
         checkIn(INPUT)
-        assertEquals(2, mission.checkIns().size)
+        assertCheckIns(mission, 2)
     }
 }
