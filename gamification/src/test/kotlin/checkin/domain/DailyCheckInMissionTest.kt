@@ -19,13 +19,13 @@ internal class DailyCheckInMissionTest {
 
     private lateinit var sut: DailyCheckInMission
 
-    fun assertCheckIns(total: Int, checkIns: List<Any>) {
-        assertEquals(total, checkIns.size)
-    }
+    fun assertCheckIns(total: Int, checkIns: List<Any>) = assertEquals(total, checkIns.size)
+
+    fun lastCheckIn() = sut.checkIns().last()
 
     @BeforeEach
     fun setUp() {
-        sut = DailyCheckInMission(USER_ID, emptyList())
+        sut = DailyCheckInMission.start(USER_ID)
     }
 
     @Test
@@ -37,7 +37,8 @@ internal class DailyCheckInMissionTest {
 
     @Test
     fun firstCheckIn() {
-        val checkIn = sut.checkIn(FIRST_DATE)
+        sut.checkIn(FIRST_DATE)
+        val checkIn = lastCheckIn()
         assertCheckIns(1, sut.checkIns())
         assertEquals(1, checkIn.streak)
         assertEquals(50, checkIn.rewards)
@@ -50,7 +51,8 @@ internal class DailyCheckInMissionTest {
 
         @BeforeEach
         fun setUp() {
-            sut = DailyCheckInMission(USER_ID, listOf(CheckIn.first(FIRST_DATE)))
+            sut = DailyCheckInMission.start(USER_ID)
+            sut.checkIn(FIRST_DATE)
         }
 
         @Test
@@ -69,8 +71,9 @@ internal class DailyCheckInMissionTest {
         @Test
         fun anotherDayAfter1HourStartingAt23PM() {
             val date = Instant.parse("2018-11-15T23:59:00.00Z")
-            sut = DailyCheckInMission(USER_ID, listOf(CheckIn.first(date)))
-            val checkIn = sut.checkIn(date.plus(Duration.ofMinutes(1)))
+            sut.checkIn(date)
+            sut.checkIn(date.plus(Duration.ofMinutes(1)))
+            val checkIn = lastCheckIn()
             assertEquals(2, checkIn.streak)
             assertEquals(100, checkIn.rewards)
             assertCheckIns(2, sut.checkIns())
@@ -79,7 +82,8 @@ internal class DailyCheckInMissionTest {
         @Test
         fun consecutiveDays() {
             val nextDay = FIRST_DATE.plus(Duration.ofDays(1))
-            val checkIn = sut.checkIn(nextDay)
+            sut.checkIn(nextDay)
+            val checkIn = lastCheckIn()
             assertEquals(2, checkIn.streak)
             assertEquals(100, checkIn.rewards)
             assertCheckIns(2, sut.checkIns())
@@ -93,29 +97,25 @@ internal class DailyCheckInMissionTest {
 
         @BeforeEach
         fun setUp() {
-            val checkIns = createWithAWeekStreak()
-            sut = DailyCheckInMission(USER_ID, checkIns)
+            createWithAWeekStreak()
             assertEquals(7, sut.checkIns().size)
-            lastCheckInDate = checkIns.last().date
+            lastCheckInDate = lastCheckIn().date
         }
 
         private fun createWithAWeekStreak() = createWithAStreak(6)
 
-        private fun createWithAStreak(streak: Int): List<CheckIn> {
+        private fun createWithAStreak(streak: Int) {
             var lastDate = FIRST_DATE
-            var lastCheckIn = CheckIn.first(lastDate)
-            val previousCheckIns = mutableListOf(lastCheckIn)
-            for (i in 0..<streak) {
+            for (i in 0..streak) {
+                sut.checkIn(lastDate)
                 lastDate = FIRST_DATE.plus(Duration.ofDays(1))
-                lastCheckIn = CheckIn.from(lastCheckIn, lastDate)
-                previousCheckIns.add(lastCheckIn)
             }
-            return previousCheckIns
         }
 
         @Test
         fun restartFromTheBeginning() {
-            val checkIn = sut.checkIn(lastCheckInDate.plus(Duration.ofDays(1)))
+            sut.checkIn(lastCheckInDate.plus(Duration.ofDays(1)))
+            val checkIn = lastCheckIn()
             assertEquals(1, checkIn.streak)
             assertEquals(50, checkIn.rewards)
         }

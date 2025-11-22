@@ -7,19 +7,15 @@ class DailyCheckInMission(val userId: Long, checkIns: List<CheckIn>) {
 
     private val checkIns: MutableList<CheckIn> = checkIns.toMutableList()
 
-    fun checkIn(date: Instant): CheckIn {
-        val checkIn = createCheckIn(date)
-        checkIns.add(checkIn)
-        return checkIn
-    }
-
     fun checkIns(): List<CheckIn> = checkIns.toMutableList()
+
+    fun checkIn(date: Instant) = checkIns.add(createCheckIn(date))
 
     private fun createCheckIn(date: Instant): CheckIn {
         return when {
             isFirstCheckIn() -> CheckIn.first(date)
             isSameDay(date) -> throw RuntimeException("Invalid check-in")
-            alreadyCheckedInForAWeek() -> CheckIn.first(date)
+            alreadyCheckedInForAWeek() -> CheckIn.restart(date)
             else -> CheckIn.from(checkIns.last(), date)
         }
     }
