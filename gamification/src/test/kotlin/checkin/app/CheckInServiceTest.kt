@@ -21,7 +21,7 @@ class CheckInServiceTest {
     }
 
     @Test
-    fun firstCheckIn() {
+    fun `first check-in of a user`() {
         val repository = mock<CheckInRepository> {
             on { getFor(any()) } doReturn null
         }
@@ -34,7 +34,7 @@ class CheckInServiceTest {
     }
 
     @Test
-    fun secondCheckIn() {
+    fun `second check-in of a user`() {
         val mission = DailyCheckInMission(USER_ID, listOf(CheckIn.first(NOW)))
         val repository = mock<CheckInRepository> {
             on { getFor(any()) } doReturn mission
