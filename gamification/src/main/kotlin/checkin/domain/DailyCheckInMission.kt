@@ -17,9 +17,9 @@ class DailyCheckInMission(val userId: Long, checkIns: List<CheckIn>) {
 
     private fun createCheckIn(date: Instant): CheckIn {
         return when {
-            isFirstCheckIn() -> CheckIn.create(date)
+            isFirstCheckIn() -> CheckIn.first(date)
             isSameDay(date) -> throw RuntimeException("Invalid check-in")
-            alreadyCheckedInForAWeek() -> CheckIn.create(date)
+            alreadyCheckedInForAWeek() -> CheckIn.first(date)
             else -> CheckIn.from(checkIns.last(), date)
         }
     }

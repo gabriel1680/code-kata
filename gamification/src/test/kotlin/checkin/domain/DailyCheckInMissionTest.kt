@@ -50,7 +50,7 @@ internal class DailyCheckInMissionTest {
 
         @BeforeEach
         fun setUp() {
-            sut = DailyCheckInMission(USER_ID, listOf(CheckIn.create(FIRST_DATE)))
+            sut = DailyCheckInMission(USER_ID, listOf(CheckIn.first(FIRST_DATE)))
         }
 
         @Test
@@ -69,7 +69,7 @@ internal class DailyCheckInMissionTest {
         @Test
         fun anotherDayAfter1HourStartingAt23PM() {
             val date = Instant.parse("2018-11-15T23:59:00.00Z")
-            sut = DailyCheckInMission(USER_ID, listOf(CheckIn.create(date)))
+            sut = DailyCheckInMission(USER_ID, listOf(CheckIn.first(date)))
             val checkIn = sut.checkIn(date.plus(Duration.ofMinutes(1)))
             assertEquals(2, checkIn.streak)
             assertEquals(100, checkIn.rewards)
@@ -103,7 +103,7 @@ internal class DailyCheckInMissionTest {
 
         private fun createWithAStreak(streak: Int): List<CheckIn> {
             var lastDate = FIRST_DATE
-            var lastCheckIn = CheckIn.create(lastDate)
+            var lastCheckIn = CheckIn.first(lastDate)
             val previousCheckIns = mutableListOf(lastCheckIn)
             for (i in 0..<streak) {
                 lastDate = FIRST_DATE.plus(Duration.ofDays(1))

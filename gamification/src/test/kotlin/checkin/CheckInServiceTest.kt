@@ -35,7 +35,7 @@ class CheckInServiceTest {
 
     @Test
     fun secondCheckIn() {
-        val mission = DailyCheckInMission(USER_ID, listOf(CheckIn.create(NOW)))
+        val mission = DailyCheckInMission(USER_ID, listOf(CheckIn.first(NOW)))
         val repository = mock<CheckInRepository> {
             on { getFor(any()) } doReturn mission
         }

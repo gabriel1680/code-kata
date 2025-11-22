@@ -5,7 +5,7 @@ import java.time.Instant
 data class CheckIn(val streak: Int, val rewards: Long, val date: Instant) {
 
     companion object Factory {
-        fun create(date: Instant): CheckIn {
+        fun first(date: Instant): CheckIn {
             return CheckIn(1, 50, date)
         }
 
