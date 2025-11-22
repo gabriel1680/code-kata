@@ -1,6 +1,5 @@
 package checkin.domain
 
-import org.gbl.checkin.domain.CheckIn
 import org.gbl.checkin.domain.DailyCheckInMission
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
