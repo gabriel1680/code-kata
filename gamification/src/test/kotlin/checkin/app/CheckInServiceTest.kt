@@ -1,10 +1,10 @@
-package checkin
+package checkin.app
 
-import org.gbl.checkin.CheckInCommand
-import org.gbl.checkin.CheckInRepository
-import org.gbl.checkin.CheckInService
-import org.gbl.checkin.domain.CheckIn
-import org.gbl.checkin.domain.DailyCheckInMission
+import org.gbl.checkin.application.CheckInCommand
+import org.gbl.checkin.application.domain.CheckInRepository
+import org.gbl.checkin.application.CheckInService
+import org.gbl.checkin.application.domain.CheckIn
+import org.gbl.checkin.application.domain.DailyCheckInMission
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.*
 import java.time.Clock

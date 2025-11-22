@@ -1,6 +1,8 @@
-package org.gbl.checkin
+package org.gbl.checkin.application
 
-import org.gbl.checkin.domain.DailyCheckInMission
+import org.gbl.checkin.CheckInAPI
+import org.gbl.checkin.application.domain.CheckInRepository
+import org.gbl.checkin.application.domain.DailyCheckInMission
 import java.time.Clock
 
 class CheckInService(private val checkInRepository: CheckInRepository, private val clock: Clock) : CheckInAPI {
@@ -14,8 +16,3 @@ class CheckInService(private val checkInRepository: CheckInRepository, private v
 }
 
 data class CheckInCommand(val userId: Long)
-
-interface CheckInRepository {
-    fun getFor(userId: Long): DailyCheckInMission?
-    fun save(checkIn: DailyCheckInMission)
-}

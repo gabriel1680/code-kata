@@ -1,4 +1,4 @@
-package org.gbl.checkin.domain
+package org.gbl.checkin.application.domain
 
 import java.time.Instant
 
