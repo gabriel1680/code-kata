@@ -36,8 +36,6 @@ class DailyCheckInMission(val userId: Long, checkIns: List<CheckIn>) {
     private fun alreadyCheckedInForAWeek() = checkIns.last().streak == 7
 
     companion object Factory {
-        fun start(userId: Long): DailyCheckInMission {
-            return DailyCheckInMission(userId, emptyList())
-        }
+        fun start(userId: Long) = DailyCheckInMission(userId, emptyList())
     }
 }
