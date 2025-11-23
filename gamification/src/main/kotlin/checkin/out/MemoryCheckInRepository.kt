@@ -1,7 +1,7 @@
 package org.gbl.checkin.out
 
 import org.gbl.checkin.CheckInDTO
-import checkin.app.CheckInQueryService
+import org.gbl.checkin.app.service.CheckInQueryService
 import checkin.app.domain.CheckInMissionRepository
 import checkin.app.domain.DailyCheckInMission
 

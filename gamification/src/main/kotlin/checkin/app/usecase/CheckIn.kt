@@ -2,14 +2,14 @@ package org.gbl.checkin.app.usecase
 
 import checkin.app.domain.CheckInMissionRepository
 import checkin.app.domain.DailyCheckInMission
-import java.time.Clock
+import org.gbl.checkin.app.service.TimeProvider
 
-class CheckIn(private val checkInRepository: CheckInMissionRepository, private val clock: Clock) {
+class CheckIn(private val checkInRepository: CheckInMissionRepository, private val timeProvider: TimeProvider) {
 
     operator fun invoke(input: CheckInInput) {
         val mission =
             checkInRepository.getFor(input.userId) ?: DailyCheckInMission.start(input.userId)
-        mission.checkIn(clock.instant())
+        mission.checkIn(timeProvider.instant())
         checkInRepository.save(mission)
     }
 }

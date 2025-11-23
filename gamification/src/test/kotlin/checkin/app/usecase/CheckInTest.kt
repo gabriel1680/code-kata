@@ -1,6 +1,6 @@
 package checkin.app.usecase
 
-import checkin.app.fixture.MockClock
+import checkin.app.fixture.MockTimeProvider
 import org.gbl.checkin.app.usecase.CheckIn
 import org.gbl.checkin.app.usecase.CheckInInput
 import checkin.app.domain.DailyCheckInMission
@@ -19,15 +19,15 @@ class CheckInTest {
         private val INPUT = CheckInInput(USER_ID)
     }
 
-    private lateinit var clock: MockClock
+    private lateinit var timeProvider: MockTimeProvider
     private lateinit var repository: MemoryCheckInRepository
     private lateinit var checkIn: CheckIn
 
     @BeforeEach
     fun setUp() {
         repository = MemoryCheckInRepository()
-        clock = MockClock(NOW)
-        checkIn = CheckIn(repository, clock)
+        timeProvider = MockTimeProvider(NOW)
+        checkIn = CheckIn(repository, timeProvider)
     }
 
     private fun assertCheckIns(mission: DailyCheckInMission, total: Int) =
@@ -46,7 +46,7 @@ class CheckInTest {
         mission.checkIn(NOW)
         repository.save(mission)
         val dayAfterFirstCheckIn = NOW.plus(Duration.ofDays(1))
-        clock.withInstant(dayAfterFirstCheckIn)
+        timeProvider.withInstant(dayAfterFirstCheckIn)
         checkIn(INPUT)
         assertCheckIns(mission, 2)
     }
