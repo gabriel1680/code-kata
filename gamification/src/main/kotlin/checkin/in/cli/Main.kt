@@ -10,6 +10,6 @@ fun main(args: Array<String>) {
     val checkInUseCase = CheckIn(repository, Instant::now)
     val api = CheckInApiImpl(checkInUseCase, repository)
     val presenter = SystemCheckInCliPresenter()
-    val cli = CLI(api, ::println, presenter)
+    val cli = CLIApplication(api, ::println, presenter)
     cli.run(args)
 }
