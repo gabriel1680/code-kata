@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "2.0.0"
+    application
 }
 
 group = "org.gbl"
@@ -20,4 +21,15 @@ tasks.test {
 
 kotlin {
     jvmToolchain(21)
+}
+
+application {
+    mainClass.set("org.gbl.MainKt")
+}
+
+tasks.register<JavaExec>("runCli") {
+    group = "application"
+    description = "Runs CLI App"
+    classpath = sourceSets["main"].runtimeClasspath
+    mainClass.set("org.gbl.checkin.in.MainKt")
 }
