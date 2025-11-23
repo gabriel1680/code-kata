@@ -48,7 +48,7 @@ class CLIApplicationTest {
 
     private fun assertPrintedValues(vararg values: String) {
         val printedValues = io.printed()
-        for (i in 0..<printedValues.size) {
+        for (i in printedValues.indices) {
             assertEquals(values[i], printedValues[i])
         }
     }
