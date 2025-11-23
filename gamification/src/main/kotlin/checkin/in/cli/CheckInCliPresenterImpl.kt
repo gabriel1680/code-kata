@@ -4,7 +4,7 @@ import org.gbl.checkin.CheckInDTO
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-class SystemCheckInCliPresenter : CheckInCliPresenter {
+class CheckInCliPresenterImpl : CheckInCliPresenter {
 
     override fun success() = "Check-in accepted"
 

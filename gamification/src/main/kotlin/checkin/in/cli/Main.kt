@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     val repository = MemoryCheckInRepository()
     val checkInUseCase = CheckIn(repository, Instant::now)
     val api = CheckInApiImpl(checkInUseCase, repository)
-    val presenter = SystemCheckInCliPresenter()
+    val presenter = CheckInCliPresenterImpl()
     val cli = CLIApplication(api, ::println, presenter)
     cli.run(args)
 }
