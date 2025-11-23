@@ -30,9 +30,4 @@ class CliApp(
         }
         io.println(presenter.bye())
     }
-
-    private fun parseInput(args: Array<String>): Long? {
-        val userId = args[0]
-        return userId.toLongOrNull()
-    }
 }

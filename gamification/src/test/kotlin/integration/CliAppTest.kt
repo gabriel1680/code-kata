@@ -39,7 +39,7 @@ class CliAppTest {
     }
 
     @Test
-    fun checkInSuccess() {
+    fun checkIn() {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         sut.run(ARGS)
         val inOrder = inOrder(io)
@@ -49,9 +49,20 @@ class CliAppTest {
     }
 
     @Test
-    fun checkInError() {
+    fun inputParsingError() {
         sut.run(emptyArray())
         val inOrder = inOrder(io)
         inOrder.verify(io).println("Check-in Error: Invalid arguments, too few arguments")
+    }
+
+    @Test
+    fun checkInFail() {
+        whenever(timeProvider.instant()).thenReturn(INSTANT)
+        sut.run(ARGS)
+        sut.run(ARGS)
+        val inOrder = inOrder(io)
+        inOrder.verify(io).println("Check-in accepted")
+        inOrder.verify(io).println("Last Check-in Details:\nDate: 15/11/2025\nStreak: 1\nReward: 50 points")
+        inOrder.verify(io).println("Bye!")
     }
 }
