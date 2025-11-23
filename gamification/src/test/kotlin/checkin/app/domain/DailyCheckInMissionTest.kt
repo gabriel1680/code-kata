@@ -86,6 +86,16 @@ internal class DailyCheckInMissionTest {
             assertEquals(100, checkIn.rewards)
             assertCheckIns(2, sut.checkIns())
         }
+
+        @Test
+        fun after2DaysCheckIn() {
+            val nextDay = FIRST_DATE.plus(Duration.ofDays(2))
+            sut.checkIn(nextDay)
+            val checkIn = lastCheckIn()
+            assertEquals(1, checkIn.streak)
+            assertEquals(50, checkIn.rewards)
+            assertCheckIns(2, sut.checkIns())
+        }
     }
 
     @Nested
