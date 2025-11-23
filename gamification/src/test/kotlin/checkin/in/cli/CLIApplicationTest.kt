@@ -42,12 +42,8 @@ class CLIApplicationTest {
         override fun bye() = "bye"
     }
 
-    @BeforeEach
-    fun setUp() {
-        api = mock<CheckInAPI>()
-        io = SpyConsoleIO()
-        presenter = DummyCLIPresenter()
-        sut = CLIApplication(api, io, presenter)
+    companion object Fixture {
+        private val ARGS = arrayOf("123")
     }
 
     private fun assertPrintedValues(vararg values: String) {
@@ -55,6 +51,14 @@ class CLIApplicationTest {
         for (i in 0..<printedValues.size) {
             assertEquals(values[i], printedValues[i])
         }
+    }
+
+    @BeforeEach
+    fun setUp() {
+        api = mock<CheckInAPI>()
+        io = SpyConsoleIO()
+        presenter = DummyCLIPresenter()
+        sut = CLIApplication(api, io, presenter)
     }
 
     @Test
@@ -65,10 +69,6 @@ class CLIApplicationTest {
     @Test
     fun invalidUserId() {
         assertThrows<RuntimeException> { sut.run(arrayOf("123.5")) }
-    }
-
-    companion object Fixture {
-        private val ARGS = arrayOf("123")
     }
 
     @Test
