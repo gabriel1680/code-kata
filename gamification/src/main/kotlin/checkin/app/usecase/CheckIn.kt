@@ -1,7 +1,7 @@
 package org.gbl.checkin.app.usecase
 
-import org.gbl.checkin.application.domain.CheckInMissionRepository
-import org.gbl.checkin.application.domain.DailyCheckInMission
+import checkin.app.domain.CheckInMissionRepository
+import checkin.app.domain.DailyCheckInMission
 import java.time.Clock
 
 class CheckIn(private val checkInRepository: CheckInMissionRepository, private val clock: Clock) {

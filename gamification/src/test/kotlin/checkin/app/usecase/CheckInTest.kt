@@ -3,7 +3,7 @@ package checkin.app.usecase
 import checkin.app.fixture.MockClock
 import org.gbl.checkin.app.usecase.CheckIn
 import org.gbl.checkin.app.usecase.CheckInInput
-import org.gbl.checkin.application.domain.DailyCheckInMission
+import checkin.app.domain.DailyCheckInMission
 import org.gbl.checkin.out.MemoryCheckInRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

@@ -1,4 +1,4 @@
-package org.gbl.checkin.application
+package checkin.app
 
 import org.gbl.checkin.CheckInDTO
 

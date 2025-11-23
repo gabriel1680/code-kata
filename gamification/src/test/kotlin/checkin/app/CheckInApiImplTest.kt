@@ -3,7 +3,6 @@ package checkin.app
 import org.gbl.checkin.CheckInDTO
 import org.gbl.checkin.GetLastCheckInQuery
 import org.gbl.checkin.app.usecase.CheckIn
-import org.gbl.checkin.application.CheckInQueryService
 import org.gbl.checkin.CheckInApiImpl
 import org.gbl.checkin.out.MemoryCheckInRepository
 import org.junit.jupiter.api.Disabled
