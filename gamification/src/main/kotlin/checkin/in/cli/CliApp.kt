@@ -3,18 +3,21 @@ package org.gbl.checkin.`in`.cli
 import org.gbl.checkin.CheckInAPI
 import org.gbl.checkin.CheckInCommand
 import org.gbl.checkin.GetLastCheckInQuery
-import org.gbl.org.gbl.checkin.`in`.cli.ConsoleIO
 
-class CLIApplication(
+class CliApp(
     private val checkInApi: CheckInAPI,
-    private val io: ConsoleIO,
+    private val argsParser: CheckInArgsParser,
+    private val io: Console,
     private val presenter: CheckInCliPresenter
 ) {
 
     fun run(args: Array<String>) {
-        require(args.isNotEmpty()) { "Invalid arguments" }
-        val userId: Long? = parseInput(args)
-        require(userId != null) { "Invalid userId value" }
+        val result = argsParser.parse(args)
+        if (result.isFailure) {
+            io.println(presenter.error(result.exceptionOrNull()!!))
+            return
+        }
+        val userId = result.getOrThrow()
         val message = try {
             checkInApi.checkIn(CheckInCommand(userId))
             presenter.success()
