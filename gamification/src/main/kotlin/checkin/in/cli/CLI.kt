@@ -1,4 +1,4 @@
-package org.gbl.checkin.`in`
+package org.gbl.checkin.`in`.cli
 
 import org.gbl.checkin.CheckInAPI
 import org.gbl.checkin.CheckInCommand
