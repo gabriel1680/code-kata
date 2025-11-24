@@ -4,11 +4,11 @@ import org.gbl.checkin.CheckInDTO
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 
-class CheckInCliPresenter {
+open class CheckInCliPresenter {
 
-    fun success() = "Check-in accepted"
+    open fun success() = "Check-in accepted"
 
-    fun presentDto(dto: CheckInDTO): String {
+    open fun presentDto(dto: CheckInDTO): String {
         return """
             Last Check-in Details:
             Date: ${formatDate(dto)}
@@ -24,7 +24,7 @@ class CheckInCliPresenter {
         return formattedDate
     }
 
-    fun bye() = "Bye!"
+    open fun bye() = "Bye!"
 
-    fun error(e: Throwable) = "Check-in Error: ${e.message}"
+    open fun error(e: Throwable) = "Check-in Error: ${e.message}"
 }
