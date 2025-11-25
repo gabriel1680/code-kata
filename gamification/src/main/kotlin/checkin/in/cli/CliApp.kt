@@ -12,22 +12,22 @@ class CliApp(
 ) {
 
     fun run(args: Array<String>) {
-        val result = argsParser.parse(args)
-        if (result.isFailure) {
-            io.println(presenter.error(result.exceptionOrNull()!!))
-            return
-        }
-        val userId = result.getOrThrow()
-        val message = try {
-            checkInApi.checkIn(CheckInCommand(userId))
-            presenter.success()
-        } catch (e: Exception) {
-            presenter.error(e)
-        }
-        io.println(message)
-        checkInApi.getLastCheckIn(GetLastCheckInQuery(userId))?.let {
-            io.println(presenter.presentDto(it))
-        }
-        io.println(presenter.bye())
+        argsParser.parse(args)
+            .onSuccess { userId ->
+                val message = try {
+                    checkInApi.checkIn(CheckInCommand(userId))
+                    presenter.success()
+                } catch (e: Exception) {
+                    presenter.error(e)
+                }
+                io.println(message)
+                checkInApi.getLastCheckIn(GetLastCheckInQuery(userId))?.let {
+                    io.println(presenter.presentDto(it))
+                }.also {
+                    io.println(presenter.bye())
+                }
+            }.onFailure { e ->
+                io.println(presenter.error(e))
+            }
     }
 }

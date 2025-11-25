@@ -22,7 +22,7 @@ class CheckInApiImplTest {
     @Test
     fun `get lsat check-in of a user`() {
         val checkInDTO = CheckInDTO(NOW, 1, 50)
-        val queryService = mock<CheckInQueryService>() {
+        val queryService = mock<CheckInQueryService> {
             on { getLastCheckInFor(USER_ID) } doReturn checkInDTO
         }
         val checkInUseCase = CheckIn(MemoryCheckInRepository(), Instant::now)

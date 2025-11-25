@@ -6,22 +6,23 @@ import java.time.format.DateTimeFormatter
 
 open class CheckInCliPresenter {
 
+    companion object {
+        private const val DATE_FORMAT = "dd/MM/yyyy"
+    }
+
     open fun success() = "Check-in accepted"
 
-    open fun presentDto(dto: CheckInDTO): String {
-        return """
+    open fun presentDto(dto: CheckInDTO) = """
             Last Check-in Details:
             Date: ${formatDate(dto)}
             Streak: ${dto.streak}
             Reward: ${dto.reward} points
         """.trimIndent()
-    }
 
-    private fun formatDate(dto: CheckInDTO): String? {
-        val localDate = dto.date.atZone(ZoneOffset.UTC)
-        val pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy")
-        val formattedDate = pattern.format(localDate)
-        return formattedDate
+    private fun formatDate(dto: CheckInDTO): String? = with(dto) {
+        date.atZone(ZoneOffset.UTC).let {
+            return DateTimeFormatter.ofPattern(DATE_FORMAT).format(it)
+        }
     }
 
     open fun bye() = "Bye!"

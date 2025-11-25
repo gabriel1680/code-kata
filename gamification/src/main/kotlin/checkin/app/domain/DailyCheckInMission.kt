@@ -12,13 +12,11 @@ class DailyCheckInMission(val userId: Long, checkIns: List<CheckIn>) {
 
     fun checkIn(date: Instant) = checkIns.add(createCheckIn(date))
 
-    private fun createCheckIn(date: Instant): CheckIn {
-        return when {
-            isFirstCheckIn() -> CheckIn.first(date)
-            isSameDay(date) -> throw RuntimeException("Invalid check-in")
-            alreadyCheckedInForAWeek() || isAfterTwoDays(date) -> CheckIn.restart(date)
-            else -> CheckIn.from(checkIns.last(), date)
-        }
+    private fun createCheckIn(date: Instant) = when {
+        isFirstCheckIn() -> CheckIn.first(date)
+        isSameDay(date) -> throw RuntimeException("Invalid check-in")
+        alreadyCheckedInForAWeek() || isAfterTwoDays(date) -> CheckIn.restart(date)
+        else -> CheckIn.from(checkIns.last(), date)
     }
 
     private fun isFirstCheckIn() = checkIns.size == 0
