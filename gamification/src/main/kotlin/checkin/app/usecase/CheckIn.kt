@@ -6,7 +6,7 @@ import org.gbl.checkin.app.service.TimeProvider
 
 class CheckIn(private val checkInRepository: CheckInMissionRepository, private val timeProvider: TimeProvider) {
 
-    operator fun invoke(input: CheckInInput) {
+    suspend operator fun invoke(input: CheckInInput) {
         val mission =
             checkInRepository.getFor(input.userId) ?: DailyCheckInMission.start(input.userId)
         mission.checkIn(timeProvider.instant())

@@ -1,9 +1,10 @@
 package checkin.app.usecase
 
+import checkin.app.domain.DailyCheckInMission
 import checkin.app.fixture.MockTimeProvider
+import kotlinx.coroutines.runBlocking
 import org.gbl.checkin.app.usecase.CheckIn
 import org.gbl.checkin.app.usecase.CheckInInput
-import checkin.app.domain.DailyCheckInMission
 import org.gbl.checkin.out.MemoryCheckInRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -34,14 +35,14 @@ class CheckInTest {
         assertEquals(total, mission.checkIns().size)
 
     @Test
-    fun `first check-in of a user`() {
+    fun `first check-in of a user`() = runBlocking {
         checkIn(INPUT)
         val mission = repository.getFor(USER_ID)!!
         assertCheckIns(mission, 1)
     }
 
     @Test
-    fun `second check-in of a user`() {
+    fun `second check-in of a user`() = runBlocking {
         val mission = DailyCheckInMission.start(USER_ID)
         mission.checkIn(NOW)
         repository.save(mission)

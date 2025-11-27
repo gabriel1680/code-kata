@@ -3,8 +3,8 @@ package org.gbl.checkin
 import java.time.Instant
 
 interface CheckInAPI {
-    fun checkIn(command: CheckInCommand)
-    fun getLastCheckIn(query: GetLastCheckInQuery): CheckInDTO?
+    suspend fun checkIn(command: CheckInCommand)
+    suspend fun getLastCheckIn(query: GetLastCheckInQuery): CheckInDTO?
 }
 
 data class CheckInCommand(val userId: Long)

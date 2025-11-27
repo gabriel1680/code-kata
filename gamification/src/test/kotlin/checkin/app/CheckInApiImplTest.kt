@@ -1,5 +1,9 @@
 package checkin.app
 
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
+import kotlinx.coroutines.runBlocking
 import org.gbl.checkin.CheckInApiImpl
 import org.gbl.checkin.CheckInDTO
 import org.gbl.checkin.GetLastCheckInQuery
@@ -20,10 +24,10 @@ class CheckInApiImplTest {
     }
 
     @Test
-    fun `get lsat check-in of a user`() {
+    fun `get lsat check-in of a user`() = runBlocking {
         val checkInDTO = CheckInDTO(NOW, 1, 50)
         val queryService = mock<CheckInQueryService> {
-            on { getLastCheckInFor(USER_ID) } doReturn checkInDTO
+            on { async { getLastCheckInFor(USER_ID) } } doReturn CompletableDeferred(checkInDTO)
         }
         val checkInUseCase = CheckIn(MemoryCheckInRepository(), Instant::now)
         val sut = CheckInApiImpl(checkInUseCase, queryService)

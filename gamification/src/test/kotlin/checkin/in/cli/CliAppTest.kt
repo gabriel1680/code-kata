@@ -1,5 +1,6 @@
 package checkin.`in`.cli
 
+import kotlinx.coroutines.runBlocking
 import org.gbl.checkin.CheckInAPI
 import org.gbl.checkin.CheckInDTO
 import org.gbl.checkin.app.service.TimeProvider
@@ -39,7 +40,7 @@ class CliAppTest {
 
     }
 
-    fun dtoFor(date: Instant) = CheckInDTO(date, 1, 50)
+    private fun dtoFor(date: Instant) = CheckInDTO(date, 1, 50)
 
     @BeforeEach
     fun setUp() {
@@ -52,7 +53,7 @@ class CliAppTest {
     }
 
     @Test
-    fun checkIn() {
+    fun checkIn() = runBlocking {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         whenever(api.getLastCheckIn(any())).thenReturn(dtoFor(INSTANT))
         whenever(argsParser.parse(any())).thenReturn(Result.success(USER_ID))
@@ -64,14 +65,14 @@ class CliAppTest {
     }
 
     @Test
-    fun inputParsingError() {
+    fun inputParsingError() = runBlocking {
         whenever(argsParser.parse(any())).thenReturn(Result.failure(Exception("test error")))
         sut.run(emptyArray())
         verify(io, times(1)).println("error")
     }
 
     @Test
-    fun checkInError() {
+    fun checkInError() = runBlocking {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         doThrow(RuntimeException::class).whenever(api).checkIn(any())
         whenever(api.getLastCheckIn(any())).thenReturn(dtoFor(INSTANT))
@@ -84,7 +85,7 @@ class CliAppTest {
     }
 
     @Test
-    fun checkInErrorWithoutLastCheckIn() {
+    fun checkInErrorWithoutLastCheckIn() = runBlocking {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         doThrow(RuntimeException::class).whenever(api).checkIn(any())
         whenever(api.getLastCheckIn(any())).thenReturn(null)

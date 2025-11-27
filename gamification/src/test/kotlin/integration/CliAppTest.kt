@@ -1,5 +1,6 @@
 package integration
 
+import kotlinx.coroutines.runBlocking
 import org.gbl.checkin.CheckInApiImpl
 import org.gbl.checkin.app.service.TimeProvider
 import org.gbl.checkin.app.usecase.CheckIn
@@ -39,7 +40,7 @@ class CliAppTest {
     }
 
     @Test
-    fun checkIn() {
+    fun checkIn() = runBlocking {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         sut.run(ARGS)
         val inOrder = inOrder(io)
@@ -49,7 +50,7 @@ class CliAppTest {
     }
 
     @Test
-    fun inputParsingError() {
+    fun inputParsingError() = runBlocking {
         sut.run(emptyArray())
         val inOrder = inOrder(io)
         inOrder.verify(io).println("Check-in Error: Invalid arguments, too few arguments")

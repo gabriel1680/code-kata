@@ -1,6 +1,6 @@
 package checkin.app.domain
 
 interface CheckInMissionRepository {
-    fun getFor(userId: Long): DailyCheckInMission?
-    fun save(mission: DailyCheckInMission)
+    suspend fun getFor(userId: Long): DailyCheckInMission?
+    suspend fun save(mission: DailyCheckInMission)
 }
