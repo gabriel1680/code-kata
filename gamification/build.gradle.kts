@@ -32,5 +32,5 @@ tasks.register<JavaExec>("runCli") {
     group = "application"
     description = "Runs CLI App"
     classpath = sourceSets["main"].runtimeClasspath
-    mainClass.set("org.gbl.checkin.in.cli.MainKt")
+    mainClass.set("checkin.in.cli.MainKt")
 }
