@@ -1,14 +1,12 @@
 package checkin.app
 
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import checkin.CheckInApiImpl
 import checkin.CheckInDTO
 import checkin.GetLastCheckInQuery
 import checkin.app.service.CheckInQueryService
 import checkin.app.usecase.CheckIn
 import checkin.out.MemoryCheckInRepository
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
@@ -26,7 +24,7 @@ class CheckInApiImplTest {
     fun `get lsat check-in of a user`() = runBlocking {
         val checkInDTO = CheckInDTO(NOW, 1, 50)
         val queryService = mock<CheckInQueryService> {
-            on { async { getLastCheckInFor(USER_ID) } } doReturn CompletableDeferred(checkInDTO)
+            onBlocking {  getLastCheckInFor(USER_ID)  } doReturn checkInDTO
         }
         val checkInUseCase = CheckIn(MemoryCheckInRepository(), Instant::now)
         val sut = CheckInApiImpl(checkInUseCase, queryService)
