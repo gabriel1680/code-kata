@@ -1,4 +1,4 @@
-package org.gbl.checkin.app.service
+package checkin.app.service
 
 import java.time.Instant
 

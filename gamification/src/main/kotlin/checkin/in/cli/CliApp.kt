@@ -1,8 +1,8 @@
-package org.gbl.checkin.`in`.cli
+package checkin.`in`.cli
 
-import org.gbl.checkin.CheckInAPI
-import org.gbl.checkin.CheckInCommand
-import org.gbl.checkin.GetLastCheckInQuery
+import checkin.CheckInAPI
+import checkin.CheckInCommand
+import checkin.GetLastCheckInQuery
 
 class CliApp(
     private val checkInApi: CheckInAPI,

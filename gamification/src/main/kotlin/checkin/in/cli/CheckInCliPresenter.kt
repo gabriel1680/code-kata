@@ -1,6 +1,6 @@
-package org.gbl.checkin.`in`.cli
+package checkin.`in`.cli
 
-import org.gbl.checkin.CheckInDTO
+import checkin.CheckInDTO
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 

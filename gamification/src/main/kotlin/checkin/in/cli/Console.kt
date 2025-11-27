@@ -1,4 +1,4 @@
-package org.gbl.checkin.`in`.cli
+package checkin.`in`.cli
 
 fun interface Console {
     fun println(s: Any)

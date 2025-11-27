@@ -1,8 +1,8 @@
-package org.gbl.checkin.app.usecase
+package checkin.app.usecase
 
 import checkin.app.domain.CheckInMissionRepository
 import checkin.app.domain.DailyCheckInMission
-import org.gbl.checkin.app.service.TimeProvider
+import checkin.app.service.TimeProvider
 
 class CheckIn(private val checkInRepository: CheckInMissionRepository, private val timeProvider: TimeProvider) {
 

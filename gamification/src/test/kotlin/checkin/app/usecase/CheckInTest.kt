@@ -3,9 +3,7 @@ package checkin.app.usecase
 import checkin.app.domain.DailyCheckInMission
 import checkin.app.fixture.MockTimeProvider
 import kotlinx.coroutines.runBlocking
-import org.gbl.checkin.app.usecase.CheckIn
-import org.gbl.checkin.app.usecase.CheckInInput
-import org.gbl.checkin.out.MemoryCheckInRepository
+import checkin.out.MemoryCheckInRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.Duration

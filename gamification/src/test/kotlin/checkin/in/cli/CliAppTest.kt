@@ -1,13 +1,9 @@
 package checkin.`in`.cli
 
 import kotlinx.coroutines.runBlocking
-import org.gbl.checkin.CheckInAPI
-import org.gbl.checkin.CheckInDTO
-import org.gbl.checkin.app.service.TimeProvider
-import org.gbl.checkin.`in`.cli.CheckInArgsParser
-import org.gbl.checkin.`in`.cli.CheckInCliPresenter
-import org.gbl.checkin.`in`.cli.CliApp
-import org.gbl.checkin.`in`.cli.Console
+import checkin.CheckInAPI
+import checkin.CheckInDTO
+import checkin.app.service.TimeProvider
 import org.junit.jupiter.api.BeforeEach
 import org.mockito.kotlin.*
 import java.time.Instant

@@ -1,15 +1,14 @@
 package checkin.app
 
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import org.gbl.checkin.CheckInApiImpl
-import org.gbl.checkin.CheckInDTO
-import org.gbl.checkin.GetLastCheckInQuery
-import org.gbl.checkin.app.service.CheckInQueryService
-import org.gbl.checkin.app.usecase.CheckIn
-import org.gbl.checkin.out.MemoryCheckInRepository
+import checkin.CheckInApiImpl
+import checkin.CheckInDTO
+import checkin.GetLastCheckInQuery
+import checkin.app.service.CheckInQueryService
+import checkin.app.usecase.CheckIn
+import checkin.out.MemoryCheckInRepository
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock

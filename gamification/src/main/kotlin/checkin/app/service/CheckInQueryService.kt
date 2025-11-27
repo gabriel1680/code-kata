@@ -1,6 +1,6 @@
-package org.gbl.checkin.app.service
+package checkin.app.service
 
-import org.gbl.checkin.CheckInDTO
+import checkin.CheckInDTO
 
 interface CheckInQueryService {
     suspend fun getLastCheckInFor(userId: Long): CheckInDTO?

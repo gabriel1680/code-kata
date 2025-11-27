@@ -1,14 +1,14 @@
 package integration
 
 import kotlinx.coroutines.runBlocking
-import org.gbl.checkin.CheckInApiImpl
-import org.gbl.checkin.app.service.TimeProvider
-import org.gbl.checkin.app.usecase.CheckIn
-import org.gbl.checkin.`in`.cli.CliApp
-import org.gbl.checkin.`in`.cli.CheckInCliPresenter
-import org.gbl.checkin.out.MemoryCheckInRepository
-import org.gbl.checkin.`in`.cli.CheckInArgsParser
-import org.gbl.checkin.`in`.cli.Console
+import checkin.CheckInApiImpl
+import checkin.app.service.TimeProvider
+import checkin.app.usecase.CheckIn
+import checkin.`in`.cli.CliApp
+import checkin.`in`.cli.CheckInCliPresenter
+import checkin.out.MemoryCheckInRepository
+import checkin.`in`.cli.CheckInArgsParser
+import checkin.`in`.cli.Console
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.inOrder

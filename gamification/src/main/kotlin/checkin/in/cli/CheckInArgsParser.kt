@@ -1,4 +1,4 @@
-package org.gbl.checkin.`in`.cli
+package checkin.`in`.cli
 
 class CheckInArgsParser {
 

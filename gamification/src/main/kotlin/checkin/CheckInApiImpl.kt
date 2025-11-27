@@ -1,8 +1,8 @@
-package org.gbl.checkin
+package checkin
 
-import org.gbl.checkin.app.usecase.CheckIn
-import org.gbl.checkin.app.usecase.CheckInInput
-import org.gbl.checkin.app.service.CheckInQueryService
+import checkin.app.service.CheckInQueryService
+import checkin.app.usecase.CheckIn
+import checkin.app.usecase.CheckInInput
 
 class CheckInApiImpl(private val checkInUseCase: CheckIn, private val queryService: CheckInQueryService) : CheckInAPI {
 

@@ -1,6 +1,5 @@
 package checkin.`in`.cli
 
-import org.gbl.checkin.`in`.cli.CheckInArgsParser
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals

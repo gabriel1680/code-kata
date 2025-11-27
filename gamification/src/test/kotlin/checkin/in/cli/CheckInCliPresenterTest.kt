@@ -1,7 +1,6 @@
 package checkin.`in`.cli
 
-import org.gbl.checkin.CheckInDTO
-import org.gbl.checkin.`in`.cli.CheckInCliPresenter
+import checkin.CheckInDTO
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.Instant

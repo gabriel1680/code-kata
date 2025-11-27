@@ -1,9 +1,9 @@
-package org.gbl.checkin.`in`.cli
+package checkin.`in`.cli
 
+import checkin.CheckInApiImpl
+import checkin.out.MemoryCheckInRepository
 import kotlinx.coroutines.runBlocking
-import org.gbl.checkin.CheckInApiImpl
-import org.gbl.checkin.app.usecase.CheckIn
-import org.gbl.checkin.out.MemoryCheckInRepository
+import checkin.app.usecase.CheckIn
 import java.time.Instant
 
 fun main(args: Array<String>) = runBlocking {

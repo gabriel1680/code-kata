@@ -1,9 +1,9 @@
-package org.gbl.checkin.out
+package checkin.out
 
+import checkin.CheckInDTO
 import checkin.app.domain.CheckInMissionRepository
 import checkin.app.domain.DailyCheckInMission
-import org.gbl.checkin.CheckInDTO
-import org.gbl.checkin.app.service.CheckInQueryService
+import checkin.app.service.CheckInQueryService
 
 class MemoryCheckInRepository : CheckInMissionRepository, CheckInQueryService {
 
