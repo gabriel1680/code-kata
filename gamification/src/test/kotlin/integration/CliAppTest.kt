@@ -1,14 +1,13 @@
 package integration
 
-import kotlinx.coroutines.runBlocking
 import checkin.CheckInApiImpl
 import checkin.app.service.TimeProvider
 import checkin.app.usecase.CheckIn
-import checkin.`in`.cli.CliApp
-import checkin.`in`.cli.CheckInCliPresenter
-import checkin.out.MemoryCheckInRepository
 import checkin.`in`.cli.CheckInArgsParser
+import checkin.`in`.cli.CheckInCliPresenter
+import checkin.`in`.cli.CliApp
 import checkin.`in`.cli.Console
+import checkin.out.MemoryCheckInRepository
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.inOrder
@@ -40,7 +39,7 @@ class CliAppTest {
     }
 
     @Test
-    fun checkIn() = runBlocking {
+    fun checkIn() {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         sut.run(ARGS)
         val inOrder = inOrder(io)
@@ -50,7 +49,7 @@ class CliAppTest {
     }
 
     @Test
-    fun inputParsingError() = runBlocking {
+    fun inputParsingError() {
         sut.run(emptyArray())
         val inOrder = inOrder(io)
         inOrder.verify(io).println("Check-in Error: Invalid arguments, too few arguments")

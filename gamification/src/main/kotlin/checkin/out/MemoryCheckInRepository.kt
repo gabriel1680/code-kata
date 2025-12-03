@@ -9,11 +9,11 @@ class MemoryCheckInRepository : CheckInMissionRepository, CheckInQueryService {
 
     private val missions = mutableMapOf<Long, DailyCheckInMission>()
 
-    override suspend fun getFor(userId: Long) = missions[userId]
+    override fun getFor(userId: Long) = missions[userId]
 
-    override suspend fun save(mission: DailyCheckInMission) = run { missions[mission.userId] = mission }
+    override fun save(mission: DailyCheckInMission) = run { missions[mission.userId] = mission }
 
-    override suspend fun getLastCheckInFor(userId: Long): CheckInDTO? {
+    override fun getLastCheckInFor(userId: Long): CheckInDTO? {
         return missions[userId]?.checkIns()?.last()?.let { checkIn ->
             return CheckInDTO(checkIn.date, checkIn.streak, checkIn.rewards)
         }

@@ -6,7 +6,6 @@ import checkin.GetLastCheckInQuery
 import checkin.app.service.CheckInQueryService
 import checkin.app.usecase.CheckIn
 import checkin.out.MemoryCheckInRepository
-import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
@@ -21,10 +20,10 @@ class CheckInApiImplTest {
     }
 
     @Test
-    fun `get lsat check-in of a user`() = runBlocking {
+    fun `get lsat check-in of a user`() {
         val checkInDTO = CheckInDTO(NOW, 1, 50)
         val queryService = mock<CheckInQueryService> {
-            onBlocking {  getLastCheckInFor(USER_ID)  } doReturn checkInDTO
+            on { getLastCheckInFor(USER_ID) } doReturn checkInDTO
         }
         val checkInUseCase = CheckIn(MemoryCheckInRepository(), Instant::now)
         val sut = CheckInApiImpl(checkInUseCase, queryService)

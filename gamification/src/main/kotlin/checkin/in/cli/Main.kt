@@ -3,10 +3,9 @@ package checkin.`in`.cli
 import checkin.CheckInApiImpl
 import checkin.app.usecase.CheckIn
 import checkin.out.MemoryCheckInRepository
-import kotlinx.coroutines.runBlocking
 import java.time.Instant
 
-fun main(args: Array<String>) = runBlocking {
+fun main(args: Array<String>) {
     val repository = MemoryCheckInRepository()
     val checkInUseCase = CheckIn(repository, Instant::now)
     val api = CheckInApiImpl(checkInUseCase, repository)

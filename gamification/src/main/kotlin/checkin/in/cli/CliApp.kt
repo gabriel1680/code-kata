@@ -11,12 +11,12 @@ class CliApp(
     private val presenter: CheckInCliPresenter
 ) {
 
-    suspend fun run(args: Array<String>) {
+    fun run(args: Array<String>) {
         argsParser.parse(args).onSuccess { executeCheckInFor(it) }
             .onFailure { io.println(presenter.error(it)) }
     }
 
-    private suspend fun executeCheckInFor(userId: Long) {
+    private fun executeCheckInFor(userId: Long) {
         val message = try {
             checkInApi.checkIn(CheckInCommand(userId))
             presenter.success()

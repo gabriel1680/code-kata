@@ -1,6 +1,5 @@
 package checkin.`in`.cli
 
-import kotlinx.coroutines.runBlocking
 import checkin.CheckInAPI
 import checkin.CheckInDTO
 import checkin.app.service.TimeProvider
@@ -49,7 +48,7 @@ class CliAppTest {
     }
 
     @Test
-    fun checkIn() = runBlocking {
+    fun checkIn() {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         whenever(api.getLastCheckIn(any())).thenReturn(dtoFor(INSTANT))
         whenever(argsParser.parse(any())).thenReturn(Result.success(USER_ID))
@@ -61,14 +60,14 @@ class CliAppTest {
     }
 
     @Test
-    fun inputParsingError() = runBlocking {
+    fun inputParsingError() {
         whenever(argsParser.parse(any())).thenReturn(Result.failure(Exception("test error")))
         sut.run(emptyArray())
         verify(io, times(1)).println("error")
     }
 
     @Test
-    fun checkInError() = runBlocking {
+    fun checkInError() {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         doThrow(RuntimeException::class).whenever(api).checkIn(any())
         whenever(api.getLastCheckIn(any())).thenReturn(dtoFor(INSTANT))
@@ -81,7 +80,7 @@ class CliAppTest {
     }
 
     @Test
-    fun checkInErrorWithoutLastCheckIn() = runBlocking {
+    fun checkInErrorWithoutLastCheckIn() {
         whenever(timeProvider.instant()).thenReturn(INSTANT)
         doThrow(RuntimeException::class).whenever(api).checkIn(any())
         whenever(api.getLastCheckIn(any())).thenReturn(null)
